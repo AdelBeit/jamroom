@@ -1,0 +1,79 @@
+.button_container {
+  width: 45px;
+  height: 45px;
+  position: relative;
+}
+
+.button_container img {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  text-align: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 2;
+}
+
+.button_container .mold {
+  width: 140%;
+  height: 140%;
+  left: -20%;
+  z-index: 1;
+}
+
+.button_container .users {
+  width: 55%;
+  height: 55%;
+}
+.button_container .users.right {
+  left: 14px;
+  bottom: 1px;
+}
+.button_container .users.left {
+  right: 14px;
+}
+
+.button_container .cog {
+  width: 80%;
+  height: 80%;
+}
+
+.button_container .cog.inner {
+  z-index: 3;
+  width: 40%;
+  height: 40%;
+}
+
+.button_container .keyboard {
+  width: 75%;
+  height: 75%;
+}
+
+.button_container .octave_up {
+  width: 75%;
+  height: 75%;
+}
+
+.button_container .octave_down {
+  width: 80%;
+  height: 80%;
+}
+
+.button_container .soundclips {
+  width: 70%;
+  height: 70%;
+  right: 5px;
+}
+
+.button_container .play {
+  width: 60%;
+  height: 60%;
+  left: 2px;
+}
+.button_container .stop {
+  width: 60%;
+  height: 60%;
+}

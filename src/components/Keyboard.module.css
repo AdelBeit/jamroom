@@ -1,0 +1,42 @@
+.keyboard_container {
+  width: 832px;
+  height: 270px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.keyboard_container li {
+  padding: 0;
+  list-style: none;
+  position: relative;
+  float: left;
+}
+
+.white_key {
+  width: 90px;
+  height: 270px;
+  z-index: 1;
+}
+
+.D,
+.E,
+.G,
+.A,
+.B {
+  margin-left: -22px;
+}
+
+.white_key:last-child,
+.F {
+  margin-left: 12px;
+}
+.white_key:first-child {
+  margin-left: -20px;
+}
+
+.black_key {
+  width: 54px;
+  height: 167px;
+  z-index: 2;
+  margin-left: -20px;
+}

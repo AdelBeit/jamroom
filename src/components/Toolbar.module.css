@@ -1,0 +1,42 @@
+.keyboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px auto 40px auto;
+}
+
+.keyboard div:nth-child(1) {
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+.keyboard div:nth-child(2) {
+  margin-left: 70px;
+}
+.keyboard div:nth-child(3) {
+  margin-left: 20px;
+}
+.keyboard div:nth-child(4) {
+  margin-left: 160px;
+}
+.keyboard div:nth-child(5) {
+  margin-right: 40px;
+}
+
+.drumpad {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 55px;
+  margin: 18px 48px;
+  border: black solid 2px;
+}
+
+.drumpad div:nth-child(1) {
+}
+.drumpad div:nth-child(2) {
+}
+.drumpad div:nth-child(3) {
+}
+.drumpad div:nth-child(4) {
+}
