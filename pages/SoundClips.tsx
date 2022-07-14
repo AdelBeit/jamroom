@@ -4,7 +4,7 @@ import io, { Socket } from "socket.io-client";
 import { Toolbar } from "../src/components/Toolbar";
 import styles from "../styles/Layout.module.css";
 import cs from "classnames";
-import { SoundClipItem } from "../src/components/List";
+import { List, SoundClipItem } from "../src/components/List";
 
 // let socket: Socket;
 
