@@ -3,12 +3,13 @@ import icons from "../utils/icons";
 import styles from "./Button.module.css";
 import cs from "classnames";
 
-function Button({
+const Button = ({
   variant,
+  bumpedUp = true,
 }: {
   variant:
     | "users"
-    | "drumpad"
+    | "drums"
     | "keyboard"
     | "octave_up"
     | "octave_down"
@@ -17,7 +18,8 @@ function Button({
     | "cog"
     | "play"
     | "stop";
-}) {
+  bumpedUp?: boolean;
+}) => {
   let icon = <img className={styles[variant]} src={icons[variant]} />;
   if (variant == "users") {
     icon = (
@@ -41,10 +43,10 @@ function Button({
 
   return (
     <div className={cs(styles.button_container)}>
-      <img className={styles.mold} src={icons.mold_bumpedUp} />
+      {bumpedUp && <img className={styles.mold} src={icons.mold_bumpedUp} />}
       {icon}
     </div>
   );
-}
+};
 
 export { Button };

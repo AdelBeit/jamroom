@@ -25,7 +25,7 @@ Toolbar.keyboard = () => {
       <Button variant="octave_down" />
       <Button variant="octave_up" />
       <Button variant="soundclips" />
-      <Button variant="drumpad" />
+      <Button variant="drums" />
     </>
   );
 };
@@ -40,23 +40,23 @@ Toolbar.drumpad = function () {
     </>
   );
 };
+
 Toolbar.users = function () {
+  let userCount = 3;
+  let roomCode = "AbC232";
   return (
     <>
-      <Button variant="users" />
-      <Button variant="octave_up" />
-      <Button variant="soundclips" />
-      <Button variant="drumpad" />
+      <Button variant="back" />
+      <span className="neumorphic_text">{userCount}/3 Jammers</span>
+      <span className="neumorphic_text">Room#{roomCode}</span>
     </>
   );
 };
+
 Toolbar.soundclips = function () {
   return (
     <>
-      <Button variant="users" />
-      <Button variant="octave_down" />
-      <Button variant="soundclips" />
-      <Button variant="drumpad" />
+      <Button variant="back" />
     </>
   );
 };

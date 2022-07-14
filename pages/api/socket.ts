@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Server, Socket } from "socket.io";
 
 const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
-  if (res.socket.server.io) {
+  if (res!.socket!.server.io) {
     console.log("Socket is already running");
   } else {
     console.log("Socket is initializing");

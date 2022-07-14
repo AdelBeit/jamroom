@@ -1,0 +1,35 @@
+.users_container,
+.soundclips_container {
+  overflow-y: scroll;
+  padding-left: 25px;
+
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.users_container::-webkit-scrollbar,
+.soundclips_container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.users_container ul,
+.soundclips_container ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 0;
+  padding-right: 20px;
+}
+
+.useritem_container,
+.soundclipitem_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px 30px;
+}
+
+.useritem_container span,
+.soundclipitem_container span {
+  margin: auto 0;
+}

@@ -1,0 +1,12 @@
+.drums {
+  flex-direction: row;
+  padding-left: 30px;
+}
+
+.keys {
+}
+
+.users,
+.soundclips {
+  padding: 0;
+}

@@ -20,31 +20,7 @@ a {
   box-sizing: border-box;
 }
 
-.neomorphic_mold_drumpad_inner {
-  background: #ebf4ff;
-  box-shadow: -8px 0px 8px rgba(199, 220, 245, 0.3),
-    8px 0px 8px rgba(255, 255, 255, 0.3),
-    inset 1px 0px 2px rgba(199, 222, 249, 0.33),
-    inset -1px 1px 2px rgba(255, 255, 255, 0.75),
-    inset 1px 0px 2px rgba(203, 223, 246, 0.66),
-    inset -2px 0px 5px rgba(244, 249, 255, 0.33);
-  border-radius: 8px;
-}
-
-.neomorphic_mold_drumpad_outer {
-  background: linear-gradient(
-      0deg,
-      rgba(83, 234, 216, 0.1),
-      rgba(83, 234, 216, 0.1)
-    ),
-    #ebf4ff;
-  box-shadow: 1px 0px 1px rgba(205, 222, 242, 0.73),
-    -2px 0px 1px rgba(240, 247, 255, 0.12),
-    inset -2px 0px 5px rgba(167, 193, 224, 0.52);
-  border-radius: 8px;
-}
-
-.neomorphic_mold_bumpedUp {
+.neumorphic_mold_bumpedUp {
   background: var(--background-color);
   box-shadow: -8px 0px 8px rgba(199, 220, 245, 0.87),
     8px 0px 8px rgba(255, 255, 255, 0.3),
@@ -55,7 +31,7 @@ a {
   border-radius: 30px;
 }
 
-.neomorphic_mold_castIn {
+.neumorphic_mold_castIn {
   background: #ebf4ff;
   box-shadow: 1px 0px 1px rgba(205, 222, 242, 0.73),
     -2px 0px 1px rgba(240, 247, 255, 0.12),
@@ -63,9 +39,33 @@ a {
   border-radius: 8px;
 }
 
+.neumorphic_text {
+  font-size: 2em;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+
+  text-shadow: 1px 0px 0.5px rgba(205, 222, 242, 1),
+    -2px 0px 1px rgba(240, 247, 255, 1);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+
+  color: transparent;
+}
+
 .page_container {
   width: 896px;
   height: 414px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
   border: 3px black solid;
-  padding: 10px;
+  padding: 20px;
+}
+
+li {
+  list-style: none;
 }

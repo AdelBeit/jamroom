@@ -10,14 +10,7 @@ function Drum({
 }) {
   return (
     <div className={cs(styles.drum_container, styles[type])}>
-      <img
-        className={cs(styles[type], styles.drum_outer)}
-        src={icons.drum_outer}
-      />
-      <img
-        className={cs(styles[type], styles.drum_inner)}
-        src={icons.drum_inner}
-      />
+      <img className={cs(styles[type])} src={icons[type]} />
     </div>
   );
 }

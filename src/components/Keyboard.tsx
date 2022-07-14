@@ -26,7 +26,7 @@ function Key({
   return (
     <li
       className={cs(
-        "neomorphic_mold_bumpedUp",
+        "neumorphic_mold_bumpedUp",
         styles[type + "_key"],
         styles[note],
         styles[octave]

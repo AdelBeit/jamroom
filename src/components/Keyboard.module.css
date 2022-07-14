@@ -7,7 +7,6 @@
 
 .keyboard_container li {
   padding: 0;
-  list-style: none;
   position: relative;
   float: left;
 }
