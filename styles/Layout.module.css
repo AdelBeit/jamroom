@@ -3,10 +3,24 @@
   padding-left: 30px;
 }
 
-.keys {
+.users,
+.soundclips,
+.drum_selector {
+  padding: 0;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  height: 0;
+  transition: height 0.3s ease;
 }
 
-.users,
-.soundclips {
-  padding: 0;
+.drums,
+.keys {
+  z-index: 1;
+}
+
+.soundclips,
+.drum_selector,
+.users {
+  z-index: 10;
 }

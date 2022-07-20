@@ -1,36 +1,12 @@
 import React from "react";
 import styles from "./Keyboard.module.css";
 import cs from "classnames";
+import { KeyProps } from "../types";
 
-function Key({
-  type,
-  note,
-  octave,
-}: {
-  type: "white" | "black";
-  note:
-    | "C"
-    | "C#"
-    | "D"
-    | "D#"
-    | "E"
-    | "F"
-    | "F#"
-    | "G"
-    | "G#"
-    | "A"
-    | "A#"
-    | "B";
-  octave: 1 | 2 | 3 | 4 | 5 | 6 | 7;
-}) {
+function Key({ note, octave = 4 }: KeyProps) {
   return (
     <li
-      className={cs(
-        "neumorphic_mold_bumpedUp",
-        styles[type + "_key"],
-        styles[note],
-        styles[octave]
-      )}
+      className={cs("neumorphic_mold_raisedUp", styles[note], styles[octave])}
     ></li>
   );
 }
@@ -38,20 +14,24 @@ function Key({
 function Keyboard() {
   return (
     <div className={styles.keyboard_container}>
-      <ul>
-        <Key type={"white"} note={"C"} octave={4} />
-        <Key type={"black"} note={"C#"} octave={4} />
-        <Key type={"white"} note={"D"} octave={4} />
-        <Key type={"black"} note={"D#"} octave={4} />
-        <Key type={"white"} note={"E"} octave={4} />
-        <Key type={"white"} note={"F"} octave={4} />
-        <Key type={"black"} note={"F#"} octave={4} />
-        <Key type={"white"} note={"G"} octave={4} />
-        <Key type={"black"} note={"G#"} octave={4} />
-        <Key type={"white"} note={"A"} octave={4} />
-        <Key type={"black"} note={"A#"} octave={4} />
-        <Key type={"white"} note={"B"} octave={4} />
-        <Key type={"white"} note={"C"} octave={4} />
+      <ul className={styles.white_keys}>
+        <Key note={"C"} />
+        <Key note={"D"} />
+        <Key note={"E"} />
+        <Key note={"F"} />
+        <Key note={"G"} />
+        <Key note={"A"} />
+        <Key note={"B"} />
+        <Key note={"C"} />
+      </ul>
+      <ul className={styles.black_keys}>
+        <Key note={"C#"} />
+        <Key note={"D#"} />
+        <Key note={"D#"} />
+        <Key note={"F#"} />
+        <Key note={"G#"} />
+        <Key note={"A#"} />
+        <Key note={"A#"} />
       </ul>
     </div>
   );

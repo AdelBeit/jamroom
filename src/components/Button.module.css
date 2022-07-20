@@ -36,18 +36,18 @@
   right: 14px;
 }
 
-.button_container .cog {
+.button_container .drum_selector {
   width: 80%;
   height: 80%;
 }
 
-.button_container .cog.inner {
+.button_container .drum_selector.inner {
   z-index: 3;
   width: 40%;
   height: 40%;
 }
 
-.button_container .keyboard {
+.button_container .keys {
   width: 75%;
   height: 75%;
 }

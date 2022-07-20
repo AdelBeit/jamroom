@@ -7,7 +7,7 @@ const icons: { [key: string]: string } = {
   hi_hat: "./icons/drums/hi_hat.svg",
   closed_hat: "./icons/drums/closed_hat.svg",
   drums: "./icons/drums.svg",
-  keyboard: "./icons/keyboard.svg",
+  keys: "./icons/keyboard.svg",
   octave_up: "./icons/octave_up.svg",
   octave_down: "./icons/octave_down.svg",
   soundclips: "./icons/music_note.svg",
@@ -17,6 +17,6 @@ const icons: { [key: string]: string } = {
   play: "./icons/play.svg",
   stop: "./icons/stop.svg",
   mold_castIn: "./icons/neumorphic_mold_cast_in.svg",
-  mold_bumpedUp: "./icons/neumorphic_mold_bumped_up.svg",
+  mold_raisedUp: "./icons/neumorphic_mold_raised_up.svg",
 };
 export default icons;

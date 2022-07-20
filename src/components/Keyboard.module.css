@@ -3,39 +3,48 @@
   height: 270px;
   position: relative;
   box-sizing: border-box;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.white_keys li {
+  width: 97px;
+  height: 270px;
+}
+
+.keyboard_container ul {
+  position: absolute;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  text-align: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.keyboard_container .white_keys {
+  z-index: 1;
+}
+
+.keyboard_container .black_keys {
+  gap: 51px;
+  z-index: 2;
+}
+
+.keyboard_container .black_keys li:nth-child(3),
+.keyboard_container .black_keys li:nth-child(7) {
+  visibility: hidden;
 }
 
 .keyboard_container li {
   padding: 0;
   position: relative;
-  float: left;
 }
 
-.white_key {
-  width: 90px;
-  height: 270px;
-  z-index: 1;
-}
-
-.D,
-.E,
-.G,
-.A,
-.B {
-  margin-left: -22px;
-}
-
-.white_key:last-child,
-.F {
-  margin-left: 12px;
-}
-.white_key:first-child {
-  margin-left: -20px;
-}
-
-.black_key {
+.black_keys li {
   width: 54px;
   height: 167px;
-  z-index: 2;
-  margin-left: -20px;
 }

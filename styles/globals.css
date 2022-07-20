@@ -1,5 +1,7 @@
 :root {
   --background-color: #ebf4ff;
+  --width: 896px;
+  --height: 414px;
 }
 
 html,
@@ -9,6 +11,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: var(--background-color);
+  box-shadow: 0 0 0 1px black; /* 'border-style' not available (dashed, solid, etc) */
+  height: var(--height);
+  width: var(--width);
 }
 
 a {
@@ -20,7 +25,7 @@ a {
   box-sizing: border-box;
 }
 
-.neumorphic_mold_bumpedUp {
+.neumorphic_mold_raisedUp {
   background: var(--background-color);
   box-shadow: -8px 0px 8px rgba(199, 220, 245, 0.87),
     8px 0px 8px rgba(255, 255, 255, 0.3),
@@ -55,17 +60,31 @@ a {
   color: transparent;
 }
 
-.page_container {
-  width: 896px;
-  height: 414px;
+.page_container,
+.drop_down_container {
+  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 20px;
-  border: 3px black solid;
   padding: 20px;
+  width: var(--width);
+}
+
+.page_container {
+  height: var(--height);
+  width: var(--width);
+}
+.drop_down_container {
+  height: 0;
 }
 
 li {
   list-style: none;
+}
+
+/* animations */
+.drop_down_container.drop {
+  height: var(--height);
+  width: var(--width);
 }

@@ -1,25 +1,12 @@
 import React from "react";
-import icons from "../utils/icons";
+import icons from "../utils/data/icons";
 import styles from "./Button.module.css";
 import cs from "classnames";
+import { useStore } from "../utils/useStore";
 
-const Button = ({
-  variant,
-  bumpedUp = true,
-}: {
-  variant:
-    | "users"
-    | "drums"
-    | "keyboard"
-    | "octave_up"
-    | "octave_down"
-    | "soundclips"
-    | "back"
-    | "cog"
-    | "play"
-    | "stop";
-  bumpedUp?: boolean;
-}) => {
+import { ButtonProps } from "../types";
+
+const Button = ({ variant, style = "raised" }: ButtonProps) => {
   let icon = <img className={styles[variant]} src={icons[variant]} />;
   if (variant == "users") {
     icon = (
@@ -32,18 +19,52 @@ const Button = ({
       </>
     );
   }
-  if (variant == "cog") {
+  if (variant == "drum_selector") {
     icon = (
       <>
-        <img className={cs(styles.outer, styles.cog)} src={icons.cog_outer} />
-        <img className={cs(styles.inner, styles.cog)} src={icons.cog_inner} />
+        <img
+          className={cs(styles.outer, styles.drum_selector)}
+          src={icons.cog_outer}
+        />
+        <img
+          className={cs(styles.inner, styles.drum_selector)}
+          src={icons.cog_inner}
+        />
       </>
     );
   }
 
+  let handler: Function = () => {};
+  switch (variant) {
+    case "back":
+      handler = () => useStore.getState().setDropDown("none");
+      break;
+    case "users":
+    case "soundclips":
+      handler = () => useStore.getState().setDropDown(variant);
+      break;
+    case "keys":
+    case "drums":
+      handler = () => useStore.getState().setScreen(variant);
+      break;
+    case "drum_selector":
+      handler = useStore.getState().toggleDrumEditMode;
+      break;
+    case "octave_up":
+      handler = useStore.getState().octaveUp;
+      break;
+    case "octave_down":
+      handler = useStore.getState().octaveDown;
+      break;
+
+    default:
+  }
+
   return (
-    <div className={cs(styles.button_container)}>
-      {bumpedUp && <img className={styles.mold} src={icons.mold_bumpedUp} />}
+    <div onClick={() => handler()} className={cs(styles.button_container)}>
+      {style == "raised" && (
+        <img className={styles.mold} src={icons.mold_raisedUp} />
+      )}
       {icon}
     </div>
   );

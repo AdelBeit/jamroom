@@ -1,4 +1,4 @@
-.keyboard {
+.keys {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -6,22 +6,20 @@
   padding-top: 5px;
 }
 
-.keyboard div:nth-child(1) {
+.keys div:nth-child(1) {
   margin-bottom: 10px;
 }
-.keyboard div:nth-child(2) {
+.keys div:nth-child(2) {
   margin-left: 70px;
 }
-.keyboard div:nth-child(3) {
+.keys div:nth-child(3) {
   margin-left: 20px;
 }
-.keyboard div:nth-child(4) {
+.keys div:nth-child(4) {
   margin-left: 80px;
 }
-.keyboard div:nth-child(5) {
-}
 
-.drumpad {
+.drums {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,6 +27,7 @@
 }
 
 .users,
+.drum_selector,
 .soundclips {
   display: flex;
   flex-direction: row;
@@ -39,6 +38,7 @@
 }
 
 .users *,
+.drum_selector *,
 .soundclips * {
   margin: auto 0;
 }

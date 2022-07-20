@@ -2,23 +2,22 @@ import React from "react";
 import styles from "./Toolbar.module.css";
 import cs from "classnames";
 import { Button } from "./Button";
+import { ToolBarProps } from "../types";
 
-function Toolbar({
-  variant,
-}: {
-  variant: "keyboard" | "drumpad" | "users" | "soundclips";
-}) {
+function Toolbar({ variant }: ToolBarProps) {
   return (
     <div className={cs(styles.toolbar_container, styles[variant])}>
-      {variant == "keyboard" ? <Toolbar.keyboard /> : null}
-      {variant == "drumpad" ? <Toolbar.drumpad /> : null}
-      {variant == "users" ? <Toolbar.users /> : null}
-      {variant == "soundclips" ? <Toolbar.soundclips /> : null}
+      {variant == "keys" && <Toolbar.Keyboard />}
+      {variant == "drums" && <Toolbar.Drumpad />}
+      {variant == "users" && <Toolbar.Users />}
+      {(variant == "soundclips" || variant == "drum_selector") && (
+        <Button variant="back" />
+      )}
     </div>
   );
 }
 
-Toolbar.keyboard = () => {
+Toolbar.Keyboard = () => {
   return (
     <>
       <Button variant="users" />
@@ -30,18 +29,18 @@ Toolbar.keyboard = () => {
   );
 };
 
-Toolbar.drumpad = function () {
+Toolbar.Drumpad = () => {
   return (
     <>
       <Button variant="users" />
       <Button variant="soundclips" />
-      <Button variant="keyboard" />
-      <Button variant="cog" />
+      <Button variant="keys" />
+      <Button variant="drum_selector" />
     </>
   );
 };
 
-Toolbar.users = function () {
+Toolbar.Users = () => {
   let userCount = 3;
   let roomCode = "AbC232";
   return (
@@ -49,14 +48,6 @@ Toolbar.users = function () {
       <Button variant="back" />
       <span className="neumorphic_text">{userCount}/3 Jammers</span>
       <span className="neumorphic_text">Room#{roomCode}</span>
-    </>
-  );
-};
-
-Toolbar.soundclips = function () {
-  return (
-    <>
-      <Button variant="back" />
     </>
   );
 };

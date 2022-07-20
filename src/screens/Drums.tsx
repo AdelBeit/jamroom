@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import { ChangeEvent, useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
-import { Toolbar } from "../src/components/Toolbar";
-import { Keyboard } from "../src/components/Keyboard";
-import styles from "../styles/Layout.module.css";
+import { Toolbar } from "../components/Toolbar";
+import { Drumpad } from "../components/Drumpad";
+import styles from "../../styles/Layout.module.css";
 import cs from "classnames";
 
 // let socket: Socket;
 
-const Page: NextPage = () => {
+const Drums = () => {
   // useEffect(() => {
   //   socketInitializer();
   // }, []);
@@ -39,11 +39,11 @@ const Page: NextPage = () => {
     //   value={input}
     //   onChange={onChangeHandler}
     // />
-    <div className={cs("page_container", styles.keys)}>
-      <Toolbar variant="keyboard" />
-      <Keyboard />
+    <div className={cs("page_container", styles.drums)}>
+      <Toolbar variant="drums" />
+      <Drumpad />
     </div>
   );
 };
 
-export default Page;
+export default Drums;
