@@ -68,13 +68,10 @@ a {
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
-  width: var(--width);
-}
-
-.page_container {
   height: var(--height);
   width: var(--width);
 }
+
 .drop_down_container {
   height: 0;
 }

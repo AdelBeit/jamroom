@@ -1,4 +1,5 @@
 .users_container,
+.drum_selector_container,
 .soundclips_container {
   overflow-y: scroll;
   padding-left: 25px;
@@ -7,11 +8,13 @@
   scrollbar-width: none; /* Firefox */
 }
 .users_container::-webkit-scrollbar,
+.drum_selector_container::-webkit-scrollbar,
 .soundclips_container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
 .users_container ul,
+.drum_selector_container ul,
 .soundclips_container ul {
   display: flex;
   flex-direction: column;

@@ -1,4 +1,8 @@
 {
   "svg.preview.background": "black",
-  "cSpell.words": ["soundclipitem", "useritem"]
+  "cSpell.words": [
+    "soundclipitem",
+    "useritem"
+  ],
+  "workbench.panel.defaultLocation": "right"
 }

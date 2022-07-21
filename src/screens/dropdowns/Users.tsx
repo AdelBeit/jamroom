@@ -35,6 +35,7 @@ const Users = () => {
   //       setInput(msg);
   //     });
   //   };
+  const variant="users";
 
   return (
     // <input
@@ -45,11 +46,11 @@ const Users = () => {
     <div
       className={cs(
         "drop_down_container",
-        dropdown == "users" && "drop",
+        dropdown == variant && "drop",
         styles.users
       )}
     >
-      <List variant="users">
+      <List variant={variant}>
         {users.map((user) => (
           <UserItem username={user.username} instrument={user.instrument} />
         ))}
@@ -58,7 +59,7 @@ const Users = () => {
         <UserItem username="SprinkleDonut11" instrument="drums" />
         <UserItem username="PhoneBooth028" instrument="keys" /> */}
       </List>
-      <Toolbar variant="users" />
+      <Toolbar variant={variant} />
     </div>
   );
 };

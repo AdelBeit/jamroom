@@ -44,6 +44,11 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
       handler = () => useStore.getState().setDropDown(variant);
       break;
     case "keys":
+      handler = () => {
+        useStore.setState(state => ({drumEditMode: false}));
+        useStore.getState().setScreen(variant);
+      };
+      break;
     case "drums":
       handler = () => useStore.getState().setScreen(variant);
       break;

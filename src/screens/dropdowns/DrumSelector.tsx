@@ -2,28 +2,28 @@ import React from "react";
 import { Toolbar } from "../../components/Toolbar";
 import styles from "../../../styles/Layout.module.css";
 import cs from "classnames";
-import { List, SoundClipItem, UserItem } from "../../components/List";
+import { List, SoundClipItem } from "../../components/List";
 import { useStore } from "../../utils/useStore";
+import soundFiles from "../../utils/data/soundFiles";
+
 
 function DrumSelector() {
   const dropdown = useStore((state) => state.selectedDropDown);
+  const selectedDrum = useStore((state) => state.selectedDrumToEdit);
+  const variant = "drum_selector";
 
   return (
     <div
       className={cs(
         "drop_down_container",
-        dropdown == "drum_selector" && "drop",
+        dropdown == variant && "drop",
         styles.drum_selector
       )}
     >
-      <List variant="drum_selector">
-        <SoundClipItem clipName="ShoeStore2321" />
-        <SoundClipItem clipName="SprinkleDonut11" />
-        <SoundClipItem clipName="SprinkleDonut11" />
-        <SoundClipItem clipName="SprinkleDonut11" />
-        <SoundClipItem clipName="PhoneBooth028" />
+      <List variant={variant}>
+       {soundFiles[selectedDrum].map((sound) => (<SoundClipItem clipName={sound} />))}
       </List>
-      <Toolbar variant="drum_selector" />
+      <Toolbar variant={variant} />
     </div>
   );
 }

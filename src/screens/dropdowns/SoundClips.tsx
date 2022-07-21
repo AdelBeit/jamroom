@@ -20,7 +20,7 @@ const SoundClips = ({ soundClips }: { soundClips: string[] }) => {
     >
       <List variant="soundclips">
         {soundClips.map((soundClip) => (
-          <SoundClipItem clipName={soundClip} button="play" />
+          <SoundClipItem clipName={soundClip}/>
         ))}
       </List>
       <Toolbar variant="soundclips" />
