@@ -2,11 +2,15 @@ import React from "react";
 import icons from "../utils/data/icons";
 import styles from "./Button.module.css";
 import cs from "classnames";
-import { useStore } from "../utils/useStore";
+import { useScreenStore, useSoundStore } from "../utils/stores";
 
 import { ButtonProps } from "../types";
 
-const Button = ({ variant, style = "raised" }: ButtonProps) => {
+const Button = ({
+  variant,
+  handler = () => {},
+  style = "raised",
+}: ButtonProps) => {
   let icon = <img className={styles[variant]} src={icons[variant]} />;
   if (variant == "users") {
     icon = (
@@ -34,35 +38,50 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
     );
   }
 
-  let handler: Function = () => {};
+  const players = useSoundStore.getState().players?.current;
+  const stopSounds = () => {
+    if (players) {
+      players.stopAll();
+    }
+  };
+
+  const playSound = () => {
+    if (players) {
+      players.stopAll();
+    }
+  };
+
   switch (variant) {
     case "back":
-      handler = () => useStore.getState().setDropDown("none");
+      handler = () => useScreenStore.getState().setDropDown("none");
+    case "stop":
+      stopSounds();
       break;
     case "users":
     case "soundclips":
-      handler = () => useStore.getState().setDropDown(variant);
+      handler = () => useScreenStore.getState().setDropDown(variant);
       break;
     case "keys":
       handler = () => {
-        useStore.setState(state => ({drumEditMode: false}));
-        useStore.getState().setScreen(variant);
+        useSoundStore.setState({ drumEditMode: false });
+        useScreenStore.getState().setScreen(variant);
       };
       break;
     case "drums":
-      handler = () => useStore.getState().setScreen(variant);
+      handler = () => useScreenStore.getState().setScreen(variant);
       break;
     case "drum_selector":
-      handler = useStore.getState().toggleDrumEditMode;
+      handler = useSoundStore.getState().toggleDrumEditMode;
       break;
     case "octave_up":
-      handler = useStore.getState().octaveUp;
+      handler = useSoundStore.getState().octaveUp;
       break;
     case "octave_down":
-      handler = useStore.getState().octaveDown;
+      handler = useSoundStore.getState().octaveDown;
       break;
 
     default:
+      break;
   }
 
   return (

@@ -4,9 +4,22 @@ import styles from "./List.module.css";
 import { Button } from "./Button";
 import { DropDown } from "../types";
 
-function ListItem({ children }: { children: JSX.Element }) {
+function ListItem({
+  style = "raised",
+  children,
+}: {
+  style?: "raised" | "castIn";
+  children: JSX.Element;
+}) {
   return (
-    <li className={cs(styles.listitem_container, "neumorphic_mold_raisedUp")}>
+    <li
+      className={cs(
+        styles.listitem_container,
+        style == "raised"
+          ? "neumorphic_mold_raisedUp"
+          : "neumorphic_mold_castIn"
+      )}
+    >
       {children}
     </li>
   );
@@ -29,14 +42,29 @@ function UserItem({
   );
 }
 
-function SoundClipItem({ clipName }: { clipName: string }) {
-  let button: "play" | "stop" = "play";
+function SoundClipItem({
+  variant = "sound_clip",
+  clipName,
+}: {
+  variant?: "drum_sample" | "drum_selected" | "sound_clip";
+  clipName: string;
+}) {
+  let state: "playing" | "stopped" = "stopped";
 
   return (
-    <ListItem>
-      <div className={styles.soundclipitem_container}>
+    <ListItem style={variant == "drum_selected" ? "castIn" : "raised"}>
+      <div
+        className={cs(
+          variant == "sound_clip"
+            ? styles.soundclipitem_container
+            : styles.drumsampleitem_container
+        )}
+      >
         <span className="neumorphic_text">{clipName}</span>
-        <Button variant={button} />
+        {variant == "sound_clip" && (
+          <Button variant={state == "playing" ? "stop" : "play"} />
+        )}
+        {variant == "drum_sample" && <Button variant="select" />}
       </div>
     </ListItem>
   );

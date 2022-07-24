@@ -25,6 +25,7 @@
 }
 
 .useritem_container,
+.drumsampleitem_container,
 .soundclipitem_container {
   display: flex;
   flex-direction: row;
@@ -33,6 +34,7 @@
 }
 
 .useritem_container span,
+.drumsampleitem_container span,
 .soundclipitem_container span {
   margin: auto 0;
 }

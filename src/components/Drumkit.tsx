@@ -1,23 +1,33 @@
 import React from "react";
-import styles from "./Drumpad.module.css";
+import styles from "./Drumkit.module.css";
 import cs from "classnames";
 import icons from "../utils/data/icons";
-import { useStore } from "../utils/useStore";
+import { useSoundStore, useScreenStore } from "../utils/stores";
 import { DrumProps } from "../types";
 
 function Drum({ drumType }: DrumProps) {
-  const editMode = useStore((state) => state.drumEditMode);
+  const editMode = useSoundStore((state) => state.drumEditMode);
+  let [players, drumSounds] = useSoundStore((state) => [
+    state.players,
+    state.drumSounds,
+  ]);
 
-  const handler = () => {
+  const drumHandler = () => {
     if (editMode) {
-      useStore.getState().setDrumToEdit(drumType);
-      useStore.getState().setDropDown("drum_selector");
+      useSoundStore.getState().setDrumToEdit(drumType);
+      useScreenStore.getState().setDropDown("drum_selector");
+      return;
+    }
+
+    if (players) {
+      const soundName = drumSounds[drumType];
+      players.current!.player(soundName).start();
     }
   };
 
   return (
     <div
-      onClick={() => handler()}
+      onClick={() => drumHandler()}
       className={cs(styles.drum_container, styles[drumType])}
     >
       <img className={cs(styles[drumType])} src={icons[drumType]} />
@@ -37,9 +47,9 @@ function Drum({ drumType }: DrumProps) {
   );
 }
 
-function Drumpad() {
+function Drumkit() {
   return (
-    <div className={styles.drumpad_container}>
+    <div className={styles.drumkit_container}>
       <Drum drumType="kick" />
       <Drum drumType="closed_hat" />
       <Drum drumType="hi_hat" />
@@ -49,4 +59,4 @@ function Drumpad() {
   );
 }
 
-export { Drumpad };
+export { Drumkit };

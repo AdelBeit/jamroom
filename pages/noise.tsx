@@ -1,26 +1,26 @@
-import * as Tone from "tone";
-import React from "react";
+import { Players, start } from "tone";
+import React, { MutableRefObject, useEffect, useRef } from "react";
+
+let baseUrl = "./samples/drums/";
 
 const Noise = () => {
-  function playSynth() {
-    const synth = new Tone.MembraneSynth().toDestination();
-    synth.triggerAttackRelease("C2", "8n");
+  const players: MutableRefObject<null | Players> = useRef(null);
 
-    const synthA = new Tone.FMSynth().toDestination();
-    const synthB = new Tone.AMSynth().toDestination();
+  useEffect(() => {
+    players.current = new Players(
+      {
+        kick: baseUrl + "kicks/acoustic_kick.ogg",
+        snare: baseUrl + "snares/acoustic_snare.ogg",
+      },
+      () => {
+        console.log("samples load");
+      }
+    ).toDestination();
+  }, []);
 
-    const loopA = new Tone.Loop((time) => {
-      synthA.triggerAttackRelease("C2", "8n", time);
-    }, "4n").start(0);
-
-    //  const loopB = new Tone.Loop((time) => {
-    //    synthB.triggerAttackRelease("C4", "8n", time);
-    //  }, "4n").start("8n");
-
-    Tone.Transport.start();
-    console.log(Tone.Transport.bpm.value);
-    Tone.Transport.bpm.rampTo(200, 10);
-  }
+  const drumHandler = (instrument) => {
+    players.current?.player(instrument).start();
+  };
 
   return (
     <div
@@ -38,31 +38,26 @@ const Noise = () => {
       <button
         style={{ height: "20px", width: "100px" }}
         id="button"
-        onClick={playSynth}
+        onClick={() => start()}
       >
-        click me
+        start context
+      </button>
+      <button
+        style={{ height: "20px", width: "100px" }}
+        id="button"
+        onClick={() => drumHandler("snare")}
+      >
+        snare
+      </button>
+      <button
+        style={{ height: "20px", width: "100px" }}
+        id="button"
+        onClick={() => drumHandler("kick")}
+      >
+        kick
       </button>
     </div>
   );
 };
 
 export default Noise;
-
-// let loopBeat;
-// let bassSynth;
-
-// function setup(){
-
-//    bassSynth = new Tone.MembraneSynth().toDestination();
-
-//    Tone.Transport.bpm.value = 140;
-
-//    loopBeat = new Tone.Loop(song, '4n');
-//    Tone.Transport.start();
-//    loopBeat.start(0);
-// }
-
-// function song(time){
-//    bassSynth.triggerAttackRelease('c1', '8n', time);
-//    console.log(time)
-// }

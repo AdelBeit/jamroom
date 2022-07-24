@@ -17,6 +17,7 @@ const icons: { [key: string]: string } = {
   play: "./icons/play.svg",
   stop: "./icons/stop.svg",
   mold_castIn: "./icons/neumorphic_mold_cast_in.svg",
-  mold_raisedUp: "./icons/neumorphic_mold_raised_up.svg",
+  mold_raisedUp: "./icons/neumorphic_mold_raised.svg",
+  select: "./icons/star_cast_in.svg",
 };
 export default icons;

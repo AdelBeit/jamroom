@@ -3,13 +3,15 @@ import { Toolbar } from "../../components/Toolbar";
 import styles from "../../../styles/Layout.module.css";
 import cs from "classnames";
 import { List, SoundClipItem } from "../../components/List";
-import { useStore } from "../../utils/useStore";
+import { useScreenStore, useSoundStore } from "../../utils/stores";
 import soundFiles from "../../utils/data/soundFiles";
 
-
 function DrumSelector() {
-  const dropdown = useStore((state) => state.selectedDropDown);
-  const selectedDrum = useStore((state) => state.selectedDrumToEdit);
+  const dropdown = useScreenStore((state) => state.selectedDropDown);
+  const [selectedDrum, selectedSample] = useSoundStore((state) => [
+    state.selectedDrumToEdit,
+    state.drumSounds[state.selectedDrumToEdit],
+  ]);
   const variant = "drum_selector";
 
   return (
@@ -21,7 +23,14 @@ function DrumSelector() {
       )}
     >
       <List variant={variant}>
-       {soundFiles[selectedDrum].map((sound) => (<SoundClipItem clipName={sound} />))}
+        {soundFiles[selectedDrum].map((sound) => (
+          <SoundClipItem
+            variant={
+              sound[0] == selectedSample ? "drum_selected" : "drum_sample"
+            }
+            clipName={sound[0]}
+          />
+        ))}
       </List>
       <Toolbar variant={variant} />
     </div>

@@ -4,13 +4,13 @@ import { Toolbar } from "../../components/Toolbar";
 import styles from "../../../styles/Layout.module.css";
 import cs from "classnames";
 import { List, UserItem } from "../../components/List";
-import { useStore } from "../../utils/useStore";
+import { useScreenStore } from "../../utils/stores";
 import users from "../../utils/data/users";
 
 // let socket: Socket;
 
 const Users = () => {
-  const dropdown = useStore((state) => state.selectedDropDown);
+  const dropdown = useScreenStore((state) => state.selectedDropDown);
 
   //   useEffect(() => {
   //     socketInitializer();
@@ -35,7 +35,7 @@ const Users = () => {
   //       setInput(msg);
   //     });
   //   };
-  const variant="users";
+  const variant = "users";
 
   return (
     // <input

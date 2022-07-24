@@ -5,10 +5,10 @@ import { Toolbar } from "../../components/Toolbar";
 import styles from "../../../styles/Layout.module.css";
 import cs from "classnames";
 import { List, SoundClipItem } from "../../components/List";
-import { useStore } from "../../utils/useStore";
+import { useScreenStore } from "../../utils/stores";
 
 const SoundClips = ({ soundClips }: { soundClips: string[] }) => {
-  const dropdown = useStore((state) => state.selectedDropDown);
+  const dropdown = useScreenStore((state) => state.selectedDropDown);
 
   return (
     <div
@@ -20,7 +20,7 @@ const SoundClips = ({ soundClips }: { soundClips: string[] }) => {
     >
       <List variant="soundclips">
         {soundClips.map((soundClip) => (
-          <SoundClipItem clipName={soundClip}/>
+          <SoundClipItem clipName={soundClip} />
         ))}
       </List>
       <Toolbar variant="soundclips" />
