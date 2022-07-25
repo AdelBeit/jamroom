@@ -17,7 +17,7 @@ function Toolbar({ variant }: ToolBarProps) {
   );
 }
 
-Toolbar.Keyboard = () => {
+Toolbar.Keyboard = function () {
   const buttons: ButtonVariants[] = [
     "users",
     "octave_down",
@@ -35,7 +35,7 @@ Toolbar.Keyboard = () => {
   );
 };
 
-Toolbar.Drumkit = () => {
+Toolbar.Drumkit = function () {
   const buttons: ButtonVariants[] = [
     "users",
     "soundclips",
@@ -52,7 +52,7 @@ Toolbar.Drumkit = () => {
   );
 };
 
-Toolbar.Users = () => {
+Toolbar.Users = function () {
   let userCount = 3;
   let roomCode = "AbC232";
   return (
