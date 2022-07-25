@@ -1,21 +1,15 @@
-.users_container,
-.drum_selector_container,
-.soundclips_container {
+.list_container {
   overflow-y: scroll;
   padding-left: 25px;
 
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
-.users_container::-webkit-scrollbar,
-.drum_selector_container::-webkit-scrollbar,
-.soundclips_container::-webkit-scrollbar {
+.list_container::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
-.users_container ul,
-.drum_selector_container ul,
-.soundclips_container ul {
+.list_container ul {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,17 +18,13 @@
   padding-right: 20px;
 }
 
-.useritem_container,
-.drumsampleitem_container,
-.soundclipitem_container {
+.item_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 15px 30px;
 }
 
-.useritem_container span,
-.drumsampleitem_container span,
-.soundclipitem_container span {
+.item_container span {
   margin: auto 0;
 }

@@ -2,17 +2,21 @@ import React from "react";
 import cs from "classnames";
 import styles from "./List.module.css";
 import { Button } from "./Button";
-import { DropDown } from "../types";
+import { DropDown, SoundClipType } from "../types";
+import { useSoundStore } from "../utils/stores";
 
 function ListItem({
   style = "raised",
+  handler = () => {},
   children,
 }: {
   style?: "raised" | "castIn";
+  handler?(): void;
   children: JSX.Element;
 }) {
   return (
     <li
+      onClick={handler}
       className={cs(
         styles.listitem_container,
         style == "raised"
@@ -34,7 +38,7 @@ function UserItem({
 }) {
   return (
     <ListItem>
-      <div className={styles.useritem_container}>
+      <div className={cs(styles.item_container, styles.user)}>
         <span className="neumorphic_text">{username}</span>
         <Button variant={instrument} style="raised" />
       </div>
@@ -51,20 +55,36 @@ function SoundClipItem({
 }) {
   let state: "playing" | "stopped" = "stopped";
 
+  const [drums, drumType, players] = useSoundStore((state) => [
+    state.drumSounds,
+    state.selectedDrumToEdit,
+    state.players,
+  ]);
+
+  const handler = () => {
+    if (players) {
+      players.current!.player(clipName).start();
+    }
+    if (variant == "drum_sample") {
+      useSoundStore.setState({
+        drumSounds: { ...drums, [drumType]: clipName },
+      });
+    }
+  };
+
   return (
-    <ListItem style={variant == "drum_selected" ? "castIn" : "raised"}>
-      <div
-        className={cs(
-          variant == "sound_clip"
-            ? styles.soundclipitem_container
-            : styles.drumsampleitem_container
-        )}
-      >
+    <ListItem
+      handler={handler}
+      style={variant == "drum_selected" ? "castIn" : "raised"}
+    >
+      <div className={cs(styles.item_container, styles[variant])}>
         <span className="neumorphic_text">{clipName}</span>
         {variant == "sound_clip" && (
+          // @ts-ignore
           <Button variant={state == "playing" ? "stop" : "play"} />
         )}
         {variant == "drum_sample" && <Button variant="select" />}
+        {variant == "drum_selected" && <Button variant="select" />}
       </div>
     </ListItem>
   );
@@ -78,7 +98,7 @@ function List({
   children: JSX.Element[];
 }) {
   return (
-    <div className={cs(styles[variant + "_container"])}>
+    <div className={cs(styles["list_container"])}>
       <ul>{children}</ul>
     </div>
   );

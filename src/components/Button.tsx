@@ -6,11 +6,7 @@ import { useScreenStore, useSoundStore } from "../utils/stores";
 
 import { ButtonProps } from "../types";
 
-const Button = ({
-  variant,
-  handler = () => {},
-  style = "raised",
-}: ButtonProps) => {
+const Button = ({ variant, style = "raised" }: ButtonProps) => {
   let icon = <img className={styles[variant]} src={icons[variant]} />;
   if (variant == "users") {
     icon = (
@@ -51,6 +47,8 @@ const Button = ({
     }
   };
 
+  let handler = () => {};
+
   switch (variant) {
     case "back":
       handler = () => useScreenStore.getState().setDropDown("none");
@@ -85,8 +83,8 @@ const Button = ({
   }
 
   return (
-    <div onClick={() => handler()} className={cs(styles.button_container)}>
-      {style == "raised" && (
+    <div onClick={handler} className={cs(styles.button_container)}>
+      {variant != "select" && style == "raised" && (
         <img className={styles.mold} src={icons.mold_raisedUp} />
       )}
       {icon}

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { MutableRefObject, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Drums from "../src/screens/Drums";
 import Keys from "../src/screens/Keys";
 import SoundClips from "../src/screens/dropdowns/SoundClips";
@@ -32,6 +32,8 @@ const Page: NextPage = () => {
         allSoundFiles[name] = path;
       })
     );
+
+    console.log(allSoundFiles);
 
     players.current = new Players(allSoundFiles, () => {
       console.log("samples loaded");

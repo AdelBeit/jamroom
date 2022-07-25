@@ -54,10 +54,6 @@ const Users = () => {
         {users.map((user) => (
           <UserItem username={user.username} instrument={user.instrument} />
         ))}
-        {/* <UserItem username="SprinkleDonut11" instrument="drums" />
-        <UserItem username="SprinkleDonut11" instrument="drums" />
-        <UserItem username="SprinkleDonut11" instrument="drums" />
-        <UserItem username="PhoneBooth028" instrument="keys" /> */}
       </List>
       <Toolbar variant={variant} />
     </div>

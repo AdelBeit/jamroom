@@ -7,7 +7,7 @@ import { DrumProps } from "../types";
 
 function Drum({ drumType }: DrumProps) {
   const editMode = useSoundStore((state) => state.drumEditMode);
-  let [players, drumSounds] = useSoundStore((state) => [
+  const [players, drumSounds] = useSoundStore((state) => [
     state.players,
     state.drumSounds,
   ]);
@@ -27,7 +27,7 @@ function Drum({ drumType }: DrumProps) {
 
   return (
     <div
-      onClick={() => drumHandler()}
+      onClick={drumHandler}
       className={cs(styles.drum_container, styles[drumType])}
     >
       <img className={cs(styles[drumType])} src={icons[drumType]} />

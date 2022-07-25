@@ -31,11 +31,6 @@ Toolbar.Keyboard = () => {
       {buttons.map((variant, index) => (
         <Button key={index} variant={variant} />
       ))}
-      {/* <Button variant="users" />
-      <Button variant="octave_down" />
-      <Button variant="octave_up" />
-      <Button variant="soundclips" />
-      <Button variant="drums" /> */}
     </>
   );
 };
@@ -53,10 +48,6 @@ Toolbar.Drumkit = () => {
       {buttons.map((variant, index) => (
         <Button key={index} variant={variant} />
       ))}
-      {/* <Button variant="users" />
-      <Button variant="soundclips" />
-      <Button variant="keys" />
-      <Button variant="drum_selector" /> */}
     </>
   );
 };

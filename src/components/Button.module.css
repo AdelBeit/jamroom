@@ -77,3 +77,7 @@
   width: 60%;
   height: 60%;
 }
+
+.button_container .select {
+  visibility: hidden;
+}
