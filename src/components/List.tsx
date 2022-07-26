@@ -2,8 +2,9 @@ import React from "react";
 import cs from "classnames";
 import styles from "./List.module.css";
 import { Button } from "./Button";
-import { DropDown, SoundClipType } from "../types";
+import { DropDown } from "../types";
 import { useSoundStore } from "../utils/stores";
+import { usePlayers } from "../../pages/home";
 
 function ListItem({
   style = "raised",
@@ -54,17 +55,15 @@ function SoundClipItem({
   clipName: string;
 }) {
   let state: "playing" | "stopped" = "stopped";
+  const players = usePlayers();
 
-  const [drums, drumType, players] = useSoundStore((state) => [
+  const [drums, drumType] = useSoundStore((state) => [
     state.drumSounds,
     state.selectedDrumToEdit,
-    state.players,
   ]);
 
   const handler = () => {
-    if (players) {
-      players.current!.player(clipName).start();
-    }
+    players?.player(clipName).start();
     if (variant == "drum_sample") {
       useSoundStore.setState({
         drumSounds: { ...drums, [drumType]: clipName },

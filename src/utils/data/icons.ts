@@ -1,4 +1,4 @@
-const icons: { [key: string]: string } = {
+const icons: { [iconName: string]: string } = {
   user_left: "./icons/users/user_left.svg",
   user_right: "./icons/users/user_right.svg",
   kick: "./icons/drums/kick.svg",

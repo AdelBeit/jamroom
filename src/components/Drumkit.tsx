@@ -4,13 +4,12 @@ import cs from "classnames";
 import icons from "../utils/data/icons";
 import { useSoundStore, useScreenStore } from "../utils/stores";
 import { DrumProps } from "../types";
+import { socket, usePlayers } from "../../pages/home";
 
 function Drum({ drumType }: DrumProps) {
+  const players = usePlayers();
   const editMode = useSoundStore((state) => state.drumEditMode);
-  const [players, drumSounds] = useSoundStore((state) => [
-    state.players,
-    state.drumSounds,
-  ]);
+  const [drumSounds] = useSoundStore((state) => [state.drumSounds]);
 
   const drumHandler = () => {
     if (editMode) {
@@ -20,15 +19,20 @@ function Drum({ drumType }: DrumProps) {
     }
 
     if (players) {
-      const soundName = drumSounds[drumType];
-      players.current!.player(soundName).start();
+      const clipName = drumSounds[drumType];
+      socket.emit("play-sound", clipName);
+      players.player(clipName).start();
     }
   };
 
   return (
-    <div
+    <button
       onClick={drumHandler}
-      className={cs(styles.drum_container, styles[drumType])}
+      className={cs(
+        styles.unstyled_button,
+        styles.drum_container,
+        styles[drumType]
+      )}
     >
       <img className={cs(styles[drumType])} src={icons[drumType]} />
       {editMode && (
@@ -43,7 +47,7 @@ function Drum({ drumType }: DrumProps) {
           />
         </>
       )}
-    </div>
+    </button>
   );
 }
 

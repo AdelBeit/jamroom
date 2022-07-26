@@ -3,17 +3,17 @@ import styles from "./Keyboard.module.css";
 import cs from "classnames";
 import { KeyProps } from "../types";
 import { useSoundStore } from "../utils/stores";
+import { socket, usePlayers } from "../../pages/home";
 
 function Key({ note }: KeyProps) {
-  const [players, octave] = useSoundStore((state) => [
-    state.players,
-    state.currentOctave,
-  ]);
+  const [octave] = useSoundStore((state) => [state.currentOctave]);
+  const players = usePlayers();
 
   const keyHandler = () => {
     if (players) {
-      const soundName = note.toLowerCase() + octave;
-      players.current!.player(soundName).start();
+      const clipName = note + octave;
+      socket.emit("play-sound", clipName);
+      players.player(clipName).start();
     }
   };
 

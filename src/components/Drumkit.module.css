@@ -53,19 +53,6 @@
   top: 2%;
 }
 
-.button_container img {
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  text-align: center;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  z-index: 2;
-}
-
 .config_drum {
   width: 35%;
   height: 35%;
@@ -75,4 +62,9 @@
   z-index: 3;
   width: 20%;
   height: 20%;
+}
+
+.unstyled_button {
+  border: unset;
+  background-color: unset;
 }

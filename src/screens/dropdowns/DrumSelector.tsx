@@ -4,7 +4,14 @@ import styles from "../../../styles/Layout.module.css";
 import cs from "classnames";
 import { List, SoundClipItem } from "../../components/List";
 import { useScreenStore, useSoundStore } from "../../utils/stores";
-import soundFiles from "../../utils/data/soundFiles";
+import {
+  toms,
+  kicks,
+  snares,
+  hihats,
+  closedhats,
+} from "../../utils/data/soundFiles";
+import { nanoid } from "nanoid";
 
 function DrumSelector() {
   const dropdown = useScreenStore((state) => state.selectedDropDown);
@@ -13,6 +20,14 @@ function DrumSelector() {
     state.drumSounds[state.selectedDrumToEdit],
   ]);
   const variant = "drum_selector";
+
+  const soundFiles = {
+    tom: toms,
+    kick: kicks,
+    snare: snares,
+    hi_hat: hihats,
+    closed_hat: closedhats,
+  };
 
   return (
     <div
@@ -23,12 +38,11 @@ function DrumSelector() {
       )}
     >
       <List variant={variant}>
-        {soundFiles[selectedDrum].map((sound) => (
+        {Object.entries(soundFiles[selectedDrum]).map(([name, path]) => (
           <SoundClipItem
-            variant={
-              sound[0] == selectedSample ? "drum_selected" : "drum_sample"
-            }
-            clipName={sound[0]}
+            key={nanoid()}
+            variant={name == selectedSample ? "drum_selected" : "drum_sample"}
+            clipName={name}
           />
         ))}
       </List>

@@ -34,18 +34,18 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
     );
   }
 
-  const players = useSoundStore.getState().players?.current;
-  const stopSounds = () => {
-    if (players) {
-      players.stopAll();
-    }
-  };
+  // const players = useSoundStore.getState().players?.current;
+  // const stopSounds = () => {
+  //   if (players) {
+  //     players.stopAll();
+  //   }
+  // };
 
-  const playSound = () => {
-    if (players) {
-      players.stopAll();
-    }
-  };
+  // const playSound = () => {
+  //   if (players) {
+  //     players.stopAll();
+  //   }
+  // };
 
   let handler = () => {};
 
@@ -53,7 +53,7 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
     case "back":
       handler = () => useScreenStore.getState().setDropDown("none");
     case "stop":
-      stopSounds();
+      // stopSounds();
       break;
     case "users":
     case "soundclips":

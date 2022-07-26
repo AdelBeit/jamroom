@@ -1,11 +1,9 @@
-import type { NextPage } from "next";
-import { ChangeEvent, useEffect, useState } from "react";
-import io, { Socket } from "socket.io-client";
 import { Toolbar } from "../../components/Toolbar";
 import styles from "../../../styles/Layout.module.css";
 import cs from "classnames";
 import { List, SoundClipItem } from "../../components/List";
 import { useScreenStore } from "../../utils/stores";
+import { nanoid } from "nanoid";
 
 const SoundClips = ({ soundClips }: { soundClips: string[] }) => {
   const dropdown = useScreenStore((state) => state.selectedDropDown);
@@ -20,7 +18,7 @@ const SoundClips = ({ soundClips }: { soundClips: string[] }) => {
     >
       <List variant="soundclips">
         {soundClips.map((soundClip) => (
-          <SoundClipItem clipName={soundClip} />
+          <SoundClipItem key={nanoid()} clipName={soundClip} />
         ))}
       </List>
       <Toolbar variant="soundclips" />

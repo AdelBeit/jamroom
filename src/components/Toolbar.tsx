@@ -4,20 +4,7 @@ import cs from "classnames";
 import { Button } from "./Button";
 import { ButtonVariants, ToolBarProps } from "../types";
 
-function Toolbar({ variant }: ToolBarProps) {
-  return (
-    <div className={cs(styles.toolbar_container, styles[variant])}>
-      {variant == "keys" && <Toolbar.Keyboard />}
-      {variant == "drums" && <Toolbar.Drumkit />}
-      {variant == "users" && <Toolbar.Users />}
-      {(variant == "soundclips" || variant == "drum_selector") && (
-        <Button variant="back" />
-      )}
-    </div>
-  );
-}
-
-Toolbar.Keyboard = function () {
+const Keyboard = () => {
   const buttons: ButtonVariants[] = [
     "users",
     "octave_down",
@@ -35,7 +22,7 @@ Toolbar.Keyboard = function () {
   );
 };
 
-Toolbar.Drumkit = function () {
+const Drumkit = () => {
   const buttons: ButtonVariants[] = [
     "users",
     "soundclips",
@@ -52,7 +39,7 @@ Toolbar.Drumkit = function () {
   );
 };
 
-Toolbar.Users = function () {
+const Users = () => {
   let userCount = 3;
   let roomCode = "AbC232";
   return (
@@ -63,5 +50,18 @@ Toolbar.Users = function () {
     </>
   );
 };
+
+function Toolbar({ variant }: ToolBarProps) {
+  return (
+    <div className={cs(styles.toolbar_container, styles[variant])}>
+      {variant == "keys" && <Keyboard />}
+      {variant == "drums" && <Drumkit />}
+      {variant == "users" && <Users />}
+      {(variant == "soundclips" || variant == "drum_selector") && (
+        <Button variant="back" />
+      )}
+    </div>
+  );
+}
 
 export { Toolbar };

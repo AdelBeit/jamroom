@@ -23,7 +23,7 @@ export interface KeyProps {
 
 export type Instrument = "drums" | "keys";
 
-export type Screen = Instrument;
+export type Screen = Instrument | "start";
 
 export type DropDown = "drum_selector" | "users" | "soundclips";
 
@@ -60,10 +60,6 @@ export interface ToolBarProps {
   variant: Screen | DropDown;
 }
 
-export type Middleware<S extends State> = (
-  config: StateCreator<S>
-) => (set: SetState<S>, get: GetState<S>, api: StoreApi<S>) => S;
-
 export interface ScreenStateStore {
   selectedScreen: Screen;
   selectedDropDown: DropDown | "none";
@@ -71,10 +67,7 @@ export interface ScreenStateStore {
   setDropDown: (selectedDropDown: DropDown | "none") => void;
 }
 
-export type PlayersRef = MutableRefObject<null | Players>;
-
 export interface SoundStateStore {
-  players: PlayersRef | null;
   currentOctave: number;
   drumEditMode: boolean;
   selectedDrumToEdit: DrumType;
@@ -85,7 +78,6 @@ export interface SoundStateStore {
     hi_hat: string;
     closed_hat: string;
   };
-  soundHandler(instrument: DrumType | Note, players: PlayersRef): void;
   setDrumSound(drum: DrumType, soundClip: string): void;
   octaveUp(): void;
   octaveDown(): void;
