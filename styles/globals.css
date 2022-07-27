@@ -86,3 +86,8 @@ li {
   height: var(--height);
   width: var(--width);
 }
+
+/* utilities */
+.HIDE_THIS {
+  visibility: hidden;
+}

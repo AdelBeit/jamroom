@@ -19,6 +19,7 @@ export type Note =
 
 export interface KeyProps {
   note: Note;
+  octave?: Octave;
 }
 
 export type Instrument = "drums" | "keys";
@@ -68,7 +69,7 @@ export interface ScreenStateStore {
 }
 
 export interface SoundStateStore {
-  currentOctave: number;
+  currentOctave: Octave;
   drumEditMode: boolean;
   selectedDrumToEdit: DrumType;
   drumSounds: {

@@ -1,6 +1,6 @@
 import { Toolbar } from "../components/Toolbar";
 import { Keyboard } from "../components/Keyboard";
-import styles from "../../styles/Layout.module.css";
+import styles from "./Screens.module.css";
 import cs from "classnames";
 
 const Keys = () => {

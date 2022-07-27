@@ -1,0 +1,9 @@
+.drums {
+  flex-direction: row;
+  padding-left: 30px;
+}
+
+.drums,
+.keys {
+  z-index: 1;
+}

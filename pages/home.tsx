@@ -4,7 +4,7 @@ import Keys from "../src/screens/Keys";
 import SoundClips from "../src/screens/dropdowns/SoundClips";
 import Users from "../src/screens/dropdowns/Users";
 import DrumSelector from "../src/screens/dropdowns/DrumSelector";
-import { useScreenStore, useSoundStore } from "../src/utils/stores";
+import { useScreenStore } from "../src/utils/stores";
 import { Players } from "tone";
 import soundFiles from "../src/utils/data/soundFiles";
 import { NextPage } from "next";
@@ -27,33 +27,31 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
 
   const startRef = useRef(null);
 
-  useEffect(() => {
-    if (!roomID && router.isReady) {
-      // console.log("joining", roomID, typeof window);
-      router.replace(`/home?roomID=${Date.now()}`, undefined, {
-        shallow: true,
-      });
-    }
-  }, [roomID]);
-
   // TODO: handle opening closing sockets for switching rooms
   useEffect(() => {
+    // create room if it doesn't exist
     if (!roomID) {
+      if (router.isReady) {
+        router.replace(`/home?roomID=${Date.now()}`);
+      }
       return;
     }
+    // start audoContext
     // @ts-ignore
     startRef.current?.click();
+    // load samples
+    // TODO: persist loaded samples
     players.current = new Players(soundFiles, () => {
-      // console.log("samples loaded");
+      // initialize socket connection
       socketInitializer();
     }).toDestination();
   }, [roomID]);
 
   const socketInitializer = async () => {
-    await fetch(`/api/socket?roomID=${roomID}`, {
-      headers: { "x-roomid": roomID as string },
-    });
+    await fetch("/api/socket");
     socket = io();
+
+    socket.emit("create-room", roomID);
 
     socket.on("connect", () => {
       console.log(socket.id, "connected");
@@ -88,25 +86,6 @@ const Page: NextPage = () => {
     "Gothic Atmospheric",
     "Space Drum",
   ];
-  const players = usePlayers();
-
-  useEffect(() => {
-    // socketInitializer();
-  }, []);
-
-  const socketInitializer = async () => {
-    await fetch("/api/socket");
-    socket = io();
-
-    socket.on("connect", () => {
-      console.log(socket.id, "connected");
-    });
-
-    socket.on("sound-played", (clipName) => {
-      console.log(players, "received event");
-      // players?.player(clipName).start();
-    });
-  };
 
   return (
     <PlayersContextProvider>

@@ -1,8 +1,3 @@
-.drums {
-  flex-direction: row;
-  padding-left: 30px;
-}
-
 .users,
 .soundclips,
 .drum_selector {
@@ -13,16 +8,4 @@
   height: 0;
   transition: height 0.3s ease;
   z-index: 10;
-}
-
-.drums,
-.keys {
-  z-index: 1;
-}
-
-.start {
-  visibility: hidden;
-}
-.start button {
-  visibility: hidden;
 }

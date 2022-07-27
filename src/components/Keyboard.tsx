@@ -1,13 +1,15 @@
 import React from "react";
 import styles from "./Keyboard.module.css";
 import cs from "classnames";
-import { KeyProps } from "../types";
+import { KeyProps, Octave } from "../types";
 import { useSoundStore } from "../utils/stores";
 import { socket, usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
 
-function Key({ note }: KeyProps) {
-  const [octave] = useSoundStore((state) => [state.currentOctave]);
+function Key({ note, octave }: KeyProps) {
+  if (!octave) {
+    octave = useSoundStore((state) => state.currentOctave);
+  }
   const players = usePlayers();
   const { roomID } = useRouter().query;
 
@@ -28,6 +30,8 @@ function Key({ note }: KeyProps) {
 }
 
 function Keyboard() {
+  const currentOctave = useSoundStore((state) => state.currentOctave);
+  const nextOctave = Math.min(Math.max(1, currentOctave + 1), 7) as Octave;
   return (
     <div className={styles.keyboard_container}>
       <ul className={styles.white_keys}>
@@ -38,7 +42,9 @@ function Keyboard() {
         <Key note={"G"} />
         <Key note={"A"} />
         <Key note={"B"} />
-        <Key note={"C"} />
+        <div className={cs(currentOctave == 7 ? "HIDE_THIS" : "")}>
+          <Key note={"C"} octave={nextOctave} />
+        </div>
       </ul>
       <ul className={styles.black_keys}>
         <Key note={"Cs"} />

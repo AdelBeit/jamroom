@@ -6,8 +6,10 @@ import {
   DrumType,
   ScreenStateStore,
   SoundStateStore,
+  Octave,
 } from "../types";
 
+// TODO: persist configs
 export const useScreenStore = create<ScreenStateStore>()(
   devtools((set) => ({
     selectedScreen: "start",
@@ -32,11 +34,11 @@ export const useSoundStore = create<SoundStateStore>()(
     },
     octaveUp: () =>
       set((state) => ({
-        currentOctave: Math.min(state.currentOctave + 1, 7),
+        currentOctave: Math.min(state.currentOctave + 1, 7) as Octave,
       })),
     octaveDown: () =>
       set((state) => ({
-        currentOctave: Math.max(state.currentOctave - 1, 1),
+        currentOctave: Math.max(state.currentOctave - 1, 1) as Octave,
       })),
     toggleDrumEditMode: () =>
       set((state) => ({ drumEditMode: !state.drumEditMode })),

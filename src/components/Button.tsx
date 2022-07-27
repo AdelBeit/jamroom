@@ -34,6 +34,7 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
     );
   }
 
+  // TODO: play and stop for loops
   // const players = useSoundStore.getState().players?.current;
   // const stopSounds = () => {
   //   if (players) {
