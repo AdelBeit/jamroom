@@ -7,8 +7,9 @@ import { socket, usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
 
 function Key({ note, octave }: KeyProps) {
+  const currentOctave = useSoundStore((state) => state.currentOctave);
   if (!octave) {
-    octave = useSoundStore((state) => state.currentOctave);
+    octave = currentOctave;
   }
   const players = usePlayers();
   const { roomID } = useRouter().query;
