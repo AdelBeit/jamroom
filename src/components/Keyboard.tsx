@@ -4,15 +4,17 @@ import cs from "classnames";
 import { KeyProps } from "../types";
 import { useSoundStore } from "../utils/stores";
 import { socket, usePlayers } from "../../pages/home";
+import { useRouter } from "next/router";
 
 function Key({ note }: KeyProps) {
   const [octave] = useSoundStore((state) => [state.currentOctave]);
   const players = usePlayers();
+  const { roomID } = useRouter().query;
 
   const keyHandler = () => {
     if (players) {
       const clipName = note + octave;
-      socket.emit("play-sound", clipName);
+      socket.emit("play-sound", clipName, roomID);
       players.player(clipName).start();
     }
   };
