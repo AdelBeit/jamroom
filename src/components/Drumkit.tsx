@@ -5,11 +5,13 @@ import icons from "../utils/data/icons";
 import { useSoundStore, useScreenStore } from "../utils/stores";
 import { DrumProps } from "../types";
 import { socket, usePlayers } from "../../pages/home";
+import { useRouter } from "next/router";
 
 function Drum({ drumType }: DrumProps) {
   const players = usePlayers();
   const editMode = useSoundStore((state) => state.drumEditMode);
   const [drumSounds] = useSoundStore((state) => [state.drumSounds]);
+  const { roomID } = useRouter().query;
 
   const drumHandler = () => {
     if (editMode) {
@@ -20,7 +22,7 @@ function Drum({ drumType }: DrumProps) {
 
     if (players) {
       const clipName = drumSounds[drumType];
-      socket.emit("play-sound", clipName);
+      socket.emit("play-sound", clipName, roomID);
       players.player(clipName).start();
     }
   };
