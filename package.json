@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:start": "next start -p 8080"
   },
   "dependencies": {
     "classnames": "^2.3.1",

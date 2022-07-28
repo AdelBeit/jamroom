@@ -30,13 +30,11 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
   // TODO: handle opening closing sockets for switching rooms
   useEffect(() => {
     // create room if it doesn't exist
-    if (!roomID) {
-      if (router.isReady) {
-        router.replace(`/home?roomID=${Date.now()}`);
-      }
-      return;
+    if (!roomID && router.isReady) {
+      router.replace(`/home?roomID=${Date.now()}`);
     }
-    // start audoContext
+    if (!roomID) return;
+    // start audioContext
     // @ts-ignore
     startRef.current?.click();
     // load samples

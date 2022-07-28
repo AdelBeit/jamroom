@@ -5,6 +5,7 @@ import { List, SoundClipItem } from "../../components/List";
 import { useScreenStore } from "../../utils/stores";
 import { nanoid } from "nanoid";
 
+// TODO: overhaul
 const SoundClips = ({ soundClips }: { soundClips: string[] }) => {
   const dropdown = useScreenStore((state) => state.selectedDropDown);
 
