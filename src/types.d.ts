@@ -85,3 +85,16 @@ export interface SoundStateStore {
   setDrumToEdit(drum: DrumType): void;
   toggleDrumEditMode(): void;
 }
+
+export type User = {
+  id: string,
+  volume: number,
+  setVolume(volume): void;
+}
+export interface UserStateStore {
+  roomID: string,
+  users: { [userID: User.id]: User };
+  setRoomID(roomID: string): void;
+  addUser(user: User): void;
+  removeUser(user: User): void;
+}

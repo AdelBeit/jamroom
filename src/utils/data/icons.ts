@@ -11,7 +11,7 @@ const icons: { [iconName: string]: string } = {
   octave_up: "./icons/octave_up.svg",
   octave_down: "./icons/octave_down.svg",
   soundclips: "./icons/music_note.svg",
-  back: "./icons/previous_arrow.svg",
+  back: "./icons/up_arrow.svg",
   cog_inner: "./icons/cog/cog_inner.svg",
   cog_outer: "./icons/cog/cog_outer.svg",
   play: "./icons/play.svg",

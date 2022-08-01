@@ -13,7 +13,7 @@ import {
 } from "../../utils/data/soundFiles";
 import { nanoid } from "nanoid";
 
-function DrumSelector() {
+const DrumSelector = () => {
   const dropdown = useScreenStore((state) => state.selectedDropDown);
   const [selectedDrum, selectedSample] = useSoundStore((state) => [
     state.selectedDrumToEdit,
@@ -49,6 +49,6 @@ function DrumSelector() {
       <Toolbar variant={variant} />
     </div>
   );
-}
+};
 
 export default DrumSelector;

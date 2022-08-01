@@ -6,7 +6,7 @@ import { DropDown } from "../types";
 import { useSoundStore } from "../utils/stores";
 import { usePlayers } from "../../pages/home";
 
-function ListItem({
+const ListItem = ({
   style = "raised",
   handler = () => {},
   children,
@@ -14,7 +14,7 @@ function ListItem({
   style?: "raised" | "castIn";
   handler?(): void;
   children: JSX.Element;
-}) {
+}) => {
   return (
     <li
       onClick={handler}
@@ -28,15 +28,15 @@ function ListItem({
       {children}
     </li>
   );
-}
+};
 
-function UserItem({
+const UserItem = ({
   username,
   instrument,
 }: {
   username: string;
   instrument: "keys" | "drums";
-}) {
+}) => {
   return (
     <ListItem>
       <div className={cs(styles.item_container, styles.user)}>
@@ -45,15 +45,15 @@ function UserItem({
       </div>
     </ListItem>
   );
-}
+};
 
-function SoundClipItem({
+const SoundClipItem = ({
   variant = "sound_clip",
   clipName,
 }: {
   variant?: "drum_sample" | "drum_selected" | "sound_clip";
   clipName: string;
-}) {
+}) => {
   let state: "playing" | "stopped" = "stopped";
   const players = usePlayers();
 
@@ -87,20 +87,20 @@ function SoundClipItem({
       </div>
     </ListItem>
   );
-}
+};
 
-function List({
+const List = ({
   variant,
   children,
 }: {
   variant: DropDown;
   children: JSX.Element[];
-}) {
+}) => {
   return (
     <div className={cs(styles["list_container"])}>
       <ul>{children}</ul>
     </div>
   );
-}
+};
 
 export { List, UserItem, SoundClipItem };

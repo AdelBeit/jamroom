@@ -7,7 +7,22 @@ import {
   ScreenStateStore,
   SoundStateStore,
   Octave,
+  UserStateStore,
+  User,
 } from "../types";
+
+// TODO: store roomid (context or store?)
+
+export const useUserStore = create<UserStateStore>()(
+  devtools((set) => ({
+    roomID: "",
+    users: {},
+    addUser: (user: User) => set((state) => ({ users: { ...state.users, user } })),
+    // TODO: whats the method that removes key from object
+    removeUser: (user: User) => set((state) => ({ users: {} })),
+    setRoomID: (roomID: string) => set({ roomID }),
+  }))
+)
 
 // TODO: persist configs
 export const useScreenStore = create<ScreenStateStore>()(
@@ -20,6 +35,8 @@ export const useScreenStore = create<ScreenStateStore>()(
   }))
 );
 
+
+// TODO: keep track of volume, allow changing volume per soundplayer
 export const useSoundStore = create<SoundStateStore>()(
   devtools((set) => ({
     currentOctave: 4,

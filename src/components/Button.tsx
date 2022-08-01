@@ -3,50 +3,44 @@ import icons from "../utils/data/icons";
 import styles from "./Button.module.css";
 import cs from "classnames";
 import { useScreenStore, useSoundStore } from "../utils/stores";
-
 import { ButtonProps } from "../types";
 
+const Users = () => (
+  <>
+    <img className={cs(styles.users, styles.right)} src={icons.user_right} />
+    <img className={cs(styles.users, styles.left)} src={icons.user_left} />
+  </>
+);
+
+const DrumSelector = () => (
+  <>
+    <img
+      className={cs(styles.outer, styles.drum_selector)}
+      src={icons.cog_outer}
+    />
+    <img
+      className={cs(styles.inner, styles.drum_selector)}
+      src={icons.cog_inner}
+    />
+  </>
+);
+
+// TEST: use button tags instead of div
 const Button = ({ variant, style = "raised" }: ButtonProps) => {
-  let icon = <img className={styles[variant]} src={icons[variant]} />;
-  if (variant == "users") {
-    icon = (
-      <>
-        <img
-          className={cs(styles.users, styles.right)}
-          src={icons.user_right}
-        />
-        <img className={cs(styles.users, styles.left)} src={icons.user_left} />
-      </>
-    );
-  }
-  if (variant == "drum_selector") {
-    icon = (
-      <>
-        <img
-          className={cs(styles.outer, styles.drum_selector)}
-          src={icons.cog_outer}
-        />
-        <img
-          className={cs(styles.inner, styles.drum_selector)}
-          src={icons.cog_inner}
-        />
-      </>
-    );
+  let icon;
+  switch (variant) {
+    case "users":
+      icon = <Users />;
+      break;
+    case "drum_selector":
+      icon = <DrumSelector />;
+      break;
+    default:
+      icon = <img className={styles[variant]} src={icons[variant]} />;
+      break;
   }
 
   // TODO: play and stop for loops
-  // const players = useSoundStore.getState().players?.current;
-  // const stopSounds = () => {
-  //   if (players) {
-  //     players.stopAll();
-  //   }
-  // };
-
-  // const playSound = () => {
-  //   if (players) {
-  //     players.stopAll();
-  //   }
-  // };
 
   let handler = () => {};
 
@@ -78,18 +72,20 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
     case "octave_down":
       handler = useSoundStore.getState().octaveDown;
       break;
-
     default:
       break;
   }
 
   return (
-    <div onClick={handler} className={cs(styles.button_container)}>
+    <button
+      onClick={handler}
+      className={cs("UNSTYLE_BUTTON", styles.button, styles[variant])}
+    >
       {variant != "select" && style == "raised" && (
         <img className={styles.mold} src={icons.mold_raisedUp} />
       )}
       {icon}
-    </div>
+    </button>
   );
 };
 

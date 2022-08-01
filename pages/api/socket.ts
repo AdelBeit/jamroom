@@ -20,6 +20,10 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
       socket.on("play-sound", (clipName: string, roomID: string) => {
         socket.to(roomID).emit("sound-played", clipName);
       });
+
+      socket.on('leave-room', (roomID: string) => {
+        socket.leave(roomID);
+      });
     });
   }
 

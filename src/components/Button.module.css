@@ -1,10 +1,10 @@
-.button_container {
+.button {
   width: 45px;
   height: 45px;
   position: relative;
 }
 
-.button_container img {
+.button img {
   position: absolute;
   width: 80%;
   height: 80%;
@@ -17,67 +17,72 @@
   z-index: 2;
 }
 
-.button_container .mold {
+.button .mold {
   width: 140%;
   height: 140%;
   left: -20%;
   z-index: 1;
 }
 
-.button_container .users {
+.button .users {
   width: 55%;
   height: 55%;
 }
-.button_container .users.right {
+.button .users.right {
   left: 14px;
   bottom: 1px;
 }
-.button_container .users.left {
+.button .users.left {
   right: 14px;
 }
 
-.button_container .drum_selector {
+.button .drum_selector {
   width: 80%;
   height: 80%;
 }
 
-.button_container .drum_selector.inner {
+.button .drum_selector.inner {
   z-index: 3;
   width: 40%;
   height: 40%;
 }
 
-.button_container .keys {
+.button .keys {
   width: 75%;
   height: 75%;
 }
 
-.button_container .octave_up {
+.button .octave_up {
   width: 75%;
   height: 75%;
 }
 
-.button_container .octave_down {
+.button .octave_down {
   width: 80%;
   height: 80%;
 }
 
-.button_container .soundclips {
+.button .soundclips {
   width: 70%;
   height: 70%;
   right: 5px;
 }
 
-.button_container .play {
+.button .play {
   width: 60%;
   height: 60%;
   left: 2px;
 }
-.button_container .stop {
+.button .stop {
   width: 60%;
   height: 60%;
 }
 
-.button_container .select {
+.button .select {
   visibility: hidden;
+}
+
+.button.back{
+  height: 77px;
+  width: 800px;
 }

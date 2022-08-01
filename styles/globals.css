@@ -91,3 +91,45 @@ li {
 .HIDE_THIS {
   visibility: hidden;
 }
+
+
+.UNSTYLE_BUTTON {
+  border: unset;
+  background-color: unset;
+}
+
+
+/* Buttons styles start */
+.UNSTYLE_BUTTON {
+  display: unset;
+  border: unset;
+  padding: unset;
+  margin: unset;
+  text-decoration: unset;
+  background-color:unset;
+  color: inherit;
+  font-family: unset;
+  font-size: unset;
+  line-height: unset;
+  cursor: pointer;
+  text-align: unset;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  transition:unset;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.UNSTYLE_BUTTON:hover,
+.UNSTYLE_BUTTON:focus {
+  background: default;
+}
+
+.UNSTYLE_BUTTON:focus {
+  outline: unset;
+  outline-offset: unset;
+}
+
+.UNSTYLE_BUTTON:active {
+  transform: unset;
+}
+/* Button styles end */

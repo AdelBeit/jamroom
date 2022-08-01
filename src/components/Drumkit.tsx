@@ -7,7 +7,7 @@ import { DrumProps } from "../types";
 import { socket, usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
 
-function Drum({ drumType }: DrumProps) {
+const Drum = ({ drumType }: DrumProps) => {
   const players = usePlayers();
   const editMode = useSoundStore((state) => state.drumEditMode);
   const [drumSounds] = useSoundStore((state) => [state.drumSounds]);
@@ -30,11 +30,7 @@ function Drum({ drumType }: DrumProps) {
   return (
     <button
       onClick={drumHandler}
-      className={cs(
-        styles.unstyled_button,
-        styles.drum_container,
-        styles[drumType]
-      )}
+      className={cs("UNSTYLE_BUTTON", styles.drum_container, styles[drumType])}
     >
       <img className={cs(styles[drumType])} src={icons[drumType]} />
       {editMode && (
@@ -51,9 +47,9 @@ function Drum({ drumType }: DrumProps) {
       )}
     </button>
   );
-}
+};
 
-function Drumkit() {
+const Drumkit = () => {
   return (
     <div className={styles.drumkit_container}>
       <Drum drumType="kick" />
@@ -63,6 +59,6 @@ function Drumkit() {
       <Drum drumType="tom" />
     </div>
   );
-}
+};
 
 export { Drumkit };

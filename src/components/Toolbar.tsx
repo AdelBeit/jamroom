@@ -40,18 +40,14 @@ const Drumkit = () => {
 };
 
 const Users = () => {
-  let userCount = 3;
-  let roomCode = "AbC232";
   return (
     <>
       <Button variant="back" />
-      <span className="neumorphic_text">{userCount}/3 Jammers</span>
-      <span className="neumorphic_text">Room#{roomCode}</span>
     </>
   );
 };
 
-function Toolbar({ variant }: ToolBarProps) {
+const Toolbar = ({ variant }: ToolBarProps) => {
   return (
     <div className={cs(styles.toolbar_container, styles[variant])}>
       {variant == "keys" && <Keyboard />}
@@ -62,6 +58,6 @@ function Toolbar({ variant }: ToolBarProps) {
       )}
     </div>
   );
-}
+};
 
 export { Toolbar };

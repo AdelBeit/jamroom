@@ -1,4 +1,4 @@
-const baseURL = (instrument) => {
+export const baseURL = (instrument) => {
   switch (instrument) {
     case "toms":
     case "tom":
@@ -29,4 +29,3 @@ const baseURL = (instrument) => {
       break;
   }
 };
-export { baseURL };

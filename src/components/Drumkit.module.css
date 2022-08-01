@@ -63,8 +63,3 @@
   width: 20%;
   height: 20%;
 }
-
-.unstyled_button {
-  border: unset;
-  background-color: unset;
-}
