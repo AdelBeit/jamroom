@@ -65,8 +65,8 @@ const KeyboardTemplate = ({ octave }: { octave: Octave }) => {
 
   return (
     <div className={styles.keyboard_template_container}>
-      {NOTES.map((note) => (
-        <Key note={note} octave={octave} />
+      {NOTES.map((note, index) => (
+        <Key key={index} note={note} octave={octave} />
       ))}
     </div>
   );
@@ -83,7 +83,7 @@ const Keyboard = () => {
   return (
     <div className={styles.keyboard_container}>
       {[...Array(7)].map((v, index) => (
-        <KeyboardTemplate octave={(index + 1) as Octave} />
+        <KeyboardTemplate key={index} octave={(index + 1) as Octave} />
       ))}
     </div>
   );
