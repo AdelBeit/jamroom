@@ -7,7 +7,7 @@
   box-sizing: border-box;
   display:flex;
   flex-wrap: nowrap;
-  overflow-x:hidden;
+  overflow-x:scroll;
   text-align: center;
   padding:10px 20px;
   padding-bottom: 0;
@@ -99,7 +99,6 @@
   padding: 0;
   position: relative;
 }
-
 
 .white.key {
   width: 97px;

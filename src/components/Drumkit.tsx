@@ -30,6 +30,7 @@ const Drum = ({ drumType }: DrumProps) => {
   return (
     <button
       onClick={drumHandler}
+      onTouchEnd={drumHandler}
       className={cs("UNSTYLE_BUTTON", styles.drum_container, styles[drumType])}
     >
       <img className={cs(styles[drumType])} src={icons[drumType]} />

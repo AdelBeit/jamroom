@@ -14,7 +14,7 @@ const Key = ({ note, octave }: KeyProps) => {
   const players = usePlayers();
   const { roomID } = useRouter().query;
 
-  // TODO: multi touch support
+  // TEST: multi touch support
   const keyHandler = () => {
     if (players) {
       const clipName = note + octave;
@@ -23,9 +23,9 @@ const Key = ({ note, octave }: KeyProps) => {
     }
   };
 
-  // TEST: convert li element to button element
   return (
     <button
+      onTouchEnd={keyHandler}
       onClick={keyHandler}
       className={cs(
         "UNSTYLE_BUTTON",
@@ -48,27 +48,26 @@ const Key = ({ note, octave }: KeyProps) => {
 };
 
 const KeyboardTemplate = ({ octave }: { octave: Octave }) => {
-  const NOTES = {
-    CDE: ["C", "Cs", "D", "Ds", "E"],
-    FGAB: ["F", "Fs", "G", "Gs", "A", "As", "B"],
-  };
+  const NOTES = [
+    "C",
+    "Cs",
+    "D",
+    "Ds",
+    "E",
+    "F",
+    "Fs",
+    "G",
+    "Gs",
+    "A",
+    "As",
+    "B",
+  ] as Note[];
+
   return (
     <div className={styles.keyboard_template_container}>
-      {/* <div className={styles.keys_CDE}>
-        {NOTES["CDE"].map((note) => (
-          <Key note={note as Note} octave={octave} />
-        ))}
-        </div>
-        <div className={styles.keys_FGAB}>
-        {NOTES["FGAB"].map((note) => (
-          <Key note={note as Note} octave={octave} />
-        ))} 
-          </div> */}
-      {["C", "Cs", "D", "Ds", "E", "F", "Fs", "G", "Gs", "A", "As", "B"].map(
-        (note) => (
-          <Key note={note as Note} octave={octave} />
-        )
-      )}
+      {NOTES.map((note) => (
+        <Key note={note} octave={octave} />
+      ))}
     </div>
   );
 };
@@ -78,7 +77,9 @@ const Keyboard = () => {
   const nextOctave = Math.min(Math.max(1, currentOctave + 1), 7) as Octave;
   // TODO: redo keyboard layout to a continuous repetition of two groups: [C CS D DS E], [F FS G GS A AS B]
   // TODO: allow swiping/dragging left and right on the keyboard to go up and down the octaves
-
+  // TODO: make a custom scroll bar for the keyboard
+  // TODO: hide elements partially overflowing in the keyboard
+  // TODO: animate keys as they enter and leave viewport of parent
   return (
     <div className={styles.keyboard_container}>
       {[...Array(7)].map((v, index) => (
