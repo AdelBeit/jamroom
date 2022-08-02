@@ -38,7 +38,7 @@ const DrumSelector = () => {
       )}
     >
       <List variant={variant}>
-        {Object.entries(soundFiles[selectedDrum]).map(([name, path]) => (
+        {Object.keys(soundFiles[selectedDrum]).map((name) => (
           <SoundClipItem
             key={nanoid()}
             variant={name == selectedSample ? "drum_selected" : "drum_sample"}

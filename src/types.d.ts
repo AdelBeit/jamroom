@@ -89,12 +89,16 @@ export interface SoundStateStore {
 export type User = {
   id: string,
   volume: number,
-  setVolume(volume): void;
+  instrument: Instrument,
+  setVolume(volume: User['volume']): void;
+  setInstrument(instrument: Instrument): void;
 }
+
 export interface UserStateStore {
   roomID: string,
-  users: { [userID: User.id]: User };
-  setRoomID(roomID: string): void;
-  addUser(user: User): void;
-  removeUser(user: User): void;
+  users: { [userID: User['id']]: User };
+  setRoomID(roomID: UserStateStore['roomID']): void;
+  addUser(id: User['id'], instrument: Instrument, volume?: User['volume']): void;
+  removeUser(id: User['id']): void;
+  setUserInstrument(id: User['id'], instrument: Instrument): void;
 }

@@ -8,19 +8,48 @@ import {
   SoundStateStore,
   Octave,
   UserStateStore,
-  User,
+  User as UserType,
+  Instrument,
 } from "../types";
 
 // TODO: store roomid (context or store?)
+
+class User {
+  id: UserType['id'];
+  volume: UserType['volume'];
+  instrument: Instrument;
+
+  constructor(id, instrument, volume = 100) {
+    this.id = id;
+    this.instrument = instrument;
+    this.volume = volume;
+  }
+
+  setVolume(volume) {
+    this.volume = volume;
+  }
+
+  setInstrument(instrument) {
+    this.instrument = instrument
+  }
+}
 
 export const useUserStore = create<UserStateStore>()(
   devtools((set) => ({
     roomID: "",
     users: {},
-    addUser: (user: User) => set((state) => ({ users: { ...state.users, user } })),
-    // TODO: whats the method that removes key from object
-    removeUser: (user: User) => set((state) => ({ users: {} })),
-    setRoomID: (roomID: string) => set({ roomID }),
+    addUser: (id, instrument, volume = 100,) => set((state) => ({ users: { ...state.users, [id]: new User(id, instrument, volume) } })),
+    removeUser: (id) => set((state) => {
+      const newUsers = { ...state.users }
+      delete newUsers[id];
+      return ({ ...newUsers })
+    }),
+    setRoomID: (roomID) => set({ roomID }),
+    setUserInstrument: (id, instrument) => set((state) => {
+      const user = { ...state.users.id };
+      user.setInstrument(instrument);
+      return ({ ...state.users, [id]: user })
+    })
   }))
 )
 

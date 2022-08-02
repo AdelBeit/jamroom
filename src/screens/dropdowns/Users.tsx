@@ -2,14 +2,20 @@ import { Toolbar } from "../../components/Toolbar";
 import styles from "./DropDown.module.css";
 import cs from "classnames";
 import { List, UserItem } from "../../components/List";
-import { useScreenStore } from "../../utils/stores";
+import { useScreenStore, useUserStore } from "../../utils/stores";
 import users from "../../utils/data/users";
 import { nanoid } from "nanoid";
 
 // TODO: overhaul
+// leave button socket
+// player joined
+// player changed instrument
+// show list of players
+// add players by inviting them, copy invite code with button
+// kick players
 const Users = () => {
   const dropdown = useScreenStore((state) => state.selectedDropDown);
-
+  const users = useUserStore((state) => state.users);
   const variant = "users";
 
   return (
@@ -21,11 +27,11 @@ const Users = () => {
       )}
     >
       <List variant={variant}>
-        {users.map((user) => (
+        {Object.keys(users).map((user) => (
           <UserItem
             key={nanoid()}
-            username={user.username}
-            instrument={user.instrument}
+            username={users[user].id}
+            instrument={users[user].instrument}
           />
         ))}
       </List>

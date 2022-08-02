@@ -4,12 +4,14 @@ import Keys from "../src/screens/Keys";
 import SoundClips from "../src/screens/dropdowns/SoundClips";
 import Users from "../src/screens/dropdowns/Users";
 import DrumSelector from "../src/screens/dropdowns/DrumSelector";
-import { useScreenStore } from "../src/utils/stores";
+import { useScreenStore, useUserStore } from "../src/utils/stores";
 import { Players } from "tone";
 import soundFiles from "../src/utils/data/soundFiles";
 import { NextPage } from "next";
 import io, { Socket } from "socket.io-client";
 import { useRouter } from "next/router";
+import { Instrument, User } from "../src/types";
+import { generateName } from "../src/utils/utils";
 
 export let socket: Socket;
 // TODO: extract context into it's own file
@@ -21,6 +23,15 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
   const { roomID } = router.query;
   const screen = useScreenStore((state) => state.selectedScreen);
   const startButton = useRef(null);
+  const [addUser, removeUser, setUserInstrument, setRoomID] = useUserStore(
+    (state) => [
+      state.addUser,
+      state.removeUser,
+      state.setUserInstrument,
+      state.setRoomID,
+    ]
+  );
+  const userID = generateName();
 
   const handler = () => {
     useScreenStore.getState().setScreen("keys");
@@ -42,10 +53,19 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     await fetch("/api/socket");
     socket = io();
 
-    socket.emit("create-room", roomID);
+    socket.emit("join-room", roomID, userID, "keys");
 
     socket.on("connect", () => {
       console.log(socket.id, "connected");
+    });
+
+    // TEST: keep track of users joining and leaving
+    socket.on("player-joined", (userID: User["id"], instrument: Instrument) => {
+      addUser(userID, instrument, 100);
+    });
+
+    socket.on("player-left", (userID: User["id"]) => {
+      removeUser(userID);
     });
 
     socket.on("sound-played", (clipName) => {
@@ -54,11 +74,14 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
       players?.current?.player(clipName).start();
     });
 
-    // TODO: keep track of users joining and leaving
-    socket.on("player-joined", (userID: string) => {});
+    socket.on(
+      "instrument-changed",
+      (userID: User["id"], instrument: Instrument) => {
+        setUserInstrument(userID, instrument);
+      }
+    );
   };
 
-  // TODO: handle opening closing sockets for switching rooms
   useEffect(() => {
     // create room if it doesn't exist
     if (!roomID && router.isReady) {

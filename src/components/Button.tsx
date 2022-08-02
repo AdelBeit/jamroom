@@ -4,6 +4,7 @@ import styles from "./Button.module.css";
 import cs from "classnames";
 import { useScreenStore, useSoundStore } from "../utils/stores";
 import { ButtonProps } from "../types";
+import { socket } from "../../pages/home";
 
 const Users = () => (
   <>
@@ -58,10 +59,14 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
       handler = () => {
         useSoundStore.setState({ drumEditMode: false });
         useScreenStore.getState().setScreen(variant);
+        socket.emit("change-instrument", "keys");
       };
       break;
     case "drums":
-      handler = () => useScreenStore.getState().setScreen(variant);
+      handler = () => {
+        useScreenStore.getState().setScreen(variant);
+        socket.emit("change-instrument", "drums");
+      };
       break;
     case "drum_selector":
       handler = useSoundStore.getState().toggleDrumEditMode;
