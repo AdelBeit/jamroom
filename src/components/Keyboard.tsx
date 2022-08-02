@@ -14,7 +14,6 @@ const Key = ({ note, octave }: KeyProps) => {
   const players = usePlayers();
   const { roomID } = useRouter().query;
 
-  // TEST: multi touch support
   const keyHandler = () => {
     if (players) {
       const clipName = note + octave;
@@ -27,6 +26,7 @@ const Key = ({ note, octave }: KeyProps) => {
     <button
       onTouchEnd={keyHandler}
       onClick={keyHandler}
+      id={note + octave}
       className={cs(
         "UNSTYLE_BUTTON",
         "neumorphic_mold_raisedUp",
