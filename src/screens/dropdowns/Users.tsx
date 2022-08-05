@@ -30,8 +30,8 @@ const Users = () => {
         {Object.keys(users).map((user) => (
           <UserItem
             key={nanoid()}
-            username={users[user].id}
-            instrument={users[user].instrument}
+            userID={users[user][0]}
+            instrument={users[user][1]}
           />
         ))}
       </List>

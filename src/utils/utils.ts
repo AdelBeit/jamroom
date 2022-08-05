@@ -1,6 +1,6 @@
 export const generateName = () => {
   const adjectives = [
-    'tidy', 'glistening', 'ubiquitous', 'rustic', 'nutritious', 'tangible', 'competent', 'dizzy', 'organic', 'tall', 'chief', 'nebulous', 'quaint', 'loquacious', 'nervous'
+    'tidy', 'glistening', 'ubiquitous', 'rustic', 'nutritious', 'tangible', 'competent', 'dizzy', 'organic', 'tall', "upstanding", 'chief', 'nebulous', 'quaint', 'loquacious', 'nervous'
   ];
   const nouns = [
     'smile', 'plant', 'wrench', 'cow', 'yam', 'llama', 'egg', 'chandellier', 'fish', 'jello', 'cabbage', 'circle', 'square', 'shelf', 'bucket'

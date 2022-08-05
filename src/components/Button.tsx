@@ -2,9 +2,9 @@ import React from "react";
 import icons from "../utils/data/icons";
 import styles from "./Button.module.css";
 import cs from "classnames";
-import { useScreenStore, useSoundStore } from "../utils/stores";
+import { useScreenStore, useSoundStore, useUserStore } from "../utils/stores";
 import { ButtonProps } from "../types";
-import { socket } from "../../pages/home";
+import { socket } from "../utils/socketClient";
 
 const Users = () => (
   <>
@@ -44,8 +44,11 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
   // TODO: play and stop for loops
 
   let handler = () => {};
+  const roomID = useUserStore((state) => state.roomID);
 
   switch (variant) {
+    case "leave":
+      break;
     case "back":
       handler = () => useScreenStore.getState().setDropDown("none");
     case "stop":
@@ -53,30 +56,27 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
       break;
     case "users":
     case "soundclips":
-      handler = () => useScreenStore.getState().setDropDown(variant);
+      handler = () => {
+        useScreenStore.getState().setDropDown(variant);
+      };
       break;
     case "keys":
       handler = () => {
         useSoundStore.setState({ drumEditMode: false });
         useScreenStore.getState().setScreen(variant);
-        socket.emit("change-instrument", "keys");
+        socket.emit("change-instrument", "keys", roomID);
       };
       break;
     case "drums":
       handler = () => {
         useScreenStore.getState().setScreen(variant);
-        socket.emit("change-instrument", "drums");
+        socket.emit("change-instrument", "drums", roomID);
       };
       break;
     case "drum_selector":
       handler = useSoundStore.getState().toggleDrumEditMode;
       break;
-    case "octave_up":
-      handler = useSoundStore.getState().octaveUp;
-      break;
-    case "octave_down":
-      handler = useSoundStore.getState().octaveDown;
-      break;
+
     default:
       break;
   }

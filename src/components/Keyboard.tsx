@@ -3,8 +3,9 @@ import styles from "./Keyboard.module.css";
 import cs from "classnames";
 import { KeyProps, Note, Octave } from "../types";
 import { useSoundStore } from "../utils/stores";
-import { socket, usePlayers } from "../../pages/home";
+import { usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
+import { socket } from "../utils/socketClient";
 
 const Key = ({ note, octave }: KeyProps) => {
   const currentOctave = useSoundStore((state) => state.currentOctave);

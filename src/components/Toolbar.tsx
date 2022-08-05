@@ -5,13 +5,7 @@ import { Button } from "./Button";
 import { ButtonVariants, ToolBarProps } from "../types";
 
 const Keyboard = () => {
-  const buttons: ButtonVariants[] = [
-    "users",
-    "octave_down",
-    "octave_up",
-    "soundclips",
-    "drums",
-  ];
+  const buttons: ButtonVariants[] = ["users", "soundclips", "drums"];
 
   return (
     <>

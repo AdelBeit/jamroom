@@ -2,45 +2,53 @@ import React from "react";
 import cs from "classnames";
 import styles from "./List.module.css";
 import { Button } from "./Button";
-import { DropDown } from "../types";
-import { useSoundStore } from "../utils/stores";
+import { DropDown, User } from "../types";
+import { useSoundStore, useUserStore } from "../utils/stores";
 import { usePlayers } from "../../pages/home";
 
+// TODO: overhaul with buttons
 const ListItem = ({
   style = "raised",
   handler = () => {},
+  classes = "",
   children,
 }: {
   style?: "raised" | "castIn";
   handler?(): void;
+  classes?: string | string[];
   children: JSX.Element;
 }) => {
   return (
-    <li
+    <button
       onClick={handler}
       className={cs(
-        styles.listitem_container,
+        styles.item_container,
         style == "raised"
           ? "neumorphic_mold_raisedUp"
-          : "neumorphic_mold_castIn"
+          : "neumorphic_mold_castIn",
+        classes && classes
       )}
     >
       {children}
-    </li>
+    </button>
   );
 };
 
 const UserItem = ({
-  username,
+  userID,
   instrument,
 }: {
-  username: string;
-  instrument: "keys" | "drums";
+  userID: User["id"];
+  instrument: User["instrument"];
 }) => {
+  const primaryUser = useUserStore((state) => state.userID) == userID;
   return (
-    <ListItem>
-      <div className={cs(styles.item_container, styles.user)}>
-        <span className="neumorphic_text">{username}</span>
+    <ListItem classes={primaryUser ? styles.primary : ""}>
+      <div className={styles.user}>
+        <Button variant="leave" style="raised" />
+        <span className={cs(primaryUser && styles.primary, "neumorphic_text")}>
+          {userID}
+        </span>
         <Button variant={instrument} style="raised" />
       </div>
     </ListItem>
@@ -76,7 +84,7 @@ const SoundClipItem = ({
       handler={handler}
       style={variant == "drum_selected" ? "castIn" : "raised"}
     >
-      <div className={cs(styles.item_container, styles[variant])}>
+      <div className={styles[variant]}>
         <span className="neumorphic_text">{clipName}</span>
         {variant == "sound_clip" && (
           // @ts-ignore
@@ -96,11 +104,7 @@ const List = ({
   variant: DropDown;
   children: JSX.Element[];
 }) => {
-  return (
-    <div className={cs(styles["list_container"])}>
-      <ul>{children}</ul>
-    </div>
-  );
+  return <div className={cs(styles["list_container"])}>{children}</div>;
 };
 
 export { List, UserItem, SoundClipItem };

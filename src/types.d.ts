@@ -35,7 +35,7 @@ export type Actions =
   | "play"
   | "stop"
   | "select"
-  | "exit_room"
+  | "leave"
   | "kick_user"
   | "add_user"
   | "drum_selector";
@@ -80,8 +80,6 @@ export interface SoundStateStore {
     closed_hat: string;
   };
   setDrumSound(drum: DrumType, soundClip: string): void;
-  octaveUp(): void;
-  octaveDown(): void;
   setDrumToEdit(drum: DrumType): void;
   toggleDrumEditMode(): void;
 }
@@ -96,9 +94,10 @@ export type User = {
 
 export interface UserStateStore {
   roomID: string,
+  userID: User['id'],
   users: { [userID: User['id']]: User };
   setRoomID(roomID: UserStateStore['roomID']): void;
-  addUser(id: User['id'], instrument: Instrument, volume?: User['volume']): void;
-  removeUser(id: User['id']): void;
-  setUserInstrument(id: User['id'], instrument: Instrument): void;
+  setUsers(users: { [id: User['id']]: User }): void;
+  setUserID(userID: User['id']): void;
 }
+

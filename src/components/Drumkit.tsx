@@ -4,8 +4,9 @@ import cs from "classnames";
 import icons from "../utils/data/icons";
 import { useSoundStore, useScreenStore } from "../utils/stores";
 import { DrumProps } from "../types";
-import { socket, usePlayers } from "../../pages/home";
+import { usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
+import { socket } from "../utils/socketClient";
 
 const Drum = ({ drumType }: DrumProps) => {
   const players = usePlayers();

@@ -6,50 +6,17 @@ import {
   DrumType,
   ScreenStateStore,
   SoundStateStore,
-  Octave,
   UserStateStore,
-  User as UserType,
-  Instrument,
 } from "../types";
-
-// TODO: store roomid (context or store?)
-
-class User {
-  id: UserType['id'];
-  volume: UserType['volume'];
-  instrument: Instrument;
-
-  constructor(id, instrument, volume = 100) {
-    this.id = id;
-    this.instrument = instrument;
-    this.volume = volume;
-  }
-
-  setVolume(volume) {
-    this.volume = volume;
-  }
-
-  setInstrument(instrument) {
-    this.instrument = instrument
-  }
-}
 
 export const useUserStore = create<UserStateStore>()(
   devtools((set) => ({
     roomID: "",
+    userID: "",
     users: {},
-    addUser: (id, instrument, volume = 100,) => set((state) => ({ users: { ...state.users, [id]: new User(id, instrument, volume) } })),
-    removeUser: (id) => set((state) => {
-      const newUsers = { ...state.users }
-      delete newUsers[id];
-      return ({ ...newUsers })
-    }),
-    setRoomID: (roomID) => set({ roomID }),
-    setUserInstrument: (id, instrument) => set((state) => {
-      const user = { ...state.users.id };
-      user.setInstrument(instrument);
-      return ({ ...state.users, [id]: user })
-    })
+    setRoomID: roomID => set({ roomID }),
+    setUsers: users => set(({ users })),
+    setUserID: userID => set(({ userID })),
   }))
 )
 
@@ -78,14 +45,6 @@ export const useSoundStore = create<SoundStateStore>()(
       hi_hat: "house hihats",
       closed_hat: "closed hat 2",
     },
-    octaveUp: () =>
-      set((state) => ({
-        currentOctave: Math.min(state.currentOctave + 1, 7) as Octave,
-      })),
-    octaveDown: () =>
-      set((state) => ({
-        currentOctave: Math.max(state.currentOctave - 1, 1) as Octave,
-      })),
     toggleDrumEditMode: () =>
       set((state) => ({ drumEditMode: !state.drumEditMode })),
     setDrumToEdit: (selectedDrumToEdit: DrumType) =>

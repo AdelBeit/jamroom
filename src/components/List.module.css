@@ -4,18 +4,17 @@
 
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
-}
-.list_container::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
 
-.list_container ul {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 8px;
   padding: 5px 0;
   padding-right: 20px;
+}
+
+.list_container::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 .item_container {
@@ -27,4 +26,9 @@
 
 .item_container span {
   margin: auto 0;
+}
+
+.primary{
+  color:green;
+  order: -1;
 }
