@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./Toolbar.module.css";
 import cs from "classnames";
 import { Button } from "./Button";
-import { ButtonVariants, ToolBarProps } from "../types";
+import { ButtonVariant, ToolBarProps } from "../types";
 
 const Keyboard = () => {
-  const buttons: ButtonVariants[] = ["users", "soundclips", "drums"];
+  const buttons: ButtonVariant[] = ["users", "soundclips", "drums"];
 
   return (
     <>
@@ -17,7 +17,7 @@ const Keyboard = () => {
 };
 
 const Drumkit = () => {
-  const buttons: ButtonVariants[] = [
+  const buttons: ButtonVariant[] = [
     "users",
     "soundclips",
     "keys",
@@ -39,6 +39,25 @@ const Users = () => {
       <Button variant="back" />
     </>
   );
+};
+
+const Debug = () => {
+  const buttons = [
+    "keys",
+    "drums",
+    "users",
+    "soundclips",
+    "back",
+    "play",
+    "stop",
+    "select",
+    "leave",
+    "kick_user",
+    "add_user",
+    "drum_selector",
+  ];
+  const buttonss = buttons.map((b) => <Button variant={b as ButtonVariant} />);
+  return <>{buttonss}</>;
 };
 
 const Toolbar = ({ variant }: ToolBarProps) => {

@@ -29,8 +29,6 @@ export type Screen = Instrument | "start";
 export type DropDown = "drum_selector" | "users" | "soundclips";
 
 export type Actions =
-  | "octave_up"
-  | "octave_down"
   | "back"
   | "play"
   | "stop"
@@ -42,10 +40,10 @@ export type Actions =
 
 export type ButtonStyle = "raised" | "inset";
 
-export type ButtonVariants = Actions | Screen | DropDown;
+export type ButtonVariant = Actions | Exclude<Screen, 'start'> | DropDown;
 
 export interface ButtonProps {
-  variant: ButtonVariants;
+  variant: ButtonVariant;
   style?: ButtonStyle;
 }
 

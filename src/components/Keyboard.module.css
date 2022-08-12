@@ -14,14 +14,6 @@
   gap: var(--column-gap);
 }
 
-.key{
-  grid-row: 1/1;
-  background-color:var(--background-color);
-  border-radius: 20px;
-}
-.key.white{
-  border-radius:30px;
-}
 
 .keyboard_template_container{
   width: 100%;
@@ -32,6 +24,16 @@
   grid-template-rows: 0;
   column-gap:var(--column-gap);
   margin: auto;
+}
+
+.key{
+  grid-row: 1/1;
+  background-color:var(--background-color);
+  border-radius: 20px;
+}
+
+.key.white{
+  border-radius:30px;
 }
 
 .key.black{

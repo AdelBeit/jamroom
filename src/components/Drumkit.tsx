@@ -7,6 +7,7 @@ import { DrumProps } from "../types";
 import { usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
+import LoadImage, { placeholder } from "../utils/LoadImage";
 
 const Drum = ({ drumType }: DrumProps) => {
   const players = usePlayers();
@@ -35,14 +36,20 @@ const Drum = ({ drumType }: DrumProps) => {
       id={drumType}
       className={cs("UNSTYLE_BUTTON", styles.drum_container, styles[drumType])}
     >
-      <img className={cs(styles[drumType])} src={icons[drumType]} />
+      <LoadImage
+        placeholder={placeholder}
+        className={cs(styles[drumType])}
+        src={icons[drumType]}
+      />{" "}
       {editMode && (
         <>
-          <img
+          <LoadImage
+            placeholder={placeholder}
             className={cs(styles.outer, styles.config_drum)}
             src={icons.cog_outer}
           />
-          <img
+          <LoadImage
+            placeholder={placeholder}
             className={cs(styles.inner, styles.config_drum)}
             src={icons.cog_inner}
           />

@@ -1,41 +1,62 @@
 .button {
-  width: 45px;
-  height: 45px;
-  position: relative;
+  width: 75px;
+  height: 75px;
+  margin: auto auto -30px -10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
 }
 
-.button img {
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  text-align: center;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
+.button > div{
+  margin: -25% -25% -25% -25%;
+  grid-column-start: 2;
+  width: 85%;
   z-index: 2;
 }
 
-.button .mold {
-  width: 140%;
-  height: 140%;
-  left: -20%;
+.button > div span{
+  right: 121%;
+  top: 15px;
+}
+
+.button .mold{
+  grid-column-start: 1;
   z-index: 1;
+  width: 150%;
+}
+.button .mold span{
+  left: 0;
+  top: 0;
 }
 
-.button .users {
-  width: 55%;
-  height: 55%;
-}
-.button .users.right {
-  left: 14px;
-  bottom: 1px;
-}
-.button .users.left {
-  right: 14px;
+.button .users_icon {
+  width: 120%;
+  --user-icon-left: -150%;
+  --user-icon-gap: -32%;
+  --user-icon-top: 75%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 'left right';
 }
 
+.button .right{
+  grid-area: right;
+}
+.button .right span{
+  left: calc(var(--user-icon-left) + var(--user-icon-gap));
+  top: var(--user-icon-top);
+}
+
+.button .left{
+  grid-area: left;
+}
+.button .left span{
+  left: var(--user-icon-left);
+  top: var(--user-icon-top);
+}
+
+/*
 .button .drum_selector {
   width: 80%;
   height: 80%;
@@ -52,14 +73,10 @@
   height: 75%;
 }
 
-.button .octave_up {
-  width: 75%;
-  height: 75%;
-}
-
-.button .octave_down {
-  width: 80%;
-  height: 80%;
+.button .drums {
+  width: 85%;
+  height: 85%;
+  left: -150%;
 }
 
 .button .soundclips {
@@ -85,4 +102,4 @@
 .button.back{
   height: 77px;
   width: 800px;
-}
+} */

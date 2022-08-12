@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "./Keyboard.module.css";
 import cs from "classnames";
-import { KeyProps, Note, Octave } from "../types";
+import { ButtonVariant, KeyProps, Note, Octave } from "../types";
 import { useSoundStore } from "../utils/stores";
 import { usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
+import { Button } from "./Button";
 
 const Key = ({ note, octave }: KeyProps) => {
   const currentOctave = useSoundStore((state) => state.currentOctave);
@@ -81,6 +82,7 @@ const Keyboard = () => {
   // TODO: make a custom scroll bar for the keyboard
   // TODO: hide elements partially overflowing in the keyboard
   // TODO: animate keys as they enter and leave viewport of parent
+  // return;
   return (
     <div className={styles.keyboard_container}>
       {[...Array(7)].map((v, index) => (
