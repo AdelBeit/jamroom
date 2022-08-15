@@ -26,18 +26,18 @@ const Users = () => {
 
 const DrumSelector = () => {
   return (
-    <>
+    <div className={cs(styles.cog_icon)}>
       <LoadImage
         placeholder={placeholder}
-        className={cs(styles.Image, styles.outer, styles.drum_selector)}
+        className={cs(styles.inner)}
+        src={icons.cog_inner}
+      />
+      <LoadImage
+        placeholder={placeholder}
+        className={cs(styles.outer)}
         src={icons.cog_outer}
       />
-      <LoadImage
-        placeholder={placeholder}
-        className={cs(styles.Image, styles.inner, styles.drum_selector)}
-        src={icons.user_left}
-      />
-    </>
+    </div>
   );
 };
 
@@ -54,7 +54,7 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
       icon = (
         <LoadImage
           placeholder={placeholder}
-          className={cs(styles.Image, styles[variant])}
+          className={cs(styles[variant])}
           src={icons[variant]}
         />
       );
@@ -62,7 +62,6 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
   }
 
   // TODO: play and stop for loops
-
   let handler = () => {};
   const roomID = useUserStore((state) => state.roomID);
 
@@ -105,8 +104,8 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
     <button
       onClick={handler}
       className={cs(
-        styles.Image,
         "UNSTYLE_BUTTON",
+        style == "plain" && "neumorphic_mold_raisedUp",
         styles.button,
         styles[variant]
       )}
@@ -114,7 +113,7 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
       {variant != "select" && style == "raised" && (
         <LoadImage
           placeholder={placeholder}
-          className={cs(styles.Image, styles.mold)}
+          className={cs(styles.mold)}
           src={icons["mold_raisedUp"]}
         />
       )}

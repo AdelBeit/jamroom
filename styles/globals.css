@@ -67,8 +67,8 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;
-  padding: 20px;
+  padding: 10px 15px;
+  gap:10px;
   height: var(--height);
   width: var(--width);
 }

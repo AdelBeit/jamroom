@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border: red 1px solid;
 }
 
 
@@ -13,16 +12,18 @@
   padding: 20px 0;
 }
 
-.users,
-.drum_selector,
+.users,.drum_selector,
 .soundclips {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   padding: 0 60px;
   padding-left: 45px;
   padding-bottom: 20px;
 }
+
+.users{
+  padding:0;
+  height: 100px;
+}
+
 
 .users *,
 .drum_selector *,

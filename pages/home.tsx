@@ -117,7 +117,7 @@ const Page: NextPage = () => {
       {screen == "drums" && <Drums />}
       <Users />
       {/* <SoundClips soundClips={soundClips} /> */}
-      {/* <DrumSelector /> */}
+      <DrumSelector />
     </PlayersContextProvider>
   );
 };

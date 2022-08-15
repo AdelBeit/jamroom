@@ -1,16 +1,14 @@
 .list_container {
   overflow-y: scroll;
-  padding-left: 25px;
-
+  padding: 5px 15px;
+  
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 8px;
-  padding: 5px 0;
-  padding-right: 20px;
 }
 
 .list_container::-webkit-scrollbar {
@@ -22,10 +20,27 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 15px 30px;
+  column-gap: 15px;
 }
 
-.item_container span {
+.item_container .icon{
+  position:relative;
+  width: 41px;
+  height: 41px;
+  flex-grow:0;
+}
+
+.item_container .icon:nth-child(1){
+  order: 1;
+}
+.item_container span{
+  text-align:left;
   margin: auto 0;
+  order: 2;
+  flex-grow:1;
+}
+.item_container .icon:nth-child(3){
+  order: 3;
 }
 
 .primary{

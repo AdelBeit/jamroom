@@ -44,6 +44,7 @@ const DrumSelector = () => {
             variant={name == selectedSample ? "drum_selected" : "drum_sample"}
             clipName={name}
           />
+          // <></>
         ))}
       </List>
       <Toolbar variant={variant} />

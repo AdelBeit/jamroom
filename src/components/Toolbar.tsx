@@ -36,7 +36,7 @@ const Drumkit = () => {
 const Users = () => {
   return (
     <>
-      <Button variant="back" />
+      <Button style="plain" variant="back" />
     </>
   );
 };

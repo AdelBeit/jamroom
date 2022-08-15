@@ -38,7 +38,7 @@ export type Actions =
   | "add_user"
   | "drum_selector";
 
-export type ButtonStyle = "raised" | "inset";
+export type ButtonStyle = "raised" | "inset" | 'plain';
 
 export type ButtonVariant = Actions | Exclude<Screen, 'start'> | DropDown;
 

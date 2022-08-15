@@ -1,59 +1,81 @@
-.button {
+.button{
+  position:relative;
   width: 75px;
   height: 75px;
-  margin: auto auto -30px -10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
 }
 
-.button > div{
-  margin: -25% -25% -25% -25%;
-  grid-column-start: 2;
-  width: 85%;
+/* .button > .Image > image [ span > img]  */
+.button > div, .icon > div{
+  position:absolute;
   z-index: 2;
+  width: 55%;
+  height: 55%;
+  top: 22%;
+  left: 20%;
 }
 
-.button > div span{
-  right: 121%;
-  top: 15px;
+.button > div span, .icon > div span{
+  position:absolute;
 }
 
 .button .mold{
-  grid-column-start: 1;
-  z-index: 1;
-  width: 150%;
-}
-.button .mold span{
-  left: 0;
+  width: 100%;
+  height: 100%;
   top: 0;
+  left: 0;
 }
 
-.button .users_icon {
-  width: 120%;
-  --user-icon-left: -150%;
-  --user-icon-gap: -32%;
-  --user-icon-top: 75%;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-areas: 'left right';
+.button .plain{
+  
 }
 
-.button .right{
-  grid-area: right;
-}
-.button .right span{
-  left: calc(var(--user-icon-left) + var(--user-icon-gap));
-  top: var(--user-icon-top);
+.button .users_icon{
+  position:absolute;
+  top: 32%;
+  left: 17%;
+  width: 40%;
+  height: 40%;
 }
 
-.button .left{
-  grid-area: left;
+.button .users_icon > div{
+  position:absolute;
+  width: 100%;
+  height: 100%;
 }
-.button .left span{
-  left: var(--user-icon-left);
-  top: var(--user-icon-top);
+
+.button .users_icon .left{
+  top:0;
+  left:0;
+}
+.button .users_icon .right{
+  left:65%;
+}
+
+.button.back{
+  width: 100%;
+  height: 100%;
+}
+
+
+/* cog icon */
+.button .cog_icon{
+  position:absolute;
+  left:16%;
+  top:19%;
+}
+
+.button .cog_icon > div{
+  position:absolute;
+  width: 80%;
+  height:80%;
+}
+
+.button .cog_icon .inner{
+  width: 40%;
+  height:40%;
+  left:20%;
+  top:20%;
+  z-index:3;  
 }
 
 /*
