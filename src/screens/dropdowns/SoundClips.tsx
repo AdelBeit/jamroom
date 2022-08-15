@@ -8,21 +8,23 @@ import { nanoid } from "nanoid";
 // TODO: overhaul
 const SoundClips = ({ soundClips }: { soundClips: string[] }) => {
   const dropdown = useScreenStore((state) => state.selectedDropDown);
+  const variant = "soundclips";
 
   return (
     <div
       className={cs(
-        "drop_down_container",
-        dropdown == "soundclips" && "drop",
-        styles.soundclips
+        "dropdown_container",
+        dropdown == variant && "drop",
+        styles.soundclips,
+        styles.container
       )}
     >
-      <List variant="soundclips">
+      <List variant={variant}>
         {soundClips.map((soundClip) => (
           <SoundClipItem key={nanoid()} clipName={soundClip} />
         ))}
       </List>
-      <Toolbar variant="soundclips" />
+      <Toolbar variant="dropdown" />
     </div>
   );
 };

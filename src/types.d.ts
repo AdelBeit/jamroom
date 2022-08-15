@@ -56,7 +56,7 @@ export interface DrumProps {
 }
 
 export interface ToolBarProps {
-  variant: Screen | DropDown;
+  variant: Screen | "dropdown";
 }
 
 export interface ScreenStateStore {

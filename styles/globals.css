@@ -62,7 +62,7 @@ a {
 }
 
 .page_container,
-.drop_down_container {
+.dropdown_container {
   background-color: var(--background-color);
   display: flex;
   flex-direction: column;
@@ -73,7 +73,7 @@ a {
   width: var(--width);
 }
 
-.drop_down_container {
+.dropdown_container {
   height: 0;
 }
 
@@ -82,7 +82,7 @@ li {
 }
 
 /* animations */
-.drop_down_container.drop {
+.dropdown_container.drop {
   height: var(--height);
   width: var(--width);
 }

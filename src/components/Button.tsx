@@ -24,9 +24,9 @@ const Users = () => {
   );
 };
 
-const DrumSelector = () => {
+const DrumConfig = ({ classes = "" }) => {
   return (
-    <div className={cs(styles.cog_icon)}>
+    <div className={cs(styles.cog_icon, classes)}>
       <LoadImage
         placeholder={placeholder}
         className={cs(styles.inner)}
@@ -48,7 +48,7 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
       icon = <Users />;
       break;
     case "drum_selector":
-      icon = <DrumSelector />;
+      icon = <DrumConfig />;
       break;
     default:
       icon = (
@@ -122,4 +122,4 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
   );
 };
 
-export { Button };
+export { Button, DrumConfig };

@@ -8,6 +8,7 @@ import { usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
 import LoadImage, { placeholder } from "../utils/LoadImage";
+import { DrumConfig } from "./Button";
 
 const Drum = ({ drumType }: DrumProps) => {
   const players = usePlayers();
@@ -38,23 +39,10 @@ const Drum = ({ drumType }: DrumProps) => {
     >
       <LoadImage
         placeholder={placeholder}
-        className={cs(styles[drumType])}
+        className={cs(styles.pad)}
         src={icons[drumType]}
       />{" "}
-      {editMode && (
-        <>
-          <LoadImage
-            placeholder={placeholder}
-            className={cs(styles.outer, styles.config_drum)}
-            src={icons.cog_outer}
-          />
-          <LoadImage
-            placeholder={placeholder}
-            className={cs(styles.inner, styles.config_drum)}
-            src={icons.cog_inner}
-          />
-        </>
-      )}
+      {editMode && <DrumConfig classes={styles.config} />}
     </button>
   );
 };

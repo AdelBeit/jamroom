@@ -9,7 +9,7 @@ import { nanoid } from "nanoid";
 // TODO: overhaul
 // leave button socket
 // player joined
-// player changed instrument
+// CHECK: player changed instrument
 // show list of players
 // add players by inviting them, copy invite code with button
 // kick players
@@ -21,9 +21,10 @@ const Users = () => {
   return (
     <div
       className={cs(
-        "drop_down_container",
+        "dropdown_container",
         dropdown == variant && "drop",
-        styles.users
+        styles.users,
+        styles.container
       )}
     >
       <List variant={variant}>
@@ -35,7 +36,7 @@ const Users = () => {
           />
         ))}
       </List>
-      <Toolbar variant={variant} />
+      <Toolbar variant="dropdown" />
     </div>
   );
 };

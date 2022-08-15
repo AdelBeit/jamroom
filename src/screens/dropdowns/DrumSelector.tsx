@@ -32,9 +32,10 @@ const DrumSelector = () => {
   return (
     <div
       className={cs(
-        "drop_down_container",
+        "dropdown_container",
         dropdown == variant && "drop",
-        styles.drum_selector
+        styles.drum_selector,
+        styles.container
       )}
     >
       <List variant={variant}>
@@ -47,7 +48,7 @@ const DrumSelector = () => {
           // <></>
         ))}
       </List>
-      <Toolbar variant={variant} />
+      <Toolbar variant="dropdown" />
     </div>
   );
 };

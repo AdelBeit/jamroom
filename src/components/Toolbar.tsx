@@ -33,14 +33,6 @@ const Drumkit = () => {
   );
 };
 
-const Users = () => {
-  return (
-    <>
-      <Button style="plain" variant="back" />
-    </>
-  );
-};
-
 const Debug = () => {
   const buttons = [
     "keys",
@@ -60,15 +52,20 @@ const Debug = () => {
   return <>{buttonss}</>;
 };
 
+const Back = () => {
+  return (
+    <>
+      <Button style="plain" variant="back" />
+    </>
+  );
+};
+
 const Toolbar = ({ variant }: ToolBarProps) => {
   return (
     <div className={cs(styles.toolbar_container, styles[variant])}>
       {variant == "keys" && <Keyboard />}
       {variant == "drums" && <Drumkit />}
-      {variant == "users" && <Users />}
-      {(variant == "soundclips" || variant == "drum_selector") && (
-        <Button variant="back" />
-      )}
+      {variant == "dropdown" && <Back />}
     </div>
   );
 };

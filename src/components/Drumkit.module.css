@@ -8,7 +8,7 @@
   position: absolute;
 }
 
-.drum_container Image {
+.drum_container .config {
   position: absolute;
   left: 0;
   right: 0;
@@ -16,6 +16,8 @@
   bottom: 0;
   margin: auto;
   text-align: center;
+  width: 25%;
+  height: 25%;
 }
 
 .kick {
