@@ -30,6 +30,5 @@ export const initSocket = () => {
 //client side cleanup
 export const socketCleanup = () => {
    socket.removeAllListeners().disconnect();
-   // console.log('socket disconnected');
 }
 

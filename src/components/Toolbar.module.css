@@ -4,29 +4,9 @@
   justify-content: space-between;
 }
 
-
 .drums {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 0;
-}
-
-.users,.drum_selector,
-.soundclips {
-  padding: 0 60px;
-  padding-left: 45px;
-  padding-bottom: 20px;
-}
-
-.users{
-  padding:0;
-  height: 100px;
-}
-
-
-.users *,
-.drum_selector *,
-.soundclips * {
-  margin: auto 0;
 }

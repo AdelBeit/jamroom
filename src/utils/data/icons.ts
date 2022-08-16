@@ -19,5 +19,6 @@ const icons: { [iconName: string]: string } = {
   mold_castIn: "/icons/neumorphic_mold_cast_in.svg",
   mold_raisedUp: "/icons/neumorphic_mold_raised.svg",
   select: "/icons/star_cast_in.svg",
+  add_user: "/icons/add.svg",
 };
 export default icons;

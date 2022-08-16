@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import cs from "classnames";
 import styles from "./List.module.css";
-import buttonStyles from "./Button.module.css";
-import { DropDown, User } from "../types";
-import { useSoundStore, useUserStore } from "../utils/stores";
+import { DropDown } from "../types";
+import { useSoundStore } from "../utils/stores";
 import { usePlayers } from "../../pages/home";
 import LoadImage, { placeholder } from "../utils/LoadImage";
 import icons from "../utils/data/icons";
@@ -18,7 +17,7 @@ const ListItem = ({
   style?: "raised" | "castIn";
   handler?(): void;
   classes?: string | string[];
-  children: JSX.Element;
+  children: ReactNode;
 }) => {
   return (
     <button
@@ -34,39 +33,6 @@ const ListItem = ({
     >
       {children}
     </button>
-  );
-};
-
-const UserItem = ({
-  userID,
-  instrument,
-}: {
-  userID: User["id"];
-  instrument: User["instrument"];
-}) => {
-  const primaryUser = useUserStore((state) => state.userID) == userID;
-  return (
-    <ListItem classes={cs(primaryUser ? styles.primary : "", styles.user)}>
-      <>
-        <LoadImage
-          placeholder={placeholder}
-          className={cs(buttonStyles.leave, buttonStyles.icon, styles.icon)}
-          src={icons["leave"]}
-        />
-        <span className={cs(primaryUser && styles.primary, "neumorphic_text")}>
-          {userID}
-        </span>
-        <LoadImage
-          placeholder={placeholder}
-          className={cs(
-            buttonStyles.instrument,
-            buttonStyles.icon,
-            styles.icon
-          )}
-          src={icons[instrument]}
-        />
-      </>
-    </ListItem>
   );
 };
 
@@ -87,6 +53,7 @@ const SoundClipItem = ({
 
   const handler = () => {
     players?.player(clipName).start();
+    // @ts-ignore
     players?.player(clipName).onstop(() => setClipState("stop"));
     setClipState("play");
     if (variant == "drum_sample") {
@@ -135,9 +102,9 @@ const List = ({
   children,
 }: {
   variant: DropDown;
-  children: JSX.Element[];
+  children: ReactNode;
 }) => {
   return <div className={cs(styles["list_container"])}>{children}</div>;
 };
 
-export { List, UserItem, SoundClipItem };
+export { List, ListItem, SoundClipItem };

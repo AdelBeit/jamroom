@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./Keyboard.module.css";
 import cs from "classnames";
 import { KeyProps, Note, Octave } from "../types";
-import { useSoundStore } from "../utils/stores";
+import { useSoundStore, useUserStore, useVolumeStore } from "../utils/stores";
 import { usePlayers } from "../../pages/home";
-import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
+import { playWithVolume } from "../utils/utils";
 
 const Key = ({ note, octave }: KeyProps) => {
   const currentOctave = useSoundStore((state) => state.currentOctave);
@@ -13,13 +13,22 @@ const Key = ({ note, octave }: KeyProps) => {
     octave = currentOctave;
   }
   const players = usePlayers();
-  const { roomID } = useRouter().query;
+  const userVolumes = useVolumeStore((state) => state.userVolumes);
+  const [roomID, userID] = useUserStore((state) => [
+    state.roomID,
+    state.userID,
+  ]);
 
   const keyHandler = () => {
     if (players) {
       const clipName = note + octave;
+      const player = players.player(clipName);
+      const volume = userVolumes[userID];
+      console.log(volume);
+      console.log(userVolumes);
+      playWithVolume(player, volume);
+      // players.player(clipName).start();
       socket.emit("play-sound", clipName, roomID);
-      players.player(clipName).start();
     }
   };
 
@@ -76,8 +85,7 @@ const KeyboardTemplate = ({ octave }: { octave: Octave }) => {
 const Keyboard = () => {
   const currentOctave = useSoundStore((state) => state.currentOctave);
   const nextOctave = Math.min(Math.max(1, currentOctave + 1), 7) as Octave;
-  // TODO: redo keyboard layout to a continuous repetition of two groups: [C CS D DS E], [F FS G GS A AS B]
-  // TODO: allow swiping/dragging left and right on the keyboard to go up and down the octaves
+  // CHECK: allow swiping/dragging left and right on the keyboard to go up and down the octaves
   // TODO: make a custom scroll bar for the keyboard
   // TODO: hide elements partially overflowing in the keyboard
   // TODO: animate keys as they enter and leave viewport of parent

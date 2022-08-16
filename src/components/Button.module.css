@@ -5,52 +5,35 @@
 }
 
 /* .button > .Image > image [ span > img]  */
-.button > div, .icon > div{
+.button > div{
   position:absolute;
   z-index: 2;
   width: 55%;
   height: 55%;
-  top: 22%;
-  left: 20%;
-}
-
-.button > div span, .icon > div span{
-  position:absolute;
-}
-
-.button .mold{
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align:center;
 }
 
-
+/* users icon */
 .button .users_icon{
   position:absolute;
-  top: 32%;
-  left: 17%;
   width: 40%;
   height: 40%;
+  left: -26%;
 }
 
 .button .users_icon > div{
-  position:absolute;
+  position: absolute;
   width: 100%;
   height: 100%;
 }
 
-.button .users_icon .left{
-  top:0;
-  left:0;
-}
 .button .users_icon .right{
   left:65%;
-}
-
-.button.back{
-  width: 100%;
-  height: 100%;
 }
 
 /* cog icon */
@@ -64,9 +47,8 @@
   bottom:0;
   margin: auto;
   text-align: center;
-
+  
 }
-
 
 .cog_icon .inner{
   width: 50%;
@@ -74,34 +56,27 @@
   z-index:3;  
 }
 
-/*
-.button .drum_selector {
-  width: 80%;
-  height: 80%;
+.button.back{
+  width: 100%;
+  height: 100%;
 }
 
-.button .drum_selector.inner {
-  z-index: 3;
-  width: 40%;
-  height: 40%;
-}
-
-.button .keys {
-  width: 75%;
-  height: 75%;
-}
-
-.button .drums {
-  width: 85%;
-  height: 85%;
-  left: -150%;
+.button.back div{
+  height:80%;
 }
 
 .button .soundclips {
-  width: 70%;
-  height: 70%;
-  right: 5px;
+  width: 50%;
+  height: 50%;
+  left: -10%;
 }
+
+.button .mold{
+  width: 100%;
+  height: 100%;
+}
+
+/*
 
 .button .play {
   width: 60%;
@@ -112,12 +87,4 @@
   width: 60%;
   height: 60%;
 }
-
-.button .select {
-  visibility: hidden;
-}
-
-.button.back{
-  height: 77px;
-  width: 800px;
-} */
+*/

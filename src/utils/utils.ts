@@ -1,3 +1,5 @@
+import { useVolumeStore } from "./stores";
+
 export const generateName = () => {
   const adjectives = [
     'tidy', 'glistening', 'ubiquitous', 'rustic', 'nutritious', 'tangible', 'competent', 'dizzy', 'organic', 'tall', "upstanding", 'chief', 'nebulous', 'quaint', 'loquacious', 'nervous'
@@ -44,3 +46,10 @@ export const baseURL = (instrument) => {
       break;
   }
 };
+
+export const playWithVolume = (player, volume) => {
+  const oldVolume = player.volume.value;
+  player.volume.value = volume;
+  player.start();
+  player.volume.value = oldVolume;
+}

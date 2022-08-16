@@ -7,7 +7,19 @@ import {
   ScreenStateStore,
   SoundStateStore,
   UserStateStore,
+  VolumeStateStore,
 } from "../types";
+
+export const useVolumeStore = create<VolumeStateStore>()(devtools((set) => ({
+  userVolumes: {},
+  changeVolume: (userID, volume) => set(state => ({ userVolumes: { ...state.userVolumes, [userID]: volume } })),
+  setVolumes: (users) => {
+    const newVolumes = {};
+    Object.keys(users).map(userID => newVolumes[userID] = 100);
+    set(state =>
+      ({ userVolumes: { ...newVolumes, ...state.userVolumes } }))
+  }
+})));
 
 export const useUserStore = create<UserStateStore>()(
   devtools((set) => ({
@@ -30,7 +42,6 @@ export const useScreenStore = create<ScreenStateStore>()(
       set({ selectedDropDown }),
   }))
 );
-
 
 // TODO: keep track of volume, allow changing volume per soundplayer
 export const useSoundStore = create<SoundStateStore>()(

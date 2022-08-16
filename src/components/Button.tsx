@@ -54,7 +54,7 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
       icon = (
         <LoadImage
           placeholder={placeholder}
-          className={cs(styles[variant])}
+          className={styles[variant]}
           src={icons[variant]}
         />
       );

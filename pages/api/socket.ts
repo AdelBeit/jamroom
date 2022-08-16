@@ -4,11 +4,9 @@ import { User, UserStateStore } from "../../src/types";
 
 const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
   // @ts-ignore
-  if (res!.socket!.server.io) {
-    console.log("Socket is already running");
-  } else {
+  if (!res!.socket!.server.io) {
     console.log("Socket is initializing");
-    const rooms: { [roomID: UserStateStore['roomID']]: { [socketID: string]: [User['id'], User['instrument'], User['volume']] } } = {};
+    const rooms: { [roomID: UserStateStore['roomID']]: { [socketID: string]: [User['id'], User['instrument']] } } = {};
     // @ts-ignore
     const io = new Server(res!.socket!.server);
     // @ts-ignore
@@ -35,43 +33,35 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
     io.on('connection', (socket) => {
       const roomID = socket['roomID'];
       if (!rooms[roomID]) rooms[roomID] = {}
-      rooms[roomID][socket.id] = [socket['userID'], 'keys', 100];
+      rooms[roomID][socket.id] = [socket['userID'], 'keys'];
 
       socket.join(roomID);
 
       io.of('/').adapter.on('join-room', (roomID, socketID) => {
-        if (roomID != socketID) socket.to(roomID).emit('users-update', rooms[roomID], `${socketID} joined the room`);
+        if (roomID != socketID) socket.to(roomID).emit('users-update', rooms[roomID], `${socketID} joined room ${roomID}`);
       });
 
       socket.on("play-sound", (clipName: string, roomID: UserStateStore['roomID']) => {
-        socket.to(roomID).emit("sound-played", clipName);
+        socket.to(roomID).emit("sound-played", socket['userID'], clipName);
       });
 
       socket.on('change-instrument', (instrument: User['instrument'], roomID: UserStateStore['roomID']) => {
         const user = rooms[roomID][socket.id];
-        rooms[roomID][socket.id] = [user[0], instrument, user[2]];
+        rooms[roomID][socket.id] = [user[0], instrument];
         io.to(roomID).emit('users-update', rooms[roomID], `${user[0]} changed instruments`);
       });
 
-      socket.on('change-volume', (volume: User['volume'], roomID: UserStateStore['roomID']) => {
-        const user = rooms[roomID][socket.id];
-        rooms[roomID][socket.id] = [user[0], user[1], volume];
-        socket.to(roomID).emit('users-update', rooms[roomID], `${user[0]} changed volume`);
-      });
+      // socket.on('change-volume', (volume: User['volume'], roomID: UserStateStore['roomID']) => {
+      //   const user = rooms[roomID][socket.id];
+      //   rooms[roomID][socket.id] = [user[0], user[1], volume];
+      //   socket.to(roomID).emit('users-update', rooms[roomID], `${user[0]} changed volume`);
+      // });
 
       io.of('/').adapter.on('leave-room', (roomID, socketID) => {
-        if (socketID != roomID) {
+        if (socketID != roomID && rooms[roomID] && rooms[roomID][socketID]) {
           delete rooms[roomID][socketID];
-          io.to(roomID).emit('users-update', rooms[roomID], `${socketID} left the room`);
-        }
-      });
-
-      socket.on('disconnecting', () => {
-        for (let roomID of Array.from(socket.rooms)) {
-          if (roomID != socket.id) {
-            delete rooms[roomID][socket.id];
-            io.to(roomID).emit('users-update', rooms[roomID], `${socket.id} disconnected`);
-          }
+          if (Object.keys(rooms[roomID]).length < 1) delete rooms[roomID]
+          io.to(roomID).emit('users-update', rooms[roomID], `${socketID} left room ${roomID}`);
         }
       });
 

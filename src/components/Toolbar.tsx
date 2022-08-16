@@ -33,25 +33,6 @@ const Drumkit = () => {
   );
 };
 
-const Debug = () => {
-  const buttons = [
-    "keys",
-    "drums",
-    "users",
-    "soundclips",
-    "back",
-    "play",
-    "stop",
-    "select",
-    "leave",
-    "kick_user",
-    "add_user",
-    "drum_selector",
-  ];
-  const buttonss = buttons.map((b) => <Button variant={b as ButtonVariant} />);
-  return <>{buttonss}</>;
-};
-
 const Back = () => {
   return (
     <>

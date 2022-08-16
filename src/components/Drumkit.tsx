@@ -2,18 +2,28 @@ import React from "react";
 import styles from "./Drumkit.module.css";
 import cs from "classnames";
 import icons from "../utils/data/icons";
-import { useSoundStore, useScreenStore } from "../utils/stores";
+import {
+  useSoundStore,
+  useScreenStore,
+  useUserStore,
+  useVolumeStore,
+} from "../utils/stores";
 import { DrumProps } from "../types";
 import { usePlayers } from "../../pages/home";
 import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
 import LoadImage, { placeholder } from "../utils/LoadImage";
 import { DrumConfig } from "./Button";
+import { playWithVolume } from "../utils/utils";
 
 const Drum = ({ drumType }: DrumProps) => {
   const players = usePlayers();
-  const editMode = useSoundStore((state) => state.drumEditMode);
-  const [drumSounds] = useSoundStore((state) => [state.drumSounds]);
+  const [drumSounds, editMode] = useSoundStore((state) => [
+    state.drumSounds,
+    state.drumEditMode,
+  ]);
+  const userID = useUserStore((state) => state.userID);
+  const userVolumes = useVolumeStore((state) => state.userVolumes);
   const { roomID } = useRouter().query;
 
   const drumHandler = () => {
@@ -25,8 +35,10 @@ const Drum = ({ drumType }: DrumProps) => {
 
     if (players) {
       const clipName = drumSounds[drumType];
+      const player = players.player(clipName);
       socket.emit("play-sound", clipName, roomID);
-      players.player(clipName).start();
+      const volume = userVolumes[userID];
+      playWithVolume(player, volume);
     }
   };
 

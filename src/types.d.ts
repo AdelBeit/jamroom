@@ -1,5 +1,5 @@
 import { FunctionComponent, MutableRefObject } from "react";
-import { Players } from "tone";
+import { Players, Volume } from "tone";
 import { GetState, SetState, State, StateCreator, StoreApi } from "zustand";
 
 export type Octave = 1 | 2 | 3 | 4 | 5 | 6 | 7;
@@ -86,8 +86,6 @@ export type User = {
   id: string,
   volume: number,
   instrument: Instrument,
-  setVolume(volume: User['volume']): void;
-  setInstrument(instrument: Instrument): void;
 }
 
 export interface UserStateStore {
@@ -99,3 +97,8 @@ export interface UserStateStore {
   setUserID(userID: User['id']): void;
 }
 
+export interface VolumeStateStore {
+  userVolumes: { [userID: User['id']]: User['volume'] }
+  changeVolume(userID: User['id'], volume: User['volume']): void;
+  setVolumes(users: UserStateStore['users']): void;
+}
