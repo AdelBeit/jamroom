@@ -15,7 +15,7 @@ export const useVolumeStore = create<VolumeStateStore>()(devtools((set) => ({
   changeVolume: (userID, volume) => set(state => ({ userVolumes: { ...state.userVolumes, [userID]: volume } })),
   setVolumes: (users) => {
     const newVolumes = {};
-    Object.keys(users).map(userID => newVolumes[userID] = 100);
+    Object.keys(users).map(user => newVolumes[users[user][0]] = -10);
     set(state =>
       ({ userVolumes: { ...newVolumes, ...state.userVolumes } }))
   }

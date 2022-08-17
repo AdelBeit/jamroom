@@ -24,10 +24,7 @@ const Key = ({ note, octave }: KeyProps) => {
       const clipName = note + octave;
       const player = players.player(clipName);
       const volume = userVolumes[userID];
-      console.log(volume);
-      console.log(userVolumes);
       playWithVolume(player, volume);
-      // players.player(clipName).start();
       socket.emit("play-sound", clipName, roomID);
     }
   };

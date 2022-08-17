@@ -33,23 +33,19 @@ const UserItem = ({
   instrument: User["instrument"];
 }) => {
   const primaryUser = useUserStore((state) => state.userID) == userID;
-  const [viewSlider, setViewSlider] = useState(false);
   const [changeVolume, userVolumes] = useVolumeStore((state) => [
     state.changeVolume,
     state.userVolumes,
   ]);
-  const handler = () => setViewSlider(!viewSlider);
   const setVolume = (e) => {
-    changeVolume(userID, e.target.valueAsNumber);
-    console.log(e.target.valueAsNumber);
+    let volume = e.target.valueAsNumber;
+    if (volume == -25) volume = -100;
+    changeVolume(userID, volume);
   };
-  const value = userVolumes[userID] ?? 0;
+  const value = userVolumes[userID];
 
   return (
-    <ListItem
-      classes={cs(primaryUser ? listStyles.primary : "", styles.user)}
-      handler={handler}
-    >
+    <ListItem classes={cs(primaryUser ? listStyles.primary : "", styles.user)}>
       <>
         {/* <LoadImage
           placeholder={placeholder}
@@ -75,8 +71,8 @@ const UserItem = ({
           value={value}
           id="volume"
           name="volume"
-          min={-20}
-          max={20}
+          min={-25}
+          max={-10}
           step="0.1"
           classes={styles.slider}
         />

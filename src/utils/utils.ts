@@ -1,3 +1,4 @@
+import { Player } from "tone";
 import { useVolumeStore } from "./stores";
 
 export const generateName = () => {
@@ -47,9 +48,7 @@ export const baseURL = (instrument) => {
   }
 };
 
-export const playWithVolume = (player, volume) => {
-  const oldVolume = player.volume.value;
+export const playWithVolume = (player: Player, volume: number) => {
   player.volume.value = volume;
   player.start();
-  player.volume.value = oldVolume;
 }
