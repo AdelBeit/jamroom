@@ -45,6 +45,7 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
   const userID = generateName();
 
   const handler = async () => {
+    useScreenStore.getState().setScreen("starting");
     await Tone.start();
     useScreenStore.getState().setScreen("keys");
   };
@@ -105,19 +106,19 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
   return (
     <PlayersContext.Provider value={players.current}>
       {"start" && props.children}
-      {screen == "start" && (
+      {(screen == "start" || screen === "starting") && (
         <div
           style={{
             position: "absolute",
             inset: "0 0 0 0",
             justifyContent: "center",
             alignItems: "center",
-            cursor: "pointer",
+            cursor: screen === "start" ? "pointer" : "loading",
             zIndex: 100,
             backdropFilter: "blur(3px)",
             backgroundColor: "rgba(0,0,0,0.2)",
           }}
-          onClick={handler}
+          onClick={screen === "start" ? handler : undefined}
           role="button"
           tabIndex={0}
           aria-label="start"
@@ -130,7 +131,7 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
               height: "100%",
             }}
           >
-            Click to start
+            {screen === "start" ? "Click to start" : "Loading.."}
           </span>
         </div>
       )}

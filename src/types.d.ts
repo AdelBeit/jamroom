@@ -24,7 +24,7 @@ export interface KeyProps {
 
 export type Instrument = "drums" | "keys";
 
-export type Screen = Instrument | "start";
+export type Screen = Instrument | "start" | "starting";
 
 export type DropDown = "drum_selector" | "users" | "soundclips";
 
