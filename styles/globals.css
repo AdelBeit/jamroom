@@ -14,6 +14,7 @@ body {
   box-shadow: 0 0 0 1px black; /* 'border-style' not available (dashed, solid, etc) */
   height: var(--height);
   width: var(--width);
+  overflow-x: clip;
 }
 
 a {

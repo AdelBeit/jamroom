@@ -31,7 +31,6 @@ const PlayersContext = React.createContext<Players | null>(null);
 const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
   const screen = useScreenStore((state) => state.selectedScreen);
-  const initAudioContext = useRef(null);
   const [setRoomID, setUsers, setUserID] = useUserStore((state) => [
     state.setRoomID,
     state.setUsers,
@@ -50,11 +49,6 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     useScreenStore.getState().setScreen("keys");
   };
 
-  const startAudioContext = () => {
-    // @ts-ignore
-    initAudioContext.current?.click();
-  };
-
   const loadSamples = () => {
     // TODO: persist loaded samples
     players.current = new Players(soundFiles, () => {}).toDestination();
@@ -68,7 +62,6 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
 
     if (!roomID) return;
 
-    startAudioContext();
     loadSamples();
   }, [roomID]);
 
@@ -111,13 +104,35 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
 
   return (
     <PlayersContext.Provider value={players.current}>
-      {props.children}
+      {"start" && props.children}
       {screen == "start" && (
-        <button
-          style={{ visibility: "hidden" }}
-          ref={initAudioContext}
+        <div
+          style={{
+            position: "absolute",
+            inset: "0 0 0 0",
+            justifyContent: "center",
+            alignItems: "center",
+            cursor: "pointer",
+            zIndex: 100,
+            backdropFilter: "blur(3px)",
+            backgroundColor: "rgba(0,0,0,0.2)",
+          }}
           onClick={handler}
-        ></button>
+          role="button"
+          tabIndex={0}
+          aria-label="start"
+        >
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            Click to start
+          </span>
+        </div>
       )}
     </PlayersContext.Provider>
   );
@@ -135,7 +150,7 @@ const Page: NextPage = () => {
 
   return (
     <PlayersContextProvider>
-      {screen == "keys" && <Keys />}
+      {(screen == "keys" || screen == "start") && <Keys />}
       {screen == "drums" && <Drums />}
       <Users />
       {/* <SoundClips soundClips={soundClips} /> */}
