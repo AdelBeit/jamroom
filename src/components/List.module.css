@@ -1,7 +1,7 @@
 .list_container {
   overflow-y: scroll;
   padding: 5px 15px;
-  
+
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 
@@ -23,31 +23,14 @@
   column-gap: 15px;
 }
 
-.item_container .icon{
-  position:relative;
+.item_container .icon {
+  position: relative;
   width: 41px;
   height: 41px;
-  flex-grow:0;
+  flex-grow: 0;
 }
 
-.item_container.add_user .icon{
-  margin: auto;
-}
-
-.item_container.user .icon:nth-child(1){
-  order: 1;
-}
-.item_container.user span{
-  text-align:left;
-  margin: auto 0;
-  order: 2;
-  flex-grow:1;
-}
-.item_container.user .icon:nth-child(3){
-  order: 3;
-}
-
-.primary{
-  color:green;
+.primary {
+  color: green;
   order: -1;
 }

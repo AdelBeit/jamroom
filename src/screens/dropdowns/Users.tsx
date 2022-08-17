@@ -1,5 +1,6 @@
 import { Toolbar } from "../../components/Toolbar";
-import styles from "./DropDown.module.css";
+import dropDownStyles from "./DropDown.module.css";
+import styles from "./Users.module.css";
 import listStyles from "./../../components/List.module.css";
 import buttonStyles from "./../../components/Button.module.css";
 import cs from "classnames";
@@ -21,7 +22,7 @@ import VolumeSlider from "../../components/VolumeSlider";
 // CHECK: player joined
 // CHECK: player changed instrument
 // CHECK: show list of players
-// add players by inviting them, copy invite code with button
+// CHECK: add players by inviting them, copy invite code with button
 // kick players
 
 const UserItem = ({
@@ -39,35 +40,36 @@ const UserItem = ({
   ]);
   const handler = () => setViewSlider(!viewSlider);
   const setVolume = (e) => {
-    changeVolume(userID, e.target.value);
+    changeVolume(userID, e.target.valueAsNumber);
+    console.log(e.target.valueAsNumber);
   };
-  const value = userVolumes[userID];
+  const value = userVolumes[userID] ?? 0;
 
   return (
     <ListItem
-      classes={cs(primaryUser ? listStyles.primary : "", listStyles.user)}
+      classes={cs(primaryUser ? listStyles.primary : "", styles.user)}
       handler={handler}
     >
-      {!viewSlider && (
-        <>
-          {/* <LoadImage
+      <>
+        {/* <LoadImage
           placeholder={placeholder}
           className={cs(buttonStyles.leave, buttonStyles.icon, listStyles.icon)}
           src={icons["leave"]}
         /> */}
-          <span
-            className={cs(primaryUser && listStyles.primary, "neumorphic_text")}
-          >
-            {userID}
-          </span>
-          <LoadImage
-            placeholder={placeholder}
-            className={listStyles.icon}
-            src={icons[instrument]}
-          />
-        </>
-      )}
-      {viewSlider && (
+        <LoadImage
+          placeholder={placeholder}
+          className={cs(listStyles.icon, styles.instrument_icon)}
+          src={icons[instrument]}
+        />
+        <span
+          className={cs(
+            styles.id,
+            primaryUser && listStyles.primary,
+            "neumorphic_text"
+          )}
+        >
+          {userID}
+        </span>
         <VolumeSlider
           onChange={setVolume}
           value={value}
@@ -76,8 +78,9 @@ const UserItem = ({
           min={-20}
           max={20}
           step="0.1"
+          classes={styles.slider}
         />
-      )}
+      </>
     </ListItem>
   );
 };
@@ -105,13 +108,14 @@ const AddUserItem = () => {
       .catch(console.error);
   };
   return (
-    <ListItem classes={cs(listStyles.add_user)} handler={handler}>
+    <ListItem classes={cs(styles.add_user)} handler={handler}>
       <LoadImage
         placeholder={placeholder}
         className={cs(
           buttonStyles.add_user,
           buttonStyles.icon,
-          listStyles.icon
+          listStyles.icon,
+          styles.icon
         )}
         src={icons["add_user"]}
       />
@@ -129,8 +133,8 @@ const Users = () => {
       className={cs(
         "dropdown_container",
         dropdown == variant && "drop",
-        styles.users,
-        styles.container
+        dropDownStyles.users,
+        dropDownStyles.container
       )}
     >
       <List variant={variant}>

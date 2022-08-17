@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "./VolumeSlider.module.css";
+import cs from "classnames";
 
 const VolumeSlider = (props) => {
   return (
-    <div className={styles.slider}>
+    <div className={cs(styles.slider, props.classes ?? "")}>
       <input
         value={props.value}
         type="range"
         onChange={props.volume}
         {...props}
+        classes=""
       />
     </div>
   );
