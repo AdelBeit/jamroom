@@ -16,7 +16,6 @@ import { UserStateStore } from "../src/types";
 import { generateName, playWithVolume } from "../src/utils/utils";
 import {
   connectSocket,
-  initSocket,
   socket,
   socketCleanup,
 } from "../src/utils/socketClient";
@@ -73,9 +72,7 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
   }, [roomID]);
 
   useEffect(() => {
-    // console.log(`players ref: ${players}, players.current: ${players.current}`);
     if (!players.current) return;
-    // console.log(`wasn't null`);
 
     connectSocket(userID, roomID);
 
@@ -83,8 +80,6 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
       setRoomID(roomID as UserStateStore["roomID"]);
       setUserID(userID);
     });
-
-    initSocket();
 
     socket.on("sound-played", (userID, clipName) => {
       console.log("received event", clipName);
@@ -100,8 +95,6 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     });
 
     socket.on("users-update", (users, msg) => {
-      console.log(msg);
-      console.log(users);
       setUsers(users);
       setVolumes(users);
     });
