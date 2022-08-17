@@ -12,20 +12,20 @@
   "dependencies": {
     "classnames": "^2.3.1",
     "nanoid": "^4.0.0",
-    "next": "12.1.6",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
+    "next": "12.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1",
     "tone": "^14.7.77",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
-    "@types/node": "17.0.40",
-    "@types/react": "18.0.12",
-    "@types/react-dom": "18.0.5",
-    "eslint": "8.17.0",
-    "eslint-config-next": "12.1.6",
-    "typescript": "4.7.3"
+    "@types/node": "18.7.6",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "eslint": "8.22.0",
+    "eslint-config-next": "12.2.5",
+    "typescript": "4.7.4"
   }
 }

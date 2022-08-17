@@ -2,8 +2,11 @@ import { io } from 'socket.io-client';
 
 // client side
 const URL = "api/socket";
-// @ts-ignore
-(async function () { await fetch(URL) })();
+(() => {
+   if (typeof window !== "undefined") {
+      fetch(URL)
+   }
+})();
 export const socket = io({ autoConnect: false });
 
 // when ready to connect

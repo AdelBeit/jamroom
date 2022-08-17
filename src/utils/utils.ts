@@ -49,7 +49,7 @@ export const baseURL = (instrument) => {
 
 export const playWithVolume = (player, volume) => {
   const oldVolume = player.volume.value;
-  player.volume.value = volume;
+  player.volume.value = volume ?? 2;
   player.start();
   player.volume.value = oldVolume;
 }
