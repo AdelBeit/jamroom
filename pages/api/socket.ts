@@ -37,9 +37,7 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
       socket.join(roomID);
 
-      io.of('/').adapter.on('join-room', (roomID, socketID) => {
-        if (roomID != socketID) socket.to(roomID).emit('users-update', rooms[roomID], `${socketID} joined room ${roomID}`);
-      });
+      io.to(roomID).emit('users-update', rooms[roomID], `${socket.id} joined room ${roomID}`);
 
       socket.on("play-sound", (clipName: string, roomID: UserStateStore['roomID']) => {
         socket.to(roomID).emit("sound-played", socket['userID'], clipName);
@@ -51,22 +49,14 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
         io.to(roomID).emit('users-update', rooms[roomID], `${user[0]} changed instruments`);
       });
 
-      // socket.on('change-volume', (volume: User['volume'], roomID: UserStateStore['roomID']) => {
-      //   const user = rooms[roomID][socket.id];
-      //   rooms[roomID][socket.id] = [user[0], user[1], volume];
-      //   socket.to(roomID).emit('users-update', rooms[roomID], `${user[0]} changed volume`);
-      // });
-
-      io.of('/').adapter.on('leave-room', (roomID, socketID) => {
-        if (socketID != roomID && rooms[roomID] && rooms[roomID][socketID]) {
-          delete rooms[roomID][socketID];
-          if (Object.keys(rooms[roomID]).length < 1) delete rooms[roomID]
-          io.to(roomID).emit('users-update', rooms[roomID], `${socketID} left room ${roomID}`);
-        }
-      });
-
       socket.on('disconnect', (reason) => {
         socket.removeAllListeners();
+        let roomID = socket['roomID'];
+        if (rooms[roomID] && rooms[roomID][socket.id]) {
+          delete rooms[roomID][socket.id];
+          if (Object.keys(rooms[roomID]).length < 1) delete rooms[roomID]
+          io.to(roomID).emit('users-update', rooms[roomID], `${socket.id} left room ${roomID}`);
+        }
       });
     });
   }
