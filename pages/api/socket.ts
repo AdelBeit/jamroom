@@ -13,7 +13,9 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
   console.log("Socket is initializing");
   const rooms: { [roomID: UserStateStore['roomID']]: { [socketID: string]: [User['id'], User['instrument']] } } = {};
   // @ts-ignore
-  const io = new Server(res.socket.server);
+  const io = new Server(res.socket.server, {
+    cors: { origin: req.headers.host }
+  });
   // @ts-ignore
   res.socket.server.io = io;
 
