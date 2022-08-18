@@ -23,7 +23,6 @@ const Drum = ({ drumType }: DrumProps) => {
     state.drumEditMode,
   ]);
   const userID = useUserStore((state) => state.userID);
-  const userVolumes = useVolumeStore((state) => state.userVolumes);
   const { roomID } = useRouter().query;
 
   const drumHandler = () => {
@@ -37,7 +36,7 @@ const Drum = ({ drumType }: DrumProps) => {
       const clipName = drumSounds[drumType];
       const player = players.player(clipName);
       socket.emit("play-sound", clipName, roomID);
-      const volume = userVolumes[userID];
+      const volume = useVolumeStore.getState().userVolumes[userID] ?? -10;
       playWithVolume(player, volume);
     }
   };

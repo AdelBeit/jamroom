@@ -23,7 +23,6 @@ import * as Tone from "tone";
 
 // TODO: make sound play on touch start not touch end
 // TODO: drag events cancel sample play
-
 // TODO: extract context into it's own file
 export const usePlayers = () => React.useContext(PlayersContext);
 const PlayersContext = React.createContext<Players | null>(null);
@@ -36,10 +35,7 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     state.setUsers,
     state.setUserID,
   ]);
-  const [setVolumes, userVolumes] = useVolumeStore((state) => [
-    state.setVolumes,
-    state.userVolumes,
-  ]);
+  const setVolumes = useVolumeStore((state) => state.setVolumes);
   const router = useRouter();
   const { roomID } = router.query;
   const userID = generateName();
@@ -82,16 +78,10 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     });
 
     socket.on("sound-played", (userID, clipName) => {
-      console.log("received event", clipName);
-      // TODO: pass volume before playing
+      // CHECK: pass volume before playing
       const player = players!.current!.player(clipName);
-      const volume = userVolumes[userID];
+      const volume = useVolumeStore.getState().userVolumes[userID] ?? -10;
       playWithVolume(player, volume);
-      // const oldVolume = player.volume.value;
-      // const volume = userVolumes[userID];
-      // player.volume.value = volume;
-      // player.start();
-      // player.volume.value = oldVolume;
     });
 
     socket.on("users-update", (users, msg) => {

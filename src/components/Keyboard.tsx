@@ -13,7 +13,6 @@ const Key = ({ note, octave }: KeyProps) => {
     octave = currentOctave;
   }
   const players = usePlayers();
-  const userVolumes = useVolumeStore((state) => state.userVolumes);
   const [roomID, userID] = useUserStore((state) => [
     state.roomID,
     state.userID,
@@ -23,7 +22,7 @@ const Key = ({ note, octave }: KeyProps) => {
     if (players) {
       const clipName = note + octave;
       const player = players.player(clipName);
-      const volume = userVolumes[userID];
+      const volume = useVolumeStore.getState().userVolumes[userID] ?? -10;
       playWithVolume(player, volume);
       socket.emit("play-sound", clipName, roomID);
     }

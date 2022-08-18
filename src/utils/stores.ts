@@ -43,7 +43,7 @@ export const useScreenStore = create<ScreenStateStore>()(
   }))
 );
 
-// TODO: keep track of volume, allow changing volume per soundplayer
+// CHECK: keep track of volume, allow changing volume per soundplayer
 export const useSoundStore = create<SoundStateStore>()(
   devtools((set) => ({
     currentOctave: 4,
