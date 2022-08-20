@@ -10,7 +10,7 @@ const Keyboard = () => {
   return (
     <>
       {buttons.map((variant, index) => (
-        <Button key={index} variant={variant} />
+        <Button style="plain" key={index} variant={variant} />
       ))}
     </>
   );
@@ -27,7 +27,7 @@ const Drumkit = () => {
   return (
     <>
       {buttons.map((variant, index) => (
-        <Button key={index} variant={variant} />
+        <Button style="plain" key={index} variant={variant} />
       ))}
     </>
   );

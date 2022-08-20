@@ -1,4 +1,38 @@
 <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <radialGradient id="MyGradient" cx="40%" cy="40%" r="90%" fx="10%" fy="20%">
+            <stop offset="20%" stop-color="#ffefcb" />
+            <stop offset="50%" stop-color="#f0846a" />
+            <stop offset="70%" stop-color="#C5363F" />
+            <stop offset="90%" stop-color="#ff5699" />
+        </radialGradient>
+        <radialGradient id="MyBorderGradient" cx="40%" cy="50%" r="50%" fx="10%" fy="20%">
+            <stop offset="70%" stop-color="#FEF9E6" />
+            <stop offset="100%" stop-color="#8F1550" />
+        </radialGradient>
+        <filter id="dropshadow">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="9" />
+
+            <feOffset dx="2" dy="2" result="offsetblur" />
+
+            <feFlood flood-color="#6F327F" flood-opacity="0.5" result="offsetColor" />
+            <feComposite in="offsetColor" in2="offsetblur" operator="in" result="offsetBlur" />
+
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="offsetblur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+    <g>
+        <rect class="stop_border" x="3" y="1" width="19" height="19" rx="2" fill="url(#MyBorderGradient)" />
+        <rect filter="url(#dropshadow)" class="stop" style="transform:scale(.97); transform-origin:center;" x="3" y="1"
+            width="19" height="19" rx="2" fill="url(#MyGradient)" />
+    </g>
+</svg>
+
+<!-- <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_ddi_18_1514)">
 <rect x="3" y="1" width="19" height="19" rx="2" fill="#EBF4FF"/>
 </g>
@@ -26,4 +60,4 @@
 <feBlend mode="normal" in2="shape" result="effect3_innerShadow_18_1514"/>
 </filter>
 </defs>
-</svg>
+</svg> -->
