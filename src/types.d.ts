@@ -1,4 +1,4 @@
-import { FunctionComponent, MutableRefObject } from "react";
+import React, { FunctionComponent, MutableRefObject, Ref } from "react";
 import { Players } from "tone";
 import { GetState, SetState, State, StateCreator, StoreApi } from "zustand";
 
@@ -38,11 +38,12 @@ export type Actions =
   | "add_user"
   | "drum_selector";
 
-export type ButtonStyle = "raised" | "inset" | 'plain';
+export type ButtonStyle = "raised" | "inset" | "plain";
 
-export type ButtonVariant = Actions | Exclude<Screen, 'start'> | DropDown;
+export type ButtonVariant = Actions | Exclude<Screen, "start"> | DropDown;
 
-export interface ButtonProps {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonVariant;
   style?: ButtonStyle;
 }
@@ -83,21 +84,21 @@ export interface SoundStateStore {
 }
 
 export type User = {
-  id: string,
-  instrument: Instrument,
-}
+  id: string;
+  instrument: Instrument;
+};
 
 export interface UserStateStore {
-  roomID: string,
-  userID: User['id'],
-  users: { [userID: User['id']]: [User['id'], User['instrument']] };
-  setRoomID(roomID: UserStateStore['roomID']): void;
-  setUsers(users: { [id: User['id']]: [User['id'], User['instrument']] }): void;
-  setUserID(userID: User['id']): void;
+  roomID: string;
+  userID: User["id"];
+  users: { [userID: User["id"]]: [User["id"], User["instrument"]] };
+  setRoomID(roomID: UserStateStore["roomID"]): void;
+  setUsers(users: { [id: User["id"]]: [User["id"], User["instrument"]] }): void;
+  setUserID(userID: User["id"]): void;
 }
 
 export interface VolumeStateStore {
-  userVolumes: { [userID: User['id']]: number }
-  changeVolume(userID: User['id'], volume: number): void;
-  setVolumes(users: UserStateStore['users']): void;
+  userVolumes: { [userID: User["id"]]: number };
+  changeVolume(userID: User["id"], volume: number): void;
+  setVolumes(users: UserStateStore["users"]): void;
 }

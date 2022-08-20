@@ -27,12 +27,18 @@ a {
 
 .neumorphic_mold_raisedUp {
   background: var(--background-color);
-  box-shadow: -8px 0px 8px rgba(199, 220, 245, 0.87),
-    8px 0px 8px rgba(255, 255, 255, 0.3),
+  box-shadow: -7px 0px 9px rgba(199, 220, 245, 0.87),
+    7px 0px 9px rgba(255, 255, 255, 0.3),
     inset 1px 0px 2px rgba(199, 222, 249, 0.33),
     inset -1px 1px 2px rgba(255, 255, 255, 0.75),
     inset 1px 0px 2px rgba(203, 223, 246, 0.66),
     inset -2px 0px 5px rgba(244, 249, 255, 0.33);
+  /* box-shadow: -2px 1px 6px rgba(199, 220, 245, 0.5),
+    2px 0px 3px rgba(255, 255, 255, 0.25),
+    inset 1px 0px 2px rgba(209, 227, 250, 0.33),
+    inset -3px 2px 5px rgba(255, 255, 255, 0.5),
+    inset 0px 0px 2px rgba(160, 197, 239, 0.7),
+    inset 1px 0px 4px rgba(228, 240, 254, 0.5); */
   border-radius: 8px;
 }
 
@@ -68,7 +74,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
   padding: 10px 15px;
-  gap:10px;
+  gap: 10px;
   height: var(--height);
   width: var(--width);
 }
@@ -92,12 +98,10 @@ li {
   visibility: hidden;
 }
 
-
 .UNSTYLE_BUTTON {
   border: unset;
   background-color: unset;
 }
-
 
 /* Buttons styles start */
 .UNSTYLE_BUTTON {
@@ -106,7 +110,7 @@ li {
   padding: unset;
   margin: unset;
   text-decoration: unset;
-  background-color:unset;
+  background-color: unset;
   color: inherit;
   font-family: unset;
   font-size: unset;
@@ -114,7 +118,7 @@ li {
   cursor: pointer;
   text-align: unset;
   transition: background 250ms ease-in-out, transform 150ms ease;
-  transition:unset;
+  transition: unset;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
@@ -132,3 +136,9 @@ li {
   transform: unset;
 }
 /* Button styles end */
+
+.start {
+  width: 50px;
+  height: 50px;
+  margin: 120px;
+}

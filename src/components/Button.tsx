@@ -41,7 +41,11 @@ const DrumConfig = ({ classes = "" }) => {
   );
 };
 
-const Button = ({ variant, style = "raised" }: ButtonProps) => {
+const Button: React.FC<ButtonProps> = ({
+  variant,
+  style = "raised",
+  ...props
+}) => {
   let icon;
   switch (variant) {
     case "users":
@@ -102,21 +106,23 @@ const Button = ({ variant, style = "raised" }: ButtonProps) => {
 
   return (
     <button
+      {...props}
       onClick={handler}
       className={cs(
         "UNSTYLE_BUTTON",
         style == "plain" && "neumorphic_mold_raisedUp",
         styles.button,
-        styles[variant]
+        styles[variant],
+        props.className
       )}
     >
-      {variant != "select" && style == "raised" && (
+      {/* {variant != "select" && style == "raised" && (
         <LoadImage
           placeholder={placeholder}
           className={cs(styles.mold)}
           src={icons["mold_raisedUp"]}
         />
-      )}
+      )} */}
       {icon}
     </button>
   );
