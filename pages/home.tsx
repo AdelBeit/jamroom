@@ -20,6 +20,8 @@ import {
   socketCleanup,
 } from "../src/utils/socketClient";
 import * as Tone from "tone";
+import cs from "classnames";
+import { Button } from "../src/components/Button";
 
 // TODO: make sound play on touch start not touch end
 // TODO: drag events cancel sample play
@@ -96,11 +98,43 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     <PlayersContext.Provider value={players.current}>
       {props.children}
       {screen == "start" && (
-        <button
-          style={{ visibility: "hidden" }}
-          ref={initAudioContext}
+        <Button
+          variant={"stop"}
+          style="plain"
+          className={cs("start")}
           onClick={handler}
-        ></button>
+        >
+          {/* <svg
+            width="50"
+            height="50"
+            viewBox="0 0 50 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <radialGradient
+              id="MyGradient"
+              cx="40%"
+              cy="40%"
+              r="90%"
+              fx="10%"
+              fy="20%"
+            >
+              <stop offset="20%" stop-color="#ffefcb" />
+              <stop offset="50%" stop-color="#f0846a" />
+            </radialGradient>
+            <g>
+              <rect
+                className="stop_SVG"
+                x="3"
+                y="1"
+                width="50"
+                height="50"
+                rx="2"
+                fill="#EBF4FF"
+              />
+            </g>
+          </svg> */}
+        </Button>
       )}
     </PlayersContext.Provider>
   );
