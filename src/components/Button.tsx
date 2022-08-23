@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 import icons from "../utils/data/icons";
 import styles from "./Button.module.css";
 import cs from "classnames";

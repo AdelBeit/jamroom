@@ -73,20 +73,14 @@
   left: -10%;
 }
 
+.button.start {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
+
 .button .mold {
   width: 100%;
   height: 100%;
 }
-
-/*
-
-.button .play {
-  width: 60%;
-  height: 60%;
-  left: 2px;
-}
-.button .stop {
-  width: 60%;
-  height: 60%;
-}
-*/

@@ -31,7 +31,6 @@ const PlayersContext = React.createContext<Players | null>(null);
 const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
   const screen = useScreenStore((state) => state.selectedScreen);
-  const initAudioContext = useRef(null);
   const [setRoomID, setUsers, setUserID] = useUserStore((state) => [
     state.setRoomID,
     state.setUsers,
@@ -47,11 +46,6 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     useScreenStore.getState().setScreen("keys");
   };
 
-  const startAudioContext = () => {
-    // @ts-ignore
-    initAudioContext.current?.click();
-  };
-
   const loadSamples = () => {
     // TODO: persist loaded samples
     players.current = new Players(soundFiles, () => {}).toDestination();
@@ -65,11 +59,8 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
 
     if (!roomID) return;
 
-    if (!initAudioContext.current) return;
-
-    startAudioContext();
     loadSamples();
-  }, [roomID, initAudioContext.current]);
+  }, [roomID]);
 
   useEffect(() => {
     if (!players.current) return;
@@ -100,13 +91,9 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
     <PlayersContext.Provider value={players.current}>
       {props.children}
       {screen == "start" && (
-        <Button
-          variant={"start"}
-          style="plain"
-          className={cs("start")}
-          handler={handler}
-          ref={initAudioContext}
-        ></Button>
+        <div className={cs("page_container")}>
+          <Button variant={"start"} handler={handler} style="plain"></Button>
+        </div>
       )}
     </PlayersContext.Provider>
   );
