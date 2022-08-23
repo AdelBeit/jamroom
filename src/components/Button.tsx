@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import icons from "../utils/data/icons";
 import styles from "./Button.module.css";
 import cs from "classnames";
@@ -41,91 +41,81 @@ const DrumConfig = ({ classes = "" }) => {
   );
 };
 
-const Button: React.FC<ButtonProps> = ({
-  variant,
-  style = "raised",
-  ...props
-}) => {
-  let icon;
-  switch (variant) {
-    case "users":
-      icon = <Users />;
-      break;
-    case "drum_selector":
-      icon = <DrumConfig />;
-      break;
-    default:
-      icon = (
-        <LoadImage
-          placeholder={placeholder}
-          className={styles[variant]}
-          src={icons[variant]}
-        />
-      );
-      break;
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant, style = "raised", handler = () => {}, ...props }, ref) => {
+    let icon;
+    switch (variant) {
+      case "users":
+        icon = <Users />;
+        break;
+      case "drum_selector":
+        icon = <DrumConfig />;
+        break;
+      default:
+        icon = (
+          <LoadImage
+            placeholder={placeholder}
+            className={styles[variant]}
+            src={icons[variant]}
+          />
+        );
+        break;
+    }
+
+    // TODO: play and stop for loops
+    const roomID = useUserStore((state) => state.roomID);
+
+    switch (variant) {
+      case "leave":
+        break;
+      case "back":
+        handler = () => useScreenStore.getState().setDropDown("none");
+        break;
+      case "users":
+      case "soundclips":
+        handler = () => {
+          useScreenStore.getState().setDropDown(variant);
+        };
+        break;
+      case "keys":
+        handler = () => {
+          useSoundStore.setState({ drumEditMode: false });
+          useScreenStore.getState().setScreen(variant);
+          socket.emit("change-instrument", "keys", roomID);
+        };
+        break;
+      case "drums":
+        handler = () => {
+          useScreenStore.getState().setScreen(variant);
+          socket.emit("change-instrument", "drums", roomID);
+        };
+        break;
+      case "drum_selector":
+        handler = useSoundStore.getState().toggleDrumEditMode;
+        break;
+
+      default:
+        break;
+    }
+
+    return (
+      <button
+        {...props}
+        ref={ref}
+        onClick={handler}
+        className={cs(
+          "UNSTYLE_BUTTON",
+          style == "plain" && "neumorphic_mold_raisedUp",
+          styles.button,
+          styles[variant],
+          props.className
+        )}
+      >
+        {icon}
+      </button>
+    );
   }
-
-  // TODO: play and stop for loops
-  let handler = () => {};
-  const roomID = useUserStore((state) => state.roomID);
-
-  switch (variant) {
-    case "leave":
-      break;
-    case "back":
-      handler = () => useScreenStore.getState().setDropDown("none");
-    case "stop":
-      // stopSounds();
-      break;
-    case "users":
-    case "soundclips":
-      handler = () => {
-        useScreenStore.getState().setDropDown(variant);
-      };
-      break;
-    case "keys":
-      handler = () => {
-        useSoundStore.setState({ drumEditMode: false });
-        useScreenStore.getState().setScreen(variant);
-        socket.emit("change-instrument", "keys", roomID);
-      };
-      break;
-    case "drums":
-      handler = () => {
-        useScreenStore.getState().setScreen(variant);
-        socket.emit("change-instrument", "drums", roomID);
-      };
-      break;
-    case "drum_selector":
-      handler = useSoundStore.getState().toggleDrumEditMode;
-      break;
-
-    default:
-      break;
-  }
-
-  return (
-    <button
-      {...props}
-      onClick={handler}
-      className={cs(
-        "UNSTYLE_BUTTON",
-        style == "plain" && "neumorphic_mold_raisedUp",
-        styles.button,
-        styles[variant],
-        props.className
-      )}
-    >
-      {/* {variant != "select" && style == "raised" && (
-        <LoadImage
-          placeholder={placeholder}
-          className={cs(styles.mold)}
-          src={icons["mold_raisedUp"]}
-        />
-      )} */}
-      {icon}
-    </button>
-  );
-};
+);
+Button.displayName = "Button";
 
 export { Button, DrumConfig };

@@ -65,9 +65,11 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
 
     if (!roomID) return;
 
+    if (!initAudioContext.current) return;
+
     startAudioContext();
     loadSamples();
-  }, [roomID]);
+  }, [roomID, initAudioContext.current]);
 
   useEffect(() => {
     if (!players.current) return;
@@ -99,42 +101,12 @@ const PlayersContextProvider = (props: React.PropsWithChildren<{}>) => {
       {props.children}
       {screen == "start" && (
         <Button
-          variant={"stop"}
+          variant={"start"}
           style="plain"
           className={cs("start")}
-          onClick={handler}
-        >
-          {/* <svg
-            width="50"
-            height="50"
-            viewBox="0 0 50 50"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <radialGradient
-              id="MyGradient"
-              cx="40%"
-              cy="40%"
-              r="90%"
-              fx="10%"
-              fy="20%"
-            >
-              <stop offset="20%" stop-color="#ffefcb" />
-              <stop offset="50%" stop-color="#f0846a" />
-            </radialGradient>
-            <g>
-              <rect
-                className="stop_SVG"
-                x="3"
-                y="1"
-                width="50"
-                height="50"
-                rx="2"
-                fill="#EBF4FF"
-              />
-            </g>
-          </svg> */}
-        </Button>
+          handler={handler}
+          ref={initAudioContext}
+        ></Button>
       )}
     </PlayersContext.Provider>
   );
