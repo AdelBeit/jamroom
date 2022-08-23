@@ -30,6 +30,7 @@ export type DropDown = "drum_selector" | "users" | "soundclips";
 
 export type Actions =
   | "back"
+  | "start"
   | "play"
   | "stop"
   | "select"
@@ -46,6 +47,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonVariant;
   style?: ButtonStyle;
+  handler?(): void;
 }
 
 export type DrumType = "kick" | "tom" | "snare" | "hi_hat" | "closed_hat";

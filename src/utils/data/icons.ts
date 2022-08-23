@@ -16,6 +16,7 @@ const icons: { [iconName: string]: string } = {
   cog_outer: "/icons/cog/cog_outer.svg",
   play: "/icons/play.svg",
   stop: "/icons/stop.svg",
+  start: "/icons/play.svg",
   mold_castIn: "/icons/neumorphic_mold_cast_in.svg",
   mold_raisedUp: "/icons/neumorphic_mold_raised.svg",
   select: "/icons/star_cast_in.svg",
