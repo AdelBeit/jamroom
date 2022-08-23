@@ -3,7 +3,7 @@ import cs from "classnames";
 import styles from "./List.module.css";
 import { DropDown } from "../types";
 import { useSoundStore } from "../utils/stores";
-import { usePlayers } from "../../pages/home";
+import { usePlayers } from "../utils/PlayersContext";
 import LoadImage, { placeholder } from "../utils/LoadImage";
 import icons from "../utils/data/icons";
 

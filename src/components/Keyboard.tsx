@@ -3,7 +3,7 @@ import styles from "./Keyboard.module.css";
 import cs from "classnames";
 import { KeyProps, Note, Octave } from "../types";
 import { useSoundStore, useUserStore, useVolumeStore } from "../utils/stores";
-import { usePlayers } from "../../pages/home";
+import { usePlayers } from "../utils/PlayersContext";
 import { socket } from "../utils/socketClient";
 import { playWithVolume } from "../utils/utils";
 
