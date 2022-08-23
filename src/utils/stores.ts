@@ -10,27 +10,33 @@ import {
   VolumeStateStore,
 } from "../types";
 
-export const useVolumeStore = create<VolumeStateStore>()(devtools((set) => ({
-  userVolumes: {},
-  changeVolume: (userID, volume) => set(state => ({ userVolumes: { ...state.userVolumes, [userID]: volume } })),
-  setVolumes: (users) => {
-    const newVolumes = {};
-    Object.keys(users).map(user => newVolumes[users[user][0]] = -10);
-    set(state =>
-      ({ userVolumes: { ...newVolumes, ...state.userVolumes } }))
-  }
-})));
+export const useVolumeStore = create<VolumeStateStore>()(
+  devtools((set) => ({
+    userVolumes: {},
+    changeVolume: (userID, volume) =>
+      set((state) => ({
+        userVolumes: { ...state.userVolumes, [userID]: volume },
+      })),
+    setVolumes: (users) => {
+      const newVolumes = {};
+      Object.keys(users).map((user) => (newVolumes[users[user][0]] = -10));
+      set((state) => ({
+        userVolumes: { ...newVolumes, ...state.userVolumes },
+      }));
+    },
+  }))
+);
 
 export const useUserStore = create<UserStateStore>()(
   devtools((set) => ({
     roomID: "",
     userID: "",
     users: {},
-    setRoomID: roomID => set({ roomID }),
-    setUsers: users => set(({ users })),
-    setUserID: userID => set(({ userID })),
+    setRoomID: (roomID) => set({ roomID }),
+    setUsers: (users) => set({ users }),
+    setUserID: (userID) => set({ userID }),
   }))
-)
+);
 
 // TODO: persist configs
 export const useScreenStore = create<ScreenStateStore>()(
