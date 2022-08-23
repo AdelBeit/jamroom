@@ -2,92 +2,90 @@
   --column-gap: 10px;
   width: 832px;
   height: 270px;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   position: relative;
   box-sizing: border-box;
-  display:flex;
+  display: flex;
   flex-wrap: nowrap;
-  overflow-x:scroll;
+  overflow-x: scroll;
   text-align: center;
-  padding:10px 0px;
+  padding: 10px 0px;
   gap: var(--column-gap);
-  
 }
 
-
-.keyboard_template_container{
+.keyboard_template_container {
   width: 100%;
-  height:100%;
-  display:grid;
-  justify-content:center;
-  grid-template-columns:repeat(7, 1fr);
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 0;
-  column-gap:var(--column-gap);
+  column-gap: var(--column-gap);
   margin: auto;
 }
 
-.key{
+.key {
   grid-row: 1/1;
-  background-color:var(--background-color);
+  background-color: var(--background-color);
   border-radius: 20px;
 }
 
-.key.white{
-  border-radius:30px;
+.key.white {
+  border-radius: 30px;
 }
 
-.key.black{
-  left:-30%;
+.key.black {
+  left: -30%;
 }
 
-.C{
+.C {
   grid-column-start: 1;
 }
-.Cs{
+.Cs {
   grid-column-start: 2;
 }
-.D{
-  grid-column-start:2;
+.D {
+  grid-column-start: 2;
 }
-.Ds{
-  grid-column-start:3;
+.Ds {
+  grid-column-start: 3;
 }
-.E{
-  grid-column-start:3;
+.E {
+  grid-column-start: 3;
 }
-.F{
+.F {
   grid-column-start: 4;
 }
-.Fs{
+.Fs {
   grid-column-start: 5;
 }
-.G{
-  grid-column-start:5;
+.G {
+  grid-column-start: 5;
 }
-.Gs{
-  grid-column-start:6;
+.Gs {
+  grid-column-start: 6;
 }
-.A{
-  grid-column-start:6;
+.A {
+  grid-column-start: 6;
 }
-.As{
-  grid-column-start:7;
+.As {
+  grid-column-start: 7;
 }
-.B{
-  grid-column-start:7;
+.B {
+  grid-column-start: 7;
 }
 
-.key.C{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+.key.C {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: flex-end;
-  padding-bottom:10px !important;
+  padding-bottom: 10px !important;
 }
 
-.key_text{
-  font-size:20px;
+.key_text {
+  font-size: 20px;
 }
 
 .keyboard_container .white.key {
@@ -98,7 +96,7 @@
   z-index: 2;
 }
 
-.keyboard_container button{
+.keyboard_container button {
   padding: 0;
   position: relative;
 }
@@ -108,7 +106,7 @@
   height: 270px;
 }
 
-.black.key{
+.black.key {
   width: 54px;
   height: 155px;
 }
