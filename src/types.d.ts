@@ -69,6 +69,7 @@ export interface ScreenStateStore {
   setDropDown: (selectedDropDown: DropDown | "none") => void;
 }
 
+export type samples = { [name: string]: string };
 export interface SoundStateStore {
   currentOctave: Octave;
   drumEditMode: boolean;
