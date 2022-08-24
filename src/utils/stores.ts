@@ -56,11 +56,11 @@ export const useSoundStore = create<SoundStateStore>()(
     drumEditMode: false,
     selectedDrumToEdit: "tom",
     drumSounds: {
-      tom: "tom 1",
-      snare: "snare 3",
-      kick: "kick 2",
-      hi_hat: "house hihats",
-      closed_hat: "closed hat 2",
+      tom: "",
+      snare: "",
+      kick: "",
+      hi_hat: "",
+      closed_hat: "",
     },
     toggleDrumEditMode: () =>
       set((state) => ({ drumEditMode: !state.drumEditMode })),
