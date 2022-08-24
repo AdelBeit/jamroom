@@ -82,3 +82,19 @@ export const playWithVolume = (player: Player, volume: number) => {
   player.volume.value = volume;
   player.start();
 };
+
+export const flattenSamples = (samples) => {
+  return Object.keys(samples).reduce(
+    // (acc, instrument) => ({ ...acc, ...samples[instrument] }),
+    (acc, instrument) => {
+      // console.log(instrument);
+      const firstSampleName = Object.keys(samples[instrument])[0];
+      const firstSample = samples[instrument][firstSampleName];
+      return {
+        ...acc,
+        [firstSampleName]: firstSample,
+      };
+    },
+    {}
+  );
+};
