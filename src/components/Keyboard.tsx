@@ -12,7 +12,7 @@ const Key = ({ note, octave }: KeyProps) => {
   if (!octave) {
     octave = currentOctave;
   }
-  const players = usePlayers();
+  const { players } = usePlayers();
   const [roomID, userID] = useUserStore((state) => [
     state.roomID,
     state.userID,

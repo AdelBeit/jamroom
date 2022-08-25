@@ -12,6 +12,7 @@ import {
   closedhats,
 } from "../../utils/data/soundFiles";
 import { nanoid } from "nanoid";
+import { usePlayers } from "../../utils/PlayersContext";
 
 const DrumSelector = () => {
   const dropdown = useScreenStore((state) => state.selectedDropDown);
@@ -20,13 +21,14 @@ const DrumSelector = () => {
     state.drumSounds[state.selectedDrumToEdit],
   ]);
   const variant = "drum_selector";
+  const { samples } = usePlayers();
 
-  const soundFiles = {
-    tom: toms,
-    kick: kicks,
-    snare: snares,
-    hi_hat: hihats,
-    closed_hat: closedhats,
+  const sampleFiles = {
+    tom: samples.toms,
+    kick: samples.kicks,
+    snare: samples.snares,
+    hi_hat: samples.hihats,
+    closed_hat: samples.closedhats,
   };
 
   return (
@@ -39,7 +41,7 @@ const DrumSelector = () => {
       )}
     >
       <List variant={variant}>
-        {Object.keys(soundFiles[selectedDrum]).map((name) => (
+        {Object.keys(sampleFiles[selectedDrum]).map((name) => (
           <SoundClipItem
             key={nanoid()}
             variant={name == selectedSample ? "drum_selected" : "drum_sample"}

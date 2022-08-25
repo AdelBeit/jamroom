@@ -13,11 +13,11 @@ import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
 import LoadImage, { placeholder } from "../utils/LoadImage";
 import { DrumConfig } from "./Button";
-import { playWithVolume } from "../utils/utils";
+import { flattenSamples, playWithVolume } from "../utils/utils";
 import { usePlayers } from "../utils/PlayersContext";
 
 const Drum = ({ drumType }: DrumProps) => {
-  const players = usePlayers();
+  const { players } = usePlayers();
   const [drumSounds, editMode] = useSoundStore((state) => [
     state.drumSounds,
     state.drumEditMode,

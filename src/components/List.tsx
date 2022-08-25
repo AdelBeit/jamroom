@@ -43,7 +43,7 @@ const SoundClipItem = ({
   variant?: "drum_sample" | "drum_selected" | "sound_clip";
   clipName: string;
 }) => {
-  const players = usePlayers();
+  const { players } = usePlayers();
   const [clipState, setClipState] = useState("stop");
 
   const [drums, drumType] = useSoundStore((state) => [
