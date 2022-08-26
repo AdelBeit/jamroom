@@ -11,8 +11,7 @@ import {
 import { Players } from "tone";
 import * as Tone from "tone";
 import { Button } from "../components/Button";
-import { samples, UserStateStore } from "../types";
-import soundFiles from "./data/soundFiles";
+import { samples, SoundStateStore, UserStateStore } from "../types";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
 import {
   useScreenStore,
@@ -54,15 +53,22 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const userID = generateName();
   // @ts-ignore
   const [samples, setSamples] = useState(defaultState.samples);
+  const setDrumSound = useSoundStore((state) => state.setDrumSound);
 
   const handler = async () => {
     await Tone.start();
     useScreenStore.getState().setScreen("keys");
   };
 
-  const loadSamples = () => {
+  const loadSamples = (samples) => {
+    const allSamples = flattenSamples(samples);
+    setDrumSound("tom", Object.keys(samples["toms"])[0]);
+    setDrumSound("snare", Object.keys(samples["snares"])[0]);
+    setDrumSound("kick", Object.keys(samples["kicks"])[0]);
+    setDrumSound("hi_hat", Object.keys(samples["hi_hats"])[0]);
+    setDrumSound("closed_hat", Object.keys(samples["closed_hats"])[0]);
     // TODO: persist loaded samples
-    players.current = new Players(soundFiles, () => {}).toDestination();
+    players.current = new Players(allSamples, () => {}).toDestination();
   };
 
   useEffect(() => {
@@ -73,8 +79,8 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
 
     if (!roomID) return;
 
-    loadSamples();
-  }, [roomID]);
+    loadSamples(samples);
+  }, [roomID, samples]);
 
   useEffect(() => {
     if (!players.current) return;
