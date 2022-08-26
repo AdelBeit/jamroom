@@ -6,17 +6,35 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { Players } from "tone";
 import * as Tone from "tone";
 import { Button } from "../components/Button";
-import { UserStateStore } from "../types";
+import { samples, UserStateStore } from "../types";
 import soundFiles from "./data/soundFiles";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
-import { useScreenStore, useUserStore, useVolumeStore } from "./stores";
-import { generateName, playWithVolume } from "./utils";
+import {
+  useScreenStore,
+  useSoundStore,
+  useUserStore,
+  useVolumeStore,
+} from "./stores";
+import { generateName, playWithVolume, flattenSamples } from "./utils";
 
-const PlayersContext = createContext<Players | null>(null);
+interface PlayersContext {
+  players: Players | null;
+  samples: samples;
+  setSamples(samples: samples): void;
+}
+
+const defaultState = {
+  players: null,
+  samples: {},
+  setSamples: () => {},
+};
+
+const PlayersContext = createContext<PlayersContext>(defaultState);
 export const usePlayers = () => useContext(PlayersContext);
 
 // TODO: make sound play on touch start not touch end
@@ -34,6 +52,8 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const router = useRouter();
   const { roomID } = router.query;
   const userID = generateName();
+  // @ts-ignore
+  const [samples, setSamples] = useState(defaultState.samples);
 
   const handler = async () => {
     await Tone.start();
@@ -82,7 +102,13 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   }, [players.current]);
 
   return (
-    <PlayersContext.Provider value={players.current}>
+    <PlayersContext.Provider
+      value={{
+        players: players.current,
+        samples: samples,
+        setSamples: setSamples,
+      }}
+    >
       {props.children}
       {screen == "start" && (
         <div className={"page_container"}>
