@@ -4,10 +4,13 @@ import Users from "../src/screens/dropdowns/Users";
 import DrumSelector from "../src/screens/dropdowns/DrumSelector";
 import { useScreenStore } from "../src/utils/stores";
 import { NextPage } from "next";
+import { usePlayers } from "../src/utils/PlayersContext";
 import { getSamples } from "../src/utils/data/getSampleNames";
+import { useEffect } from "react";
 
 const Page: NextPage = (props) => {
   const screen = useScreenStore((state) => state.selectedScreen);
+  const { setSamples } = usePlayers();
   const soundClips = [
     "Egyptian Drum",
     "Tuba",
@@ -15,6 +18,11 @@ const Page: NextPage = (props) => {
     "Gothic Atmospheric",
     "Space Drum",
   ];
+
+  useEffect(() => {
+    // @ts-ignore
+    setSamples(props.samples);
+  }, []);
 
   return (
     <>
