@@ -30,7 +30,7 @@ const Page: NextPage = (props) => {
       {screen == "drums" && <Drums />}
       <Users />
       {/* <SoundClips soundClips={soundClips} /> */}
-      {/* <DrumSelector /> */}
+      <DrumSelector />
     </>
   );
 };
