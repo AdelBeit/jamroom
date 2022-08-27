@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import { ButtonVariant, ToolBarProps } from "../types";
 
 const Keyboard = () => {
-  const buttons: ButtonVariant[] = ["users", "soundclips", "drums"];
+  const buttons: ButtonVariant[] = ["users", "drums"];
 
   return (
     <>
@@ -19,7 +19,7 @@ const Keyboard = () => {
 const Drumkit = () => {
   const buttons: ButtonVariant[] = [
     "users",
-    "soundclips",
+    // "soundclips",
     "keys",
     "drum_selector",
   ];
