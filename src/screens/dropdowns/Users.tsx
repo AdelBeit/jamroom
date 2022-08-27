@@ -17,12 +17,8 @@ import LoadImage, { placeholder } from "../../utils/LoadImage";
 import { useEffect, useState } from "react";
 import VolumeSlider from "../../components/VolumeSlider";
 
-// TODO: overhaul
+// TODO: minor features
 // leave button socket
-// CHECK: player joined
-// CHECK: player changed instrument
-// CHECK: show list of players
-// CHECK: add players by inviting them, copy invite code with button
 // kick players
 
 const UserItem = ({
