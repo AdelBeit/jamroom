@@ -14,6 +14,28 @@
   gap: var(--column-gap);
 }
 
+/* custom scrollbar */
+.keyboard_container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.keyboard_container::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+.keyboard_container::-webkit-scrollbar-thumb {
+  background: var(--background-color);
+  background: rgb(252, 190, 83);
+  box-shadow: 1px 0px 1px rgba(205, 222, 242, 0.73),
+    -2px 0px 1px rgba(240, 247, 255, 0.12),
+    inset -2px 0px 5px rgba(167, 193, 224, 0.52);
+  border-radius: 8px;
+}
+
+.keyboard_container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .keyboard_template_container {
   width: 100%;
   height: 100%;
@@ -32,10 +54,14 @@
 }
 
 .key.white {
+  width: 97px;
+  height: 270px;
   border-radius: 30px;
 }
 
 .key.black {
+  width: 54px;
+  height: 155px;
   left: -30%;
 }
 
@@ -99,14 +125,4 @@
 .keyboard_container button {
   padding: 0;
   position: relative;
-}
-
-.white.key {
-  width: 97px;
-  height: 270px;
-}
-
-.black.key {
-  width: 54px;
-  height: 155px;
 }
