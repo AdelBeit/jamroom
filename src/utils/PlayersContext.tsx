@@ -38,7 +38,7 @@ export const usePlayers = () => useContext(PlayersContext);
 
 // TODO: make sound play on touch start not touch end
 // TODO: drag events cancel sample play
-// CHECK: extract context into it's own file
+
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
   const screen = useScreenStore((state) => state.selectedScreen);
