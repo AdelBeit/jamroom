@@ -43,7 +43,7 @@ a {
 }
 
 .neumorphic_mold_castIn {
-  background: #ebf4ff;
+  background: var(--background-color);
   box-shadow: 1px 0px 1px rgba(205, 222, 242, 0.73),
     -2px 0px 1px rgba(240, 247, 255, 0.12),
     inset -2px 0px 5px rgba(167, 193, 224, 0.52);
@@ -121,10 +121,6 @@ li {
   transition: unset;
   -webkit-appearance: none;
   -moz-appearance: none;
-}
-
-.UNSTYLE_BUTTON:hover,
-.UNSTYLE_BUTTON:focus {
 }
 
 .UNSTYLE_BUTTON:focus {
