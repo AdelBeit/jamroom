@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./Keyboard.module.css";
 import cs from "classnames";
 import { KeyProps, Note, Octave } from "../types";
@@ -6,6 +6,7 @@ import { useSoundStore, useUserStore, useVolumeStore } from "../utils/stores";
 import { usePlayers } from "../utils/PlayersContext";
 import { socket } from "../utils/socketClient";
 import { playWithVolume } from "../utils/utils";
+import useDraggableScroll from "use-draggable-scroll";
 
 const Key = ({ note, octave }: KeyProps) => {
   const currentOctave = useSoundStore((state) => state.currentOctave);
@@ -30,8 +31,8 @@ const Key = ({ note, octave }: KeyProps) => {
 
   return (
     <button
-      onTouchEnd={keyHandler}
-      onClick={keyHandler}
+      onTouchStart={keyHandler}
+      onMouseDown={keyHandler}
       id={note + octave}
       className={cs(
         "UNSTYLE_BUTTON",
@@ -81,12 +82,18 @@ const KeyboardTemplate = ({ octave }: { octave: Octave }) => {
 const Keyboard = () => {
   const currentOctave = useSoundStore((state) => state.currentOctave);
   const nextOctave = Math.min(Math.max(1, currentOctave + 1), 7) as Octave;
+  const ref = useRef(null);
+  const { onMouseDown } = useDraggableScroll(ref, { direction: "horizontal" });
   // CHECK: allow swiping/dragging left and right on the keyboard to go up and down the octaves
   // TODO: make a custom scroll bar for the keyboard
   // TODO: hide elements partially overflowing in the keyboard
   // TODO: animate keys as they enter and leave viewport of parent
   return (
-    <div className={styles.keyboard_container}>
+    <div
+      ref={ref}
+      onMouseDown={onMouseDown}
+      className={styles.keyboard_container}
+    >
       {[...Array(7)].map((v, index) => (
         <KeyboardTemplate key={index} octave={(index + 1) as Octave} />
       ))}
