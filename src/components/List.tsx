@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import cs from "classnames";
 import styles from "./List.module.css";
-import { DropDown } from "../types";
+import { classNames, DropDown } from "../types";
 import { useSoundStore } from "../utils/stores";
 import { usePlayers } from "../utils/PlayersContext";
 import LoadImage, { placeholder } from "../utils/LoadImage";
@@ -16,7 +16,7 @@ const ListItem = ({
 }: {
   style?: "raised" | "castIn";
   handler?(): void;
-  classes?: string | string[];
+  classes?: classNames;
   children: ReactNode;
 }) => {
   return (

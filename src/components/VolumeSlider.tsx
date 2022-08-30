@@ -4,7 +4,7 @@ import cs from "classnames";
 
 const VolumeSlider = (props) => {
   return (
-    <div className={cs(styles.slider, props.classes ?? "")}>
+    <div className={cs(styles.slider, props.classes && props.classes)}>
       <input
         value={props.value}
         type="range"
