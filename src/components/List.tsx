@@ -67,7 +67,11 @@ const SoundClipItem = ({
     <ListItem
       handler={handler}
       style={variant == "drum_selected" ? "castIn" : "raised"}
-      classes={cs(styles.soundclip, styles[variant])}
+      classes={cs(
+        styles.soundclip,
+        styles[variant],
+        variant == "drum_selected" && styles.primary
+      )}
     >
       <>
         <span className="neumorphic_text">{clipName}</span>
