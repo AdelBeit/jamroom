@@ -121,6 +121,7 @@ li {
   transition: unset;
   -webkit-appearance: none;
   -moz-appearance: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .UNSTYLE_BUTTON:focus {
