@@ -17,10 +17,8 @@ import LoadImage, { placeholder } from "../../utils/LoadImage";
 import { useEffect, useState } from "react";
 import VolumeSlider from "../../components/VolumeSlider";
 
-// TODO: minor features
-// leave button socket
-// kick players
-
+// (maybe) TODO: leave button socket, kick players
+// TODO: join a random room
 const UserItem = ({
   userID,
   instrument,

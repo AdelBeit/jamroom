@@ -125,10 +125,9 @@ const Keyboard = () => {
     setObserver(new IntersectionObserver(observerCallBack, options));
   }, []);
 
-  // CHECK: allow swiping/dragging left and right on the keyboard to go up and down the octaves
   // TODO: make a custom scroll bar for the keyboard
-  // TODO: hide elements partially overflowing in the keyboard
-  // TODO: animate keys as they enter and leave viewport of parent
+  // CHECK: hide elements partially overflowing in the keyboard
+  // CHECK: animate keys as they enter and leave viewport of parent
   return (
     <div
       ref={containerRef}
