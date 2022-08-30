@@ -1,18 +1,23 @@
-import React, { useRef } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import styles from "./Keyboard.module.css";
 import cs from "classnames";
-import { KeyProps, Note, Octave } from "../types";
+import { KeyboardTemplateProps, KeyProps, Note, Octave } from "../types";
 import { useSoundStore, useUserStore, useVolumeStore } from "../utils/stores";
 import { usePlayers } from "../utils/PlayersContext";
 import { socket } from "../utils/socketClient";
 import { playWithVolume } from "../utils/utils";
+// @ts-ignore
 import useDraggableScroll from "use-draggable-scroll";
+import React from "react";
 
-const Key = ({ note, octave }: KeyProps) => {
+const Key = (props: KeyProps) => {
+  const { note, observer } = { ...props };
+  let { octave } = { ...props };
   const currentOctave = useSoundStore((state) => state.currentOctave);
-  if (!octave) {
-    octave = currentOctave;
-  }
+  const ref = useRef<HTMLButtonElement>(null);
+
+  if (!octave) octave = currentOctave;
+
   const { players } = usePlayers();
   const [roomID, userID] = useUserStore((state) => [
     state.roomID,
@@ -29,12 +34,20 @@ const Key = ({ note, octave }: KeyProps) => {
     }
   };
 
+  useEffect(() => {
+    if (!ref.current || !observer) return;
+
+    observer.observe(ref.current);
+  }, [observer]);
+
   return (
     <button
+      ref={ref}
       onTouchStart={keyHandler}
       onMouseDown={keyHandler}
       id={note + octave}
       className={cs(
+        props.classes && props.classes,
         "UNSTYLE_BUTTON",
         "neumorphic_mold_raisedUp",
         styles[note],
@@ -54,7 +67,7 @@ const Key = ({ note, octave }: KeyProps) => {
   );
 };
 
-const KeyboardTemplate = ({ octave }: { octave: Octave }) => {
+const KeyboardTemplate = (props: KeyboardTemplateProps) => {
   const NOTES = [
     "C",
     "Cs",
@@ -73,29 +86,63 @@ const KeyboardTemplate = ({ octave }: { octave: Octave }) => {
   return (
     <div className={styles.keyboard_template_container}>
       {NOTES.map((note, index) => (
-        <Key key={index} note={note} octave={octave} />
+        <Key {...props} key={index} note={note} />
       ))}
     </div>
   );
 };
 
 const Keyboard = () => {
-  const currentOctave = useSoundStore((state) => state.currentOctave);
-  const nextOctave = Math.min(Math.max(1, currentOctave + 1), 7) as Octave;
-  const ref = useRef(null);
-  const { onMouseDown } = useDraggableScroll(ref, { direction: "horizontal" });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { onMouseDown } = useDraggableScroll(containerRef, {
+    direction: "horizontal",
+  });
+  const [childRef, setChildRef] = useState<
+    MutableRefObject<HTMLButtonElement | null>
+  >(useRef(null));
+  const [observer, setObserver] = useState<IntersectionObserver | null>(null);
+
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.6,
+  };
+
+  const observerCallBack = (
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver
+  ) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.setAttribute("data-visible", "");
+      } else {
+        entry.target.removeAttribute("data-visible");
+      }
+    });
+  };
+
+  useEffect(() => {
+    setObserver(new IntersectionObserver(observerCallBack, options));
+  }, []);
+
   // CHECK: allow swiping/dragging left and right on the keyboard to go up and down the octaves
   // TODO: make a custom scroll bar for the keyboard
   // TODO: hide elements partially overflowing in the keyboard
   // TODO: animate keys as they enter and leave viewport of parent
   return (
     <div
-      ref={ref}
+      ref={containerRef}
       onMouseDown={onMouseDown}
       className={styles.keyboard_container}
+      id="keyboard_viewbox"
     >
       {[...Array(7)].map((v, index) => (
-        <KeyboardTemplate key={index} octave={(index + 1) as Octave} />
+        <KeyboardTemplate
+          observer={observer}
+          key={index}
+          octave={(index + 1) as Octave}
+          setChildRef={setChildRef}
+        />
       ))}
     </div>
   );

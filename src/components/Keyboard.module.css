@@ -10,13 +10,14 @@
   flex-wrap: nowrap;
   overflow-x: scroll;
   text-align: center;
-  padding: 10px 0px;
+  padding: 15px 0px;
   gap: var(--column-gap);
 }
 
 /* custom scrollbar */
 .keyboard_container::-webkit-scrollbar {
   width: 10px;
+  display: none;
 }
 
 .keyboard_container::-webkit-scrollbar-track {
@@ -51,6 +52,17 @@
   grid-row: 1/1;
   background-color: var(--background-color);
   border-radius: 20px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition-duration: 0.2s;
+  transition-property: opacity, transform;
+  transition-timing-function: ease;
+}
+
+.key[data-visible] {
+  transform: translateY(10px);
+  transform: scale(1);
+  opacity: 1;
 }
 
 .key.white {

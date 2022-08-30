@@ -1,4 +1,9 @@
-import React, { FunctionComponent, MutableRefObject, Ref } from "react";
+import React, {
+  FunctionComponent,
+  MutableRefObject,
+  Ref,
+  RefObject,
+} from "react";
 import { Players } from "tone";
 import { GetState, SetState, State, StateCreator, StoreApi } from "zustand";
 
@@ -17,10 +22,17 @@ export type Note =
   | "As"
   | "B";
 
+export type classNames = String | String[];
+
 export interface KeyProps {
   note: Note;
+  setChildRef: Function;
+  observer: IntersectionObserver | null;
+  classes?: classNames;
   octave?: Octave;
 }
+
+export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> {}
 
 export type Instrument = "drums" | "keys";
 
