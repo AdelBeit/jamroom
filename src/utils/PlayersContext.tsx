@@ -36,7 +36,7 @@ const defaultState = {
 const PlayersContext = createContext<PlayersContext>(defaultState);
 export const usePlayers = () => useContext(PlayersContext);
 
-// TODO: make sound play on touch start not touch end
+// CHECK: make sound play on touch start not touch end
 // TODO: drag events cancel sample play
 
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
@@ -93,7 +93,6 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     });
 
     socket.on("sound-played", (userID, clipName) => {
-      // CHECK: pass volume before playing
       const player = players!.current!.player(clipName);
       const volume = useVolumeStore.getState().userVolumes[userID] ?? -10;
       playWithVolume(player, volume);
