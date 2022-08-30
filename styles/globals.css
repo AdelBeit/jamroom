@@ -117,8 +117,7 @@ li {
   line-height: unset;
   cursor: pointer;
   text-align: unset;
-  transition: background 250ms ease-in-out, transform 150ms ease;
-  transition: unset;
+  transition: transform 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
   -webkit-appearance: none;
   -moz-appearance: none;
   -webkit-tap-highlight-color: transparent;

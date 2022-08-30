@@ -6,6 +6,10 @@
 
 .drum_container {
   position: absolute;
+  transition: transform 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.drum_container:active {
+  transform: scale(0.9);
 }
 
 .drum_container .config {
