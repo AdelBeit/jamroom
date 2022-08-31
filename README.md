@@ -2,7 +2,7 @@
 
 Multiplayer music jamming app. Made for mobile. Gather your friends and play the keyboard or the drums together.
 
-https://dnk-app-ierav.ondigitalocean.app
+[Play Here](https://dnk-app-ierav.ondigitalocean.app)
 
 ## Features:
 
@@ -18,3 +18,6 @@ Powered by:
 - Docker
 - ToneJS (Web Audio API)
 - Zustand
+
+
+[Figma File](https://www.figma.com/file/mL6jPwkLXq2MvPu1FzyQnt/Music-App?node-id=0%3A1)
