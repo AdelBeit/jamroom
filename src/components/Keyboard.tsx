@@ -34,6 +34,10 @@ const Key = (props: KeyProps) => {
     }
   };
 
+  const preventDefault = (e) => {
+    e.preventDefault();
+  };
+
   useEffect(() => {
     if (!ref.current || !observer) return;
 
@@ -45,6 +49,8 @@ const Key = (props: KeyProps) => {
       ref={ref}
       onTouchStart={keyHandler}
       onMouseDown={keyHandler}
+      onMouseUp={preventDefault}
+      onTouchEnd={preventDefault}
       id={note + octave}
       className={cs(
         props.classes && props.classes,
@@ -58,7 +64,7 @@ const Key = (props: KeyProps) => {
       )}
     >
       {note == "C" && (
-        <span className={styles.key_text}>
+        <span className={cs("neumorphic_text", styles.key_text)}>
           {note}
           {octave}
         </span>

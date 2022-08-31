@@ -41,10 +41,16 @@ const Drum = ({ drumType }: DrumProps) => {
     }
   };
 
+  const preventDefault = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <button
-      onClick={drumHandler}
-      onTouchEnd={drumHandler}
+      onMouseDown={drumHandler}
+      onTouchStart={drumHandler}
+      onMouseUp={preventDefault}
+      onTouchEnd={preventDefault}
       id={drumType}
       className={cs("UNSTYLE_BUTTON", styles.drum_container, styles[drumType])}
     >
