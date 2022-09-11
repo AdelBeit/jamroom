@@ -83,9 +83,26 @@
 
 .button.start {
   display: block;
-  width: 100px;
+  width: auto;
   height: 100px;
   margin: auto;
+  padding: 0px 15px;
+}
+
+.button.start * > span {
+  display: none;
+}
+
+@media screen and (max-width: 1023px) {
+  .button.start .mobile_screen {
+    display: inline;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .button.start .desktop_screen {
+    display: inline;
+  }
 }
 
 .button .mold {

@@ -51,6 +51,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       case "drum_selector":
         icon = <DrumConfig />;
         break;
+      case "start":
+        icon = (
+          <span className={"neumorphic_text"}>
+            <span className={styles.mobile_screen}>Tap</span>
+            <span className={styles.desktop_screen}>Click</span> here to enable
+            audio
+          </span>
+        );
+        break;
       default:
         icon = (
           <LoadImage
