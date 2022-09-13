@@ -1,4 +1,4 @@
-## Drunk 'n' Keys
+## Drum 'n' Keys
 
 Multiplayer music jamming app. Made for mobile. Gather your friends and play the keyboard or the drums together.
 
