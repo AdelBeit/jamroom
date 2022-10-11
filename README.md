@@ -8,6 +8,7 @@ Multiplayer music jamming app. Made for mobile. Gather your friends and play the
 
 - Customizable drumpads
 - Multiplayer, invite your friends through the users dropdown
+- Scrollable full keyboard
 
 Powered by:
 
