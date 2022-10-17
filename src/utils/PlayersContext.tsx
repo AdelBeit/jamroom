@@ -67,7 +67,6 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     setDrumSound("kick", Object.keys(samples["kicks"])[0]);
     setDrumSound("hi_hat", Object.keys(samples["hi_hats"])[0]);
     setDrumSound("closed_hat", Object.keys(samples["closed_hats"])[0]);
-    // TODO: persist loaded samples
     players.current = new Players(allSamples, () => {}).toDestination();
   };
 
