@@ -24,7 +24,8 @@ const Key = (props: KeyProps) => {
     state.userID,
   ]);
 
-  const keyHandler = () => {
+  const keyHandler = (e) => {
+    e.currentTarget.classList.add(styles.tap);
     if (players) {
       const clipName = note + octave;
       const player = players.player(clipName);
@@ -36,6 +37,7 @@ const Key = (props: KeyProps) => {
 
   const preventDefault = (e) => {
     e.preventDefault();
+    e.currentTarget.classList.remove(styles.tap);
   };
 
   useEffect(() => {

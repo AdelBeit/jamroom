@@ -25,7 +25,8 @@ const Drum = ({ drumType }: DrumProps) => {
   const userID = useUserStore((state) => state.userID);
   const { roomID } = useRouter().query;
 
-  const drumHandler = () => {
+  const drumHandler = (e) => {
+    e.currentTarget.classList.add(styles.tap);
     if (editMode) {
       useSoundStore.getState().setDrumToEdit(drumType);
       useScreenStore.getState().setDropDown("drum_selector");
@@ -43,6 +44,7 @@ const Drum = ({ drumType }: DrumProps) => {
 
   const preventDefault = (e) => {
     e.preventDefault();
+    e.currentTarget.classList.remove(styles.tap);
   };
 
   return (

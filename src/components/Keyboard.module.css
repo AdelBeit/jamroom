@@ -64,7 +64,8 @@
   opacity: 1;
 }
 
-.key[data-visible]:active {
+.key[data-visible]:active,
+.tap {
   transform: scale(0.9, 0.98);
 }
 
