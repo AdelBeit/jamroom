@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <title>DnK</title>
+        <title>Drum 'n' Keys</title>
         <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="apple-touch-icon" href="/app_icons/icon-192x192.png" />
         <meta name="theme-color" content="#fff" />
