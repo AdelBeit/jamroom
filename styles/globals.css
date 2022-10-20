@@ -12,6 +12,7 @@ body {
   background-color: var(--background-color);
   height: var(--height);
   width: var(--width);
+  width: 100vw;
   margin: auto;
 }
 
@@ -76,6 +77,7 @@ a {
   gap: 10px;
   height: var(--height);
   width: var(--width);
+  width: 100vw;
 }
 
 .dropdown_container {
