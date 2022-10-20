@@ -1,6 +1,8 @@
 .drums {
   flex-direction: row;
+  justify-content: center;
   padding-left: 30px;
+  column-gap: 20px;
 }
 
 .drums,
