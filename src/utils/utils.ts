@@ -1,5 +1,4 @@
 import { Player } from "tone";
-import { useVolumeStore } from "./stores";
 
 export const generateName = () => {
   const adjectives = [
@@ -74,7 +73,6 @@ export const baseURL = (instrument) => {
       return "./samples/piano/";
     default:
       return "./samples/";
-      break;
   }
 };
 

@@ -11,7 +11,7 @@ import {
 import { Players } from "tone";
 import * as Tone from "tone";
 import { Button } from "../components/Button";
-import { samples, SoundStateStore, UserStateStore } from "../types";
+import { samples, UserStateStore } from "../types";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
 import {
   useScreenStore,
