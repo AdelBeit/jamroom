@@ -13,7 +13,6 @@ body {
   background-color: var(--background-color);
   height: var(--height);
   width: var(--width);
-  width: 100vw;
   margin: auto;
 }
 
@@ -78,7 +77,6 @@ a {
   gap: 10px;
   height: var(--height);
   width: var(--width);
-  width: 100vw;
 }
 
 .dropdown_container {
@@ -134,3 +132,12 @@ li {
   transform: unset;
 }
 /* Button styles end */
+
+@media screen and (max-width: 1024px) {
+  html,
+  body,
+  .page_container,
+  .dropdown_container {
+    width: 100vw;
+  }
+}

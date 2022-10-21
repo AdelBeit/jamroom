@@ -64,13 +64,14 @@ const Key = (props: KeyProps) => {
         !note.includes("s") && styles.white,
         styles.key
       )}
+      autoFocus={note == "C" && octave == 4}
     >
-      {note == "C" && (
+      {
         <span className={cs("neumorphic_text", styles.key_text)}>
           {note}
           {octave}
         </span>
-      )}
+      }
     </button>
   );
 };
@@ -92,7 +93,7 @@ const KeyboardTemplate = (props: KeyboardTemplateProps) => {
   ] as Note[];
 
   return (
-    <div className={styles.keyboard_template_container}>
+    <div className={styles.octave_container}>
       {NOTES.map((note, index) => (
         <Key {...props} key={index} note={note} />
       ))}
@@ -140,17 +141,19 @@ const Keyboard = () => {
     <div
       ref={containerRef}
       onMouseDown={onMouseDown}
-      className={styles.keyboard_container}
       id="keyboard_viewbox"
+      className={styles.viewbox}
     >
-      {[...Array(7)].map((v, index) => (
-        <KeyboardTemplate
-          observer={observer}
-          key={index}
-          octave={(index + 1) as Octave}
-          setChildRef={setChildRef}
-        />
-      ))}
+      <div className={styles.container}>
+        {[...Array(7)].map((v, index) => (
+          <KeyboardTemplate
+            observer={observer}
+            key={index}
+            octave={(index + 1) as Octave}
+            setChildRef={setChildRef}
+          />
+        ))}
+      </div>
     </div>
   );
 };
