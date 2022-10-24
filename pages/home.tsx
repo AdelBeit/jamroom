@@ -7,7 +7,7 @@ import { NextPage } from "next";
 import { usePlayers } from "../src/utils/PlayersContext";
 import { getSamples } from "../src/utils/data/getSampleNames";
 import { useEffect, useState } from "react";
-import { changeTheme } from "../src/utils/utils";
+import { changeTheme, isItDarkOutside } from "../src/utils/utils";
 
 const Page: NextPage = (props) => {
   const screen = useScreenStore((state) => state.selectedScreen);
@@ -20,8 +20,10 @@ const Page: NextPage = (props) => {
     "Gothic Atmospheric",
     "Space Drum",
   ];
+  const setTheme = useScreenStore((state) => state.setTheme);
 
   useEffect(() => {
+    setTheme(isItDarkOutside() ? "dark" : "light");
     // @ts-ignore
     setSamples(props.samples);
 

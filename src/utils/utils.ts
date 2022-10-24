@@ -100,14 +100,12 @@ const getRoot = () => ({
   rootStyles: window.getComputedStyle(document.documentElement),
 });
 
-const isItDarkOutside = () =>
-  ((hour: number) => hour >= 18 && hour < 6)(new Date().getHours());
+export const isItDarkOutside = () =>
+  ((hour: number) => hour >= 18 || hour < 6)(new Date().getHours());
 
 export const changeTheme = () => {
   const { root, rootStyles } = getRoot();
   const theme = useScreenStore.getState().selectedTheme;
-  const setTheme = useScreenStore.getState().setTheme;
-  setTheme(isItDarkOutside() ? "dark" : "light");
   let themeColor = rootStyles.getPropertyValue(
     theme == "dark" ? "--dark-theme" : "--light-theme"
   );
