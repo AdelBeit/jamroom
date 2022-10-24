@@ -2,7 +2,7 @@
 
 Multiplayer music jamming PWA. Made for mobile. Gather your friends and play the keyboard or the drums together.
 
-[Play Here](https://dnk-app-ierav.ondigitalocean.app)
+[Play Here](https://dnk.adelbeit.com)
 
 ## Features:
 
