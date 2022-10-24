@@ -1,33 +1,17 @@
-<svg width="34" height="27" viewBox="0 0 34 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_ddi_19_1614)">
-<path d="M19.111 15.5929C24.0568 15.3933 25.8136 14.817 27.3967 14.1808V25.007C27.3162 25.2476 22.392 25.9958 19.111 25.9484L19.111 15.5929Z" fill="#EBF4FF"/>
-<path d="M16.5793 15.5929C13.5872 15.5929 9.21423 14.6515 7.83328 13.7101L7.83328 24.5363C9.73482 25.5661 16.394 26.1891 16.3491 25.9484L16.5793 15.5929Z" fill="#EBF4FF"/>
-<path d="M6.45237 13.0824C5.75259 12.8201 3.68769 11.5684 3.00001 10.8859L3 20.7706C3.7176 21.6461 6.33285 23.3124 6.45237 23.3595V13.0824Z" fill="#EBF4FF"/>
-<path d="M29.2381 13.2394C29.6984 13.004 31.0794 12.0626 32 11.1212V20.2999C31.3095 21.2413 29.2274 23.7033 29.2381 23.3595V13.2394Z" fill="#EBF4FF"/>
-<path d="M22.3333 9.9445C23.4841 9.70915 23.4841 9.0031 23.4841 9.0031C24.6349 9.0031 27.8571 9.0031 30.1587 8.76775C31.2687 8.95654 31.0423 9.71957 30.619 10.4152C23.254 17.9464 4.34969 13.0824 4.15079 7.59099C3.92063 1.23654 23.8451 -2.48366 29.6984 5.70819C29.9994 6.17704 30.0849 6.40005 29.9286 6.6496H23.4841C23.4841 6.6496 23.1318 6.11019 22.3333 6.17889C18.8483 6.66557 20.9827 10.321 22.3333 9.9445Z" fill="#EBF4FF"/>
-</g>
-<defs>
-<filter id="filter0_ddi_19_1614" x="0" y="0" width="34" height="27" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dx="-2"/>
-<feGaussianBlur stdDeviation="0.5"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.941667 0 0 0 0 0.967917 0 0 0 0 1 0 0 0 0.12 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_19_1614"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dx="1"/>
-<feGaussianBlur stdDeviation="0.5"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.803922 0 0 0 0 0.870588 0 0 0 0 0.94902 0 0 0 0.73 0"/>
-<feBlend mode="normal" in2="effect1_dropShadow_19_1614" result="effect2_dropShadow_19_1614"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_19_1614" result="shape"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dx="-2"/>
-<feGaussianBlur stdDeviation="2.5"/>
-<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.655833 0 0 0 0 0.755583 0 0 0 0 0.8775 0 0 0 0.52 0"/>
-<feBlend mode="normal" in2="shape" result="effect3_innerShadow_19_1614"/>
-</filter>
-</defs>
+<svg width="110" height="95" viewBox="0 0 110 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+        d="M61.1107 55.4532C79.8707 54.6944 86.5345 52.5047 92.5393 50.0872V91.2264C92.2338 92.1408 73.556 94.9842 61.1107 94.8037L61.1107 55.4532Z"
+        fill="#FEFAE0" />
+    <path
+        d="M51.5077 55.4532C40.1585 55.4532 23.5712 51.8759 18.3331 48.2986L18.3331 89.4378C25.5459 93.3512 50.8047 95.7187 50.6347 94.8037L51.5077 55.4532Z"
+        fill="#FEFAE0" />
+    <path
+        d="M13.0952 45.913C10.4409 44.9164 2.60848 40.1598 2.66423e-05 37.5664L0 75.1283C2.72195 78.4553 12.6418 84.7871 13.0952 84.9659V45.913Z"
+        fill="#FEFAE0" />
+    <path
+        d="M99.5238 46.5097C101.27 45.6154 106.508 42.038 110 38.4607V73.3396C107.381 76.9169 99.4834 86.2725 99.5238 84.9659V46.5097Z"
+        fill="#FEFAE0" />
+    <path
+        d="M73.3333 33.9891C77.6984 33.0948 77.6984 30.4118 77.6984 30.4118C82.0635 30.4118 94.2857 30.4118 103.016 29.5174C107.226 30.2349 106.367 33.1344 104.762 35.7777C76.8254 64.3963 5.11952 45.913 4.36508 25.0458C3.49206 0.898861 79.0678 -13.2379 101.27 17.8911C102.411 19.6728 102.736 20.5202 102.143 21.4685H77.6984C77.6984 21.4685 76.3619 19.4187 73.3333 19.6798C60.1141 21.5292 68.2102 35.4197 73.3333 33.9891Z"
+        fill="#FEFAE0" />
 </svg>
