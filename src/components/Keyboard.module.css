@@ -59,7 +59,8 @@
 
 .key {
   grid-row: 1/1;
-  background-color: var(--background-color);
+  background-color: var(--main-color);
+  border: 2px solid var(--stroke-color);
   border-radius: 20px;
   opacity: 0;
   transform: scale(0.8) translateY(40px);
@@ -76,6 +77,7 @@
 .key[data-visible]:active,
 .tap {
   transform: scale(0.9, 0.85);
+  background-color: var(--dark-theme);
 }
 
 .key.white {
@@ -85,6 +87,7 @@
 }
 
 .key.black {
+  background-color: var(--alt-color);
   width: 54px;
   height: 155px;
   left: -30%;
