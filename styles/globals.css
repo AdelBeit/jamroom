@@ -1,5 +1,17 @@
 :root {
-  --background-color: #ebf4ff;
+  --color1: #fefae0;
+  --color2: #d4a373;
+  --color3: #7a2323;
+  --color4: #3c1742;
+
+  --light-theme: var(--color3);
+  --dark-theme: var(--color4);
+
+  --background-color: var(--color1);
+  --main-color: var(--color2);
+  --alt-color: var(--light-theme);
+  --stroke-color: var(--color1);
+
   --width: 896px;
   --height: 414px;
   --max-width: 850px;
@@ -10,10 +22,12 @@ body {
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: var(--background-color);
   height: var(--height);
   width: var(--width);
   margin: auto;
+  background-color: var(--background-color);
+  color: var(--stroke-color);
+  font-size: 22px;
 }
 
 a {
@@ -23,6 +37,11 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.button {
+  background-color: var(--alt-color) !important;
+  border: solid 2px var(--stroke-color) !important;
 }
 
 .page_container,
@@ -45,6 +64,10 @@ li {
   list-style: none;
 }
 
+.text {
+  color: var(--stroke-color);
+}
+
 /* animations */
 .dropdown_container.drop {
   height: var(--height);
@@ -56,19 +79,14 @@ li {
   visibility: hidden;
 }
 
+/* Buttons styles start */
 .UNSTYLE_BUTTON {
   border: unset;
   background-color: unset;
-}
-
-/* Buttons styles start */
-.UNSTYLE_BUTTON {
   display: unset;
-  border: unset;
   padding: unset;
   margin: unset;
   text-decoration: unset;
-  background-color: unset;
   color: inherit;
   font-family: unset;
   font-size: unset;
