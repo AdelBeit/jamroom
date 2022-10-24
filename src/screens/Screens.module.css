@@ -6,6 +6,7 @@
 
 .drums,
 .keys {
+  padding-left: 1vw;
   z-index: 1;
 }
 

@@ -14,6 +14,7 @@
   --stroke-color: var(--color1);
 
   --width: 896px;
+  --width: 100vw;
   --height: 414px;
   --max-width: 850px;
 }
@@ -51,7 +52,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px 15px;
+  padding: 10px 0;
   gap: 10px;
   height: var(--height);
   width: var(--width);
@@ -125,12 +126,3 @@ li {
   transform: unset;
 }
 /* Button styles end */
-
-@media screen and (max-width: 1024px) {
-  html,
-  body,
-  .page_container,
-  .dropdown_container {
-    width: 100vw;
-  }
-}
