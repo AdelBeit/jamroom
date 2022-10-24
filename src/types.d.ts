@@ -58,7 +58,6 @@ export type ButtonVariant = Actions | Exclude<Screen, "start"> | DropDown;
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: ButtonVariant;
-  style?: ButtonStyle;
   handler?(): void;
 }
 

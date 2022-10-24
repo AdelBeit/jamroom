@@ -28,12 +28,12 @@ const DrumConfig = ({ classes = "" }) => {
   return (
     <div className={cs(styles.cog_icon, classes)}>
       <LoadImage
-        placeholder={placeholder}
+        placeholder={"empty"}
         className={cs(styles.inner)}
         src={icons.cog_inner}
       />
       <LoadImage
-        placeholder={placeholder}
+        placeholder={"empty"}
         className={cs(styles.outer)}
         src={icons.cog_outer}
       />
@@ -42,7 +42,7 @@ const DrumConfig = ({ classes = "" }) => {
 };
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant, style = "raised", handler = () => {}, ...props }, ref) => {
+  ({ variant, handler = () => {}, ...props }, ref) => {
     let icon;
     switch (variant) {
       case "users":
@@ -53,10 +53,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         break;
       case "start":
         icon = (
-          <span className={"neumorphic_text"}>
+          <span className={"text"}>
             <span className={styles.mobile_screen}>Tap</span>
-            <span className={styles.desktop_screen}>Click</span> here to enable
-            audio
+            <span className={styles.desktop_screen}>Click</span>
+            <span>&nbsp;here to enable audio</span>
           </span>
         );
         break;
@@ -114,7 +114,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={handler}
         className={cs(
           "UNSTYLE_BUTTON",
-          style == "plain" && "neumorphic_mold_raisedUp",
+          "button",
           styles.button,
           styles[variant],
           props.className

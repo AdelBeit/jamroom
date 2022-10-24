@@ -116,7 +116,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
       {props.children}
       {screen == "start" && (
         <div className={"page_container"}>
-          <Button variant={"start"} handler={handler} style="plain"></Button>
+          <Button variant={"start"} handler={handler}></Button>
         </div>
       )}
     </PlayersContext.Provider>

@@ -2,6 +2,7 @@
   position: relative;
   width: 60px;
   height: 60px;
+  border-radius: 8px;
 }
 
 .button:active {
@@ -44,6 +45,10 @@
 }
 
 /* cog icon */
+.cog_icon {
+  position: relative;
+}
+
 .cog_icon > div {
   position: absolute;
   width: 100%;
@@ -91,6 +96,10 @@
 
 .button.start * > span {
   display: none;
+}
+
+.button.start * > span:last-child {
+  display: initial;
 }
 
 @media screen and (max-width: 1023px) {
