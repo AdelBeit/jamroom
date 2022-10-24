@@ -57,7 +57,6 @@ const Key = (props: KeyProps) => {
       className={cs(
         props.classes && props.classes,
         "UNSTYLE_BUTTON",
-        "neumorphic_mold_raisedUp",
         styles[note],
         styles[octave],
         note.includes("s") && styles.black,
@@ -67,7 +66,7 @@ const Key = (props: KeyProps) => {
       autoFocus={note == "C" && octave == 4}
     >
       {
-        <span className={cs("neumorphic_text", styles.key_text)}>
+        <span className={cs(styles.key_text, "text")}>
           {note}
           {octave}
         </span>
@@ -135,8 +134,6 @@ const Keyboard = () => {
   }, []);
 
   // TODO: make a custom scroll bar for the keyboard
-  // CHECK: hide elements partially overflowing in the keyboard
-  // CHECK: animate keys as they enter and leave viewport of parent
   return (
     <div
       ref={containerRef}
