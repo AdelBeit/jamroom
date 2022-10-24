@@ -21,6 +21,9 @@
   justify-content: space-between;
   padding: 15px 15px;
   column-gap: 15px;
+  background-color: var(--alt-color);
+  border: 2px solid var(--stroke-color);
+  border-radius: 8px;
 }
 
 .item_container .icon {
@@ -31,6 +34,6 @@
 }
 
 .primary {
-  color: green;
+  background-color: var(--main-color);
   order: -1;
 }

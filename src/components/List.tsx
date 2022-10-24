@@ -7,27 +7,24 @@ import { usePlayers } from "../utils/PlayersContext";
 import LoadImage, { placeholder } from "../utils/LoadImage";
 import icons from "../utils/data/icons";
 
-// CHECK: overhaul with buttons
-const ListItem = ({
-  style = "raised",
-  handler = () => {},
-  classes = "",
-  children,
-}: {
-  style?: "raised" | "castIn";
+interface ListItemProps {
   handler?(): void;
   classes?: classNames;
   children: ReactNode;
-}) => {
+}
+
+// CHECK: overhaul with buttons
+const ListItem = ({
+  handler = () => {},
+  classes = "",
+  children,
+}: ListItemProps) => {
   return (
     <button
       onClick={handler}
       className={cs(
         styles.item_container,
         "UNSTYLE_BUTTON",
-        style == "raised"
-          ? "neumorphic_mold_raisedUp"
-          : "neumorphic_mold_castIn",
         classes && classes
       )}
     >
@@ -66,7 +63,6 @@ const SoundClipItem = ({
   return (
     <ListItem
       handler={handler}
-      style={variant == "drum_selected" ? "castIn" : "raised"}
       classes={cs(
         styles.soundclip,
         styles[variant],
@@ -74,7 +70,7 @@ const SoundClipItem = ({
       )}
     >
       <>
-        <span className="neumorphic_text">{clipName}</span>
+        <span className="text">{clipName}</span>
         {variant == "sound_clip" && (
           <LoadImage
             placeholder={placeholder}
