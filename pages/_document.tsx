@@ -23,7 +23,7 @@ export default function Document() {
         <meta name="msapplication-starturl" content="/" />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=yes"
         ></meta>
       </Head>
       <body>
