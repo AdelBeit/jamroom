@@ -14,8 +14,8 @@ import { nanoid } from "nanoid";
 import { User } from "../../types";
 import icons from "../../utils/data/icons";
 import LoadImage, { placeholder } from "../../utils/LoadImage";
-import { useEffect, useState } from "react";
 import VolumeSlider from "../../components/VolumeSlider";
+import React, { useState } from "react";
 
 // (maybe) TODO: leave button socket, kick players
 // TODO: join a random room
@@ -65,13 +65,18 @@ const UserItem = ({
 };
 
 const AddUserItem = () => {
+  const [notify, setNotify] = useState(false);
+
   const handler = () => {
     const url = window.location.href;
-    if (!navigator.share) {
+    let isMobile = window.matchMedia("(pointer:coarse)").matches;
+    if (!navigator.share || !isMobile) {
       //fallback
       navigator.clipboard
         .writeText(url)
-        .then(() => alert("Copied to clipboard"))
+        .then(() => {
+          setNotify(true);
+        })
         .catch(console.error);
       return;
     }
@@ -86,18 +91,29 @@ const AddUserItem = () => {
       })
       .catch(console.error);
   };
+
   return (
     <ListItem classes={cs(styles.add_user)} handler={handler}>
-      <LoadImage
-        placeholder={placeholder}
-        className={cs(
-          buttonStyles.add_user,
-          buttonStyles.icon,
-          listStyles.icon,
-          styles.icon
-        )}
-        src={icons["add_user"]}
-      />
+      {notify ? (
+        <span
+          onAnimationEnd={() => setNotify(false)}
+          className={cs("text", "notification")}
+          id="add_user"
+        >
+          Copied to clipboard!
+        </span>
+      ) : (
+        <LoadImage
+          placeholder={placeholder}
+          className={cs(
+            buttonStyles.add_user,
+            buttonStyles.icon,
+            listStyles.icon,
+            styles.icon
+          )}
+          src={icons["add_user"]}
+        />
+      )}
     </ListItem>
   );
 };

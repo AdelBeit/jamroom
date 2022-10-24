@@ -17,6 +17,13 @@
   order: 3;
 }
 
-.add_user .icon {
+.add_user .icon,
+.add_user span {
   margin: auto;
+}
+
+.add_user span {
+  height: 41px;
+  display: flex;
+  align-items: center;
 }

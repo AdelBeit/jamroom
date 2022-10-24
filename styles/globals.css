@@ -73,6 +73,23 @@ li {
   height: var(--height);
 }
 
+.notification {
+  opacity: 0%;
+  animation: 1.2s notify;
+}
+
+@keyframes notify {
+  0% {
+    opacity: 100%;
+  }
+  70% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
 /* utilities */
 .HIDE_THIS {
   visibility: hidden;
