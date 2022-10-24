@@ -1,11 +1,16 @@
 .drums {
   flex-direction: row;
-  justify-content: center;
   padding-left: 30px;
-  column-gap: 20px;
+  column-gap: 40px;
 }
 
 .drums,
 .keys {
   z-index: 1;
+}
+
+@media screen and (min-width: 1024px) {
+  .drums {
+    justify-content: center;
+  }
 }
