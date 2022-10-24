@@ -8,6 +8,7 @@ import {
   SoundStateStore,
   UserStateStore,
   VolumeStateStore,
+  Theme,
 } from "../types";
 
 export const useVolumeStore = create<VolumeStateStore>()(
@@ -41,11 +42,13 @@ export const useUserStore = create<UserStateStore>()(
 // TODO: persist configs
 export const useScreenStore = create<ScreenStateStore>()(
   devtools((set) => ({
+    selectedTheme: "light",
     selectedScreen: "start",
     selectedDropDown: "none",
     setScreen: (selectedScreen: Screen) => set({ selectedScreen }),
     setDropDown: (selectedDropDown: DropDown | "none") =>
       set({ selectedDropDown }),
+    setTheme: (selectedTheme: Theme) => set({ selectedTheme }),
   }))
 );
 

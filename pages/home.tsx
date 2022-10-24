@@ -6,10 +6,12 @@ import { useScreenStore } from "../src/utils/stores";
 import { NextPage } from "next";
 import { usePlayers } from "../src/utils/PlayersContext";
 import { getSamples } from "../src/utils/data/getSampleNames";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { changeTheme } from "../src/utils/utils";
 
 const Page: NextPage = (props) => {
   const screen = useScreenStore((state) => state.selectedScreen);
+  const [hour, setHour] = useState(new Date().getHours());
   const { setSamples } = usePlayers();
   const soundClips = [
     "Egyptian Drum",
@@ -22,7 +24,20 @@ const Page: NextPage = (props) => {
   useEffect(() => {
     // @ts-ignore
     setSamples(props.samples);
+
+    // keep track of hour
+    const hourInterval = setInterval(
+      () => setHour(new Date().getHours()),
+      3600000
+    );
+    return () => clearInterval(hourInterval);
   }, []);
+
+  // check time of day every hour and trigger theme change if necessary
+  useEffect(() => {
+    // set theme based on time of day
+    changeTheme();
+  }, [hour]);
 
   return (
     <>

@@ -27,7 +27,7 @@
 .pad_container:active,
 .tap {
   transform: scale(0.9);
-  background-color: var(--dark-theme);
+  background-color: var(--alt-color-2);
 }
 
 .pad_container .config {

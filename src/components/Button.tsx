@@ -25,13 +25,23 @@ const Users = () => {
 };
 
 const DrumConfig = ({ classes = "" }) => {
+  const theme = useScreenStore((state) => state.selectedTheme);
+  console.log(theme);
   return (
     <div className={cs(styles.cog_icon, classes)}>
-      <LoadImage
-        placeholder={"empty"}
-        className={cs(styles.inner)}
-        src={icons.cog_inner_red}
-      />
+      {theme == "light" ? (
+        <LoadImage
+          placeholder={"empty"}
+          className={cs(styles.inner)}
+          src={icons.cog_inner_red}
+        />
+      ) : (
+        <LoadImage
+          placeholder={"empty"}
+          className={cs(styles.inner)}
+          src={icons.cog_inner_purple}
+        />
+      )}
       <LoadImage
         placeholder={"empty"}
         className={cs(styles.outer)}

@@ -24,6 +24,8 @@ export type Note =
 
 export type classNames = String | String[];
 
+export type Theme = "light" | "dark";
+
 export interface KeyProps {
   note: Note;
   setChildRef: Function;
@@ -76,8 +78,10 @@ export interface ToolBarProps {
 export interface ScreenStateStore {
   selectedScreen: Screen;
   selectedDropDown: DropDown | "none";
+  selectedTheme: Theme;
   setScreen: (selectedScreen: Screen) => void;
   setDropDown: (selectedDropDown: DropDown | "none") => void;
+  setTheme: (selectedTheme: Theme) => void;
 }
 
 export type samples = { [name: string]: string };

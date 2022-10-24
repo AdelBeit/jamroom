@@ -10,6 +10,7 @@
   --background-color: var(--color1);
   --main-color: var(--color2);
   --alt-color: var(--light-theme);
+  --alt-color-2: var(--dark-theme);
   --stroke-color: var(--color1);
 
   --width: 896px;
@@ -80,13 +81,13 @@ li {
 
 @keyframes notify {
   0% {
-    opacity: 100%;
+    opacity: 1;
   }
   70% {
-    opacity: 100%;
+    opacity: 1;
   }
   100% {
-    opacity: 0%;
+    opacity: 0;
   }
 }
 
