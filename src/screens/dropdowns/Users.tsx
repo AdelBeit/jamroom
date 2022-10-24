@@ -41,23 +41,12 @@ const UserItem = ({
   return (
     <ListItem classes={cs(primaryUser ? listStyles.primary : "", styles.user)}>
       <>
-        {/* <LoadImage
-          placeholder={placeholder}
-          className={cs(buttonStyles.leave, buttonStyles.icon, listStyles.icon)}
-          src={icons["leave"]}
-        /> */}
         <LoadImage
           placeholder={placeholder}
           className={cs(listStyles.icon, styles.instrument_icon)}
           src={icons[instrument]}
         />
-        <span
-          className={cs(
-            styles.id,
-            primaryUser && listStyles.primary,
-            "neumorphic_text"
-          )}
-        >
+        <span className={cs(styles.id, primaryUser && listStyles.primary)}>
           {userID}
         </span>
         <VolumeSlider
