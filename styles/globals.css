@@ -71,7 +71,6 @@ li {
 /* animations */
 .dropdown_container.drop {
   height: var(--height);
-  width: var(--width);
 }
 
 /* utilities */
