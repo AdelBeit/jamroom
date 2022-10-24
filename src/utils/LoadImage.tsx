@@ -2,7 +2,7 @@ import cs from "classnames";
 import Image from "next/image";
 import React from "react";
 
-export const placeholder = "/icons/neumorphic_mold_cast_in.svg";
+export const placeholder = "/icons/stop.svg";
 
 const LoadImage = (props) => {
   let image = (
