@@ -1,65 +1,39 @@
-.drumkit_container {
-  width: 100%;
-  max-width: var(--max-width);
+.drumkit_viewbox {
+  --pad-size: 30vw;
+  width: 100vw !important;
   height: 100%;
   position: relative;
+  overflow-x: hidden;
+  padding: 10px 0;
 }
 
-.drum_container {
-  position: absolute;
+.drumkit_container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.pad_container {
+  flex: 1 0 30%;
   transition: transform 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform-origin: center center;
+  background-color: var(--main-color);
+  margin: 5px;
 }
 
-.drum_container:active,
+.pad_container:active,
 .tap {
   transform: scale(0.9);
 }
 
-.drum_container .config {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+.pad_container .config {
   margin: auto;
   text-align: center;
-  width: 25%;
-  height: 25%;
-}
-
-.kick {
-  width: 310px;
-  height: 310px;
-  left: 32%;
-  bottom: 0;
-}
-
-.tom {
-  width: 210px;
-  height: 210px;
-  left: 3%;
-  bottom: 4%;
-}
-
-.snare {
-  width: 180px;
-  height: 180px;
-  right: 3%;
-  bottom: 5%;
-}
-
-.hi_hat {
-  width: 145px;
-  height: 145px;
-  left: 17%;
-  top: 0;
-}
-
-.closed_hat {
-  width: 140px;
-  height: 140px;
-  right: 12%;
-  top: 2%;
+  width: 35%;
+  height: 35%;
 }
 
 .config_drum {
@@ -71,4 +45,14 @@
   z-index: 3;
   width: 20%;
   height: 20%;
+}
+
+.pad_container.edit_mode {
+  background-color: var(--alt-color) !important;
+}
+
+@media screen and (min-width: 1024px) {
+  .drumkit_container {
+    max-width: var(--max-width);
+  }
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./Drumkit.module.css";
 import cs from "classnames";
-import icons from "../utils/data/icons";
 import {
   useSoundStore,
   useScreenStore,
@@ -11,12 +10,11 @@ import {
 import { DrumProps } from "../types";
 import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
-import LoadImage, { placeholder } from "../utils/LoadImage";
 import { DrumConfig } from "./Button";
-import { flattenSamples, playWithVolume } from "../utils/utils";
+import { playWithVolume } from "../utils/utils";
 import { usePlayers } from "../utils/PlayersContext";
 
-const Drum = ({ drumType }: DrumProps) => {
+const Pad = ({ drumType }: DrumProps) => {
   const { players } = usePlayers();
   const [drumSounds, editMode] = useSoundStore((state) => [
     state.drumSounds,
@@ -54,13 +52,13 @@ const Drum = ({ drumType }: DrumProps) => {
       onMouseUp={preventDefault}
       onTouchEnd={preventDefault}
       id={drumType}
-      className={cs("UNSTYLE_BUTTON", styles.drum_container, styles[drumType])}
+      className={cs(
+        "UNSTYLE_BUTTON",
+        styles.pad_container,
+        styles[drumType],
+        editMode && styles.edit_mode
+      )}
     >
-      <LoadImage
-        placeholder={placeholder}
-        className={cs(styles.pad)}
-        src={icons[drumType]}
-      />{" "}
       {editMode && <DrumConfig classes={styles.config} />}
     </button>
   );
@@ -68,12 +66,15 @@ const Drum = ({ drumType }: DrumProps) => {
 
 const Drumkit = () => {
   return (
-    <div className={styles.drumkit_container}>
-      <Drum drumType="kick" />
-      <Drum drumType="closed_hat" />
-      <Drum drumType="hi_hat" />
-      <Drum drumType="snare" />
-      <Drum drumType="tom" />
+    <div className={styles.drumkit_viewbox}>
+      <div className={styles.drumkit_container}>
+        <Pad drumType="kick" />
+        <Pad drumType="closed_hat" />
+        <Pad drumType="hi_hat" />
+        <Pad drumType="snare" />
+        <Pad drumType="tom" />
+        <Pad drumType="tom" />
+      </div>
     </div>
   );
 };
