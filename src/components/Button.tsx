@@ -30,7 +30,7 @@ const DrumConfig = ({ classes = "" }) => {
       <LoadImage
         placeholder={"empty"}
         className={cs(styles.inner)}
-        src={icons.cog_inner}
+        src={icons.cog_inner_red}
       />
       <LoadImage
         placeholder={"empty"}

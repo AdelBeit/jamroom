@@ -26,8 +26,8 @@
 /* users icon */
 .button .users_icon {
   position: absolute;
-  width: 50%;
-  height: 50%;
+  width: 55%;
+  height: 55%;
   left: -26%;
 }
 
@@ -77,7 +77,7 @@
 }
 
 .button.back div {
-  height: 80%;
+  height: 55%;
 }
 
 .button .soundclips {
