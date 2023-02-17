@@ -81,7 +81,6 @@ export interface ScreenStateStore {
   selectedTheme: Theme;
   setScreen: (selectedScreen: Screen) => void;
   setDropDown: (selectedDropDown: DropDown | "none") => void;
-  setTheme: (selectedTheme: Theme) => void;
 }
 
 export type samples = { [name: string]: string };

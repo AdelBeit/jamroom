@@ -48,7 +48,6 @@ export const useScreenStore = create<ScreenStateStore>()(
     setScreen: (selectedScreen: Screen) => set({ selectedScreen }),
     setDropDown: (selectedDropDown: DropDown | "none") =>
       set({ selectedDropDown }),
-    setTheme: (selectedTheme: Theme) => set({ selectedTheme }),
   }))
 );
 

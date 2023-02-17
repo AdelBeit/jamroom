@@ -1,5 +1,4 @@
 import { Player } from "tone";
-import { useScreenStore } from "./stores";
 
 export const generateName = () => {
   const adjectives = [
@@ -93,26 +92,4 @@ export const flattenSamples = (samples) => {
   };
   const selectAll = (acc, instrument) => ({ ...acc, ...samples[instrument] });
   return Object.keys(samples).reduce(selectAll, {});
-};
-
-const getRoot = () => ({
-  root: document.documentElement,
-  rootStyles: window.getComputedStyle(document.documentElement),
-});
-
-export const isItDarkOutside = () =>
-  ((hour: number) => hour >= 18 || hour < 6)(new Date().getHours());
-
-export const changeTheme = () => {
-  const { root, rootStyles } = getRoot();
-  const theme = useScreenStore.getState().selectedTheme;
-  let themeColor = rootStyles.getPropertyValue(
-    theme == "dark" ? "--dark-theme" : "--light-theme"
-  );
-  let themeColorAlt = rootStyles.getPropertyValue(
-    theme == "dark" ? "--light-theme" : "--dark-theme"
-  );
-
-  root.style.setProperty("--alt-color", themeColor);
-  root.style.setProperty("--alt-color-2", themeColorAlt);
 };
