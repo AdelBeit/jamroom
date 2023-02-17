@@ -1,22 +1,17 @@
 :root {
-  --color1: #fefae0;
-  --color2: #d4a373;
-  --color3: #7a2323;
-  --color4: #3c1742;
-
-  --light-theme: var(--color3);
-  --dark-theme: var(--color4);
-
-  --background-color: var(--color1);
-  --main-color: var(--color2);
-  --alt-color: var(--light-theme);
-  --alt-color-2: var(--dark-theme);
-  --stroke-color: var(--color1);
+  --black: #282828;
+  --amber: #ffb000;
 
   --width: 896px;
   --width: 100vw;
   --height: 414px;
   --max-width: 850px;
+}
+@media only screen and (max-width: 900px) {
+  :root {
+    --width: 100%;
+    --height: 100%;
+  }
 }
 
 html,
@@ -27,8 +22,8 @@ body {
   height: var(--height);
   width: var(--width);
   margin: auto;
-  background-color: var(--background-color);
-  color: var(--stroke-color);
+  background-color: var(--black);
+  color: var(--black);
   font-size: 22px;
 }
 
@@ -43,12 +38,12 @@ a {
 
 .button {
   background-color: var(--alt-color) !important;
-  border: solid 2px var(--stroke-color) !important;
+  border: solid 2px var(--black) !important;
 }
 
 .page_container,
 .dropdown_container {
-  background-color: var(--background-color);
+  background-color: var(--black);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -67,7 +62,7 @@ li {
 }
 
 .text {
-  color: var(--stroke-color);
+  color: var(--black);
 }
 
 /* animations */
