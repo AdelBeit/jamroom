@@ -1,30 +1,27 @@
 :root {
   --black: #282828;
   --amber: #ffb000;
-
-  --width: 896px;
-  --width: 100vw;
-  --height: 414px;
-  --max-width: 850px;
-}
-@media only screen and (max-width: 900px) {
-  :root {
-    --width: 100%;
-    --height: 100%;
-  }
+  --font-xs: 10px;
+  --font-sm: 15px;
+  --font-med: 20px;
+  --font-lg: 25px;
 }
 
 html,
 body {
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  height: var(--height);
-  width: var(--width);
-  margin: auto;
+  margin: 0;
   background-color: var(--black);
   color: var(--black);
-  font-size: 22px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html,
+body,
+#__next {
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 a {
@@ -36,25 +33,50 @@ a {
   box-sizing: border-box;
 }
 
-.button {
-  background-color: var(--alt-color) !important;
-  border: solid 2px var(--black) !important;
+input,
+span {
+  font-weight: bold;
 }
 
-.page_container,
-.dropdown_container {
-  background-color: var(--black);
+/* utils */
+.flex {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 10px 0;
-  gap: 10px;
-  height: var(--height);
-  width: var(--width);
+}
+.bar {
+  width: 100%;
+  height: 40px;
+  background-color: var(--black);
+  border: 2px solid var(--amber);
+  color: var(--amber);
+  padding: 2%;
+}
+.bar.active {
+  background-color: var(--amber);
+  color: var(--black);
+}
+.outline {
+  border: solid red 2px;
 }
 
-.dropdown_container {
-  height: 0;
+/* font sizes */
+.x-small {
+  font-size: var(--font-xs);
+}
+.small {
+  font-size: var(--font-sm);
+}
+.medium {
+  font-size: var(--font-med);
+}
+.large {
+  font-size: var(--font-lg);
+}
+
+/* old styles! recycle remove */
+
+.button {
+  background-color: var(--black);
+  border: solid 2px var(--black);
 }
 
 li {
@@ -66,9 +88,6 @@ li {
 }
 
 /* animations */
-.dropdown_container.drop {
-  height: var(--height);
-}
 
 .notification {
   opacity: 0%;

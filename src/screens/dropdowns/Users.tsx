@@ -51,7 +51,7 @@ const UserItem = ({
         </span>
         <VolumeSlider
           onChange={setVolume}
-          value={value}
+          volume={value}
           id="volume"
           name="volume"
           min={-25}

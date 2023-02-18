@@ -36,7 +36,6 @@ const defaultState = {
 const PlayersContext = createContext<PlayersContext>(defaultState);
 export const usePlayers = () => useContext(PlayersContext);
 
-// CHECK: make sound play on touch start not touch end
 // TODO: drag events cancel sample play
 
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
@@ -48,8 +47,8 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     state.setUserID,
   ]);
   const setVolumes = useVolumeStore((state) => state.setVolumes);
-  const router = useRouter();
-  const { roomID } = router.query;
+  // const router = useRouter();
+  // const { roomID } = router.query;
   const userID = generateName();
   // @ts-ignore
   const [samples, setSamples] = useState(defaultState.samples);
@@ -72,16 +71,18 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
 
   useEffect(() => {
     // create room if it doesn't exist
-    if (!roomID && router.isReady) {
-      router.replace(`/home?roomID=${Date.now()}`);
-    }
+    // if (!roomID && router.isReady) {
+    // router.replace(`/home?roomID=${Date.now()}`);
+    // }
 
-    if (!roomID) return;
-
+    // if (!roomID) return;
+    if (Object.keys(samples).length === 0) return;
+    console.log("full samples", Object.keys(samples).length);
     loadSamples(samples);
-  }, [roomID, samples]);
+  }, [samples]);
 
   useEffect(() => {
+    let roomID = "1";
     if (!players.current) return;
 
     connectSocket(userID, roomID);
@@ -114,11 +115,11 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
       }}
     >
       {props.children}
-      {screen == "start" && (
+      {/* {screen == "start" && (
         <div className={"page_container"}>
           <Button variant={"start"} handler={handler}></Button>
         </div>
-      )}
+      )} */}
     </PlayersContext.Provider>
   );
 };
