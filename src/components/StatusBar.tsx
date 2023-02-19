@@ -1,4 +1,7 @@
 import React from "react";
+import { Instrument } from "../types";
+import Button from "./Button";
+import JammingToast from "./JammingToast";
 
 interface Props {
   roomID: string;
@@ -6,15 +9,21 @@ interface Props {
 }
 
 export default function StatusBar({ roomID, _name }: Props) {
-  const jammingToast = ["spoonypan", "purplepeach23"];
+  const nowJamming = [
+    ["spoonypan", "keyboard"],
+    ["purplepeach23", "drumkit"],
+  ];
   return (
     <div className="_container">
-      {/* <Button _name="menu" />
-      <Button _name="tutorial" /> */}
+      <Button _name="menu" />
+      <Button _name="question" />
       <div className="now_jamming">
-        {/* {jammingToast.map((jammerID) => (
-          <JammingToast key={jammerID} id={jammerID} />
-        ))} */}
+        {nowJamming.map((user) => (
+          <JammingToast
+            key={user[0]}
+            {...{ username: user[0], instrument: user[1] as Instrument }}
+          />
+        ))}
       </div>
       <div className="room_id">
         <span>#{roomID}</span>

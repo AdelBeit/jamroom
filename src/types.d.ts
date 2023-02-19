@@ -37,7 +37,7 @@ export interface KeyProps {
 
 export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> { }
 
-export type Instrument = "drums" | "keys";
+export type Instrument = "drumkit" | "keyboard";
 
 export type Screen = Instrument | "start";
 
