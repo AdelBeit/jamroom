@@ -16,7 +16,7 @@ export default function JammerBar({
   classes = "",
 }: Props) {
   return (
-    <button className={`_container bar flex ${classes}`}>
+    <button className={`_container bar mold flex ${classes}`}>
       <div className="jammer flex">
         <Icon _name="keyboard" size={20} />
         <span className="user_id">{userID}</span>

@@ -7,7 +7,7 @@ interface Props {
 
 export default function RoomBar({ text }: Props) {
   return (
-    <button className="_container bar flex">
+    <button className="_container bar mold flex">
       <span className="content">{text}</span>
       <div className="icon">
         <Icon _name="join_room" size={20} />

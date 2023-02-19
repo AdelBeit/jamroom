@@ -19,7 +19,7 @@ export default function Jammers() {
           />
         );
       })}
-      <button className={`add_jammer bar flex`}>
+      <button className={`add_jammer bar mold flex`}>
         <Icon _name="plus" size={25} />
       </button>
       <style jsx>{``}</style>

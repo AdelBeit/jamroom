@@ -19,7 +19,7 @@ export function Lobby() {
       </div>
       <div className="_body flex">
         <input
-          className="bar active medium"
+          className="bar mold active medium"
           type="text"
           value={roomID}
           id="roomID"
@@ -51,7 +51,6 @@ export function Lobby() {
         }
         input {
           border-radius: 8px;
-          color: var(--black);
         }
         input:focus {
           outline-color: var(--black);
@@ -59,8 +58,8 @@ export function Lobby() {
           outline-offset: -3px;
         }
         input:focus::selection {
-          color: var(--amber);
           background-color: var(--black);
+          color: var(--amber);
         }
         input::placeholder {
           color: #885f26;
