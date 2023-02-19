@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import MenuButton, { Props as ButtonProps } from "../components/MenuButton";
 import { Page } from "../types";
 
@@ -7,8 +7,22 @@ interface Props {
 }
 
 export default function Menu({ _screen }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const container = ref.current;
+    container.classList.add("show_menu");
+    return () => {
+      container.classList.remove("show_menu");
+    };
+  }, [ref.current]);
   return (
-    <div id="_menu" className={`${_screen} ._container flex`}>
+    <div
+      id="_menu"
+      ref={ref}
+      className={`${_screen} ._container absolute mold flex`}
+    >
       <div className="flex top">
         <MenuButton icon="close" text="Close" />
         <MenuButton
@@ -34,7 +48,20 @@ export default function Menu({ _screen }: Props) {
         ._container {
           flex-direction: column;
           width: 100%;
-          height: 30%;
+          height: 40%;
+          inset: 0;
+          bottom: -100%;
+          transition: bottom 1s cubic-bezier(0.075, 0.82, 0.165, 1)
+            alternate-reverse;
+        }
+        .show_menu {
+          bottom: -7%;
+        }
+        .top,
+        .bottom {
+          justify-content: space-between;
+          width: fit-content;
+          margin: auto;
         }
       `}</style>
     </div>

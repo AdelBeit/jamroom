@@ -16,6 +16,7 @@ export default function MenuButton({ icon, text, active = false }: Props) {
         ._container {
           background-color: var(--black);
           color: var(--amber);
+          gap: 16px;
         }
         .active {
           opacity: 0.25;
