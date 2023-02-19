@@ -7,6 +7,7 @@ import React, {
 import { Players } from "tone";
 import { GetState, SetState, State, StateCreator, StoreApi } from "zustand";
 
+
 export type Octave = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type Note =
   | "C"
@@ -34,7 +35,7 @@ export interface KeyProps {
   octave?: Octave;
 }
 
-export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> {}
+export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> { }
 
 export type Instrument = "drums" | "keys";
 
@@ -119,3 +120,18 @@ export interface VolumeStateStore {
   changeVolume(userID: User["id"], volume: number): void;
   setVolumes(users: UserStateStore["users"]): void;
 }
+
+
+
+
+
+// NEW
+
+
+export type Page =
+  | "_Lobby"
+  | "_Jammers"
+  | "_Drumkit"
+  | "_Keyboard"
+  | "_SoundClips";
+
