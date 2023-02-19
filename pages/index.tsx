@@ -8,7 +8,8 @@ import { usePlayers } from "../src/utils/PlayersContext";
 import { getSamples } from "../src/utils/data/getSampleNames";
 import { useEffect, useState } from "react";
 import { Lobby } from "../src/screens/Lobby";
-import PageFrame from "../src/PageFrame";
+import PageFrame from "../src/screens/PageFrame";
+import { Page as PageType } from "../src/types";
 
 /**
  * optional:
@@ -19,12 +20,10 @@ import PageFrame from "../src/PageFrame";
  *
  */
 
-type Page = "_Lobby" | "_Jammers" | "_Drumkit" | "_Keyboard" | "_SoundClips";
-
 const Page: NextPage = (props) => {
   const screen = useScreenStore((state) => state.selectedScreen);
   const { setSamples } = usePlayers();
-  const page: Page = "_Lobby";
+  const page: PageType = "_Lobby";
   let pageComponent = <Lobby />;
   // if (page === "_Jammers") pageComponent = <Jammers />;
   // if (page === "_Drumkit") pageComponent = <Drumkit />;
@@ -42,7 +41,6 @@ const Page: NextPage = (props) => {
       <style jsx>
         {`
           div {
-            color: var(--amber);
             background-color: var(--black);
           }
         `}

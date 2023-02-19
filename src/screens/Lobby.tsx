@@ -38,8 +38,6 @@ export function Lobby() {
         ._page {
           flex-direction: column;
           justify-content: space-between;
-          width: 100%;
-          height: 100%;
         }
         ._header {
           justify-content: space-between;
