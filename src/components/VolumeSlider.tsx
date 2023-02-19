@@ -3,15 +3,11 @@ import Icon from "./Icon";
 
 interface Props {
   volume: number;
-  volumeHandler: React.ChangeEventHandler<HTMLInputElement>;
+  setVolume: React.ChangeEventHandler<HTMLInputElement>;
   classes?: string;
 }
 
-export default function VolumeBar({
-  volume,
-  volumeHandler,
-  classes = "",
-}: Props) {
+export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
   const icon =
     "volume#" + (volume === -25 ? "mute" : volume === -10 ? "full" : "partial");
   return (
@@ -20,7 +16,7 @@ export default function VolumeBar({
       <input
         value={volume}
         type="range"
-        onChange={volumeHandler}
+        onChange={setVolume}
         min={-25}
         max={-10}
         step="0.1"
