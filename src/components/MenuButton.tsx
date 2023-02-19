@@ -9,7 +9,7 @@ export interface Props {
 }
 export default function MenuButton({ icon, text, active = false }: Props) {
   return (
-    <div className={cs("._container button flex", text, active && "active")}>
+    <div className={cs("._container button flex", text, active && "faded")}>
       <Icon _name={icon} size={30} />
       <span className="large">{text}</span>
       <style jsx>{`
@@ -17,9 +17,6 @@ export default function MenuButton({ icon, text, active = false }: Props) {
           background-color: var(--black);
           color: var(--amber);
           gap: 16px;
-        }
-        .active {
-          opacity: 0.25;
         }
       `}</style>
     </div>

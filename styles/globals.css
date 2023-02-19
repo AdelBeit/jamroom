@@ -68,6 +68,9 @@ span {
 .outline {
   border: solid red 2px;
 }
+.faded {
+  opacity: 0.25;
+}
 
 /* font sizes */
 .x-small {
