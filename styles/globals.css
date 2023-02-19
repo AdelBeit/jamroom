@@ -45,18 +45,23 @@ span {
 }
 
 /* utils */
+.absolute {
+  position: absolute;
+}
 .flex {
   display: flex;
 }
 .bar {
   width: 100%;
   height: 40px;
+  padding: 2%;
+}
+.mold {
   background-color: var(--black);
   border: 2px solid var(--amber);
   color: var(--amber);
-  padding: 2%;
 }
-.bar.active {
+.mold.active {
   background-color: var(--amber);
   color: var(--black);
 }
