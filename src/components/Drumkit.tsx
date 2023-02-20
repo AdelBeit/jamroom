@@ -10,7 +10,7 @@ import {
 import { DrumProps } from "../types";
 import { useRouter } from "next/router";
 import { socket } from "../utils/socketClient";
-import { DrumConfig } from "./Button";
+import { DrumConfig } from "./SquareButton";
 import { playWithVolume } from "../utils/utils";
 import { usePlayers } from "../utils/PlayersContext";
 
