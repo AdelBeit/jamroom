@@ -88,11 +88,6 @@ span {
 
 /* old styles! recycle remove */
 
-.button {
-  background-color: var(--black);
-  border: solid 2px var(--black);
-}
-
 li {
   list-style: none;
 }

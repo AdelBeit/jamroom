@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Toolbar.module.css";
 import cs from "classnames";
-import { Button } from "./Button";
+import { Button } from "./SquareButton";
 import { ButtonVariant, ToolBarProps } from "../types";
 
 const Keyboard = () => {

@@ -10,7 +10,7 @@ import {
 } from "react";
 import { Players } from "tone";
 import * as Tone from "tone";
-import { Button } from "../components/Button";
+import { Button } from "../components/SquareButton";
 import { samples, UserStateStore } from "../types";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
 import {
