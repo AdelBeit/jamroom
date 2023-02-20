@@ -6,7 +6,8 @@ import React, {
 } from "react";
 import { Players } from "tone";
 import { GetState, SetState, State, StateCreator, StoreApi } from "zustand";
-
+import { Icon } from "./icons";
+import { Props as IconProps } from "./components/Icon";
 
 export type Octave = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type Note =
@@ -35,13 +36,11 @@ export interface KeyProps {
   octave?: Octave;
 }
 
-export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> { }
+export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> {}
 
 export type Instrument = "drumkit" | "keyboard";
 
 export type Screen = Instrument | "start";
-
-export type DropDown = "drum_selector" | "users" | "soundclips";
 
 export type Actions =
   | "back"
@@ -57,12 +56,6 @@ export type Actions =
 export type ButtonStyle = "raised" | "inset" | "plain";
 
 export type ButtonVariant = Actions | Exclude<Screen, "start"> | DropDown;
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: ButtonVariant;
-  handler?(): void;
-}
 
 export type DrumType = "kick" | "tom" | "snare" | "hi_hat" | "closed_hat";
 
@@ -121,17 +114,17 @@ export interface VolumeStateStore {
   setVolumes(users: UserStateStore["users"]): void;
 }
 
-
-
-
-
 // NEW
-
 
 export type Page =
   | "_Lobby"
   | "_Jammers"
   | "_Drumkit"
   | "_Keyboard"
-  | "_SoundClips";
+  | "_Samples";
 
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon: IconProps["icon"];
+  text: string;
+}
