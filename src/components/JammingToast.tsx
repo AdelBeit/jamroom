@@ -14,13 +14,16 @@ export default function JammingToast({
   volume = "partial",
 }: Props) {
   return (
-    <div className="_container flex">
-      <Icon _name={volume} size={15} />
+    <div className="flex">
+      <Icon _icon={`volume#${volume}`} size={15} />
       <span className="small">{username}</span>
-      <Icon _name={instrument} size={15} />
+      <Icon
+        _icon={instrument === "keyboard" ? "keyboard#thin" : instrument}
+        size={15}
+      />
       <style jsx>
         {`
-          ._container {
+          div {
             gap: 8px;
           }
         `}

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import MenuButton, { Props as ButtonProps } from "../components/MenuButton";
+import BorderlessTextButton from "../components/BorderlessTextButton";
 import { Page } from "../types";
 
 interface Props {
-  _screen: Page;
+  _page: Page;
 }
 
-export default function Menu({ _screen }: Props) {
+export default function Menu({ _page }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!ref.current) return;
@@ -21,27 +21,27 @@ export default function Menu({ _screen }: Props) {
     <div
       id="_menu"
       ref={ref}
-      className={`${_screen} ._container absolute mold flex`}
+      className={`${_page} _container absolute mold flex`}
     >
       <div className="flex top">
-        <MenuButton icon="close" text="Close" />
-        <MenuButton
+        <BorderlessTextButton icon="close" text="Close" />
+        <BorderlessTextButton
           icon="users"
           text="Jammers"
-          active={_screen === "_Jammers"}
+          active={_page === "_Jammers"}
         />
-        <MenuButton icon="exit" text="Leave Room" />
+        <BorderlessTextButton icon="exit" text="Leave Room" />
       </div>
       <div className="flex bottom">
-        <MenuButton
-          icon={_screen === "_Drumkit" ? "gear" : "drumkit"}
-          text={_screen === "_Drumkit" ? "Config Pads" : "Drumkit"}
-          active={_screen === "_Drumkit"}
+        <BorderlessTextButton
+          icon={_page === "_Drumkit" ? "gear" : "drumkit"}
+          text={_page === "_Drumkit" ? "Config Pads" : "Drumkit"}
+          active={_page === "_Drumkit"}
         />
-        <MenuButton
+        <BorderlessTextButton
           icon="keyboard"
           text="Keyboard"
-          active={_screen === "_Keyboard"}
+          active={_page === "_Keyboard"}
         />
       </div>
       <style jsx>{`

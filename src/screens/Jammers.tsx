@@ -20,10 +20,10 @@ export default function Jammers() {
         );
       })}
       <button className={`add_jammer bar mold flex`}>
-        <Icon _name="plus" size={25} />
+        <Icon _icon="plus" size={25} />
       </button>
       <div className="icon absolute faded">
-        <Icon _name="users" size={65} />
+        <Icon _icon="jammers" size={65} />
       </div>
       <style jsx>{`
         .icon {

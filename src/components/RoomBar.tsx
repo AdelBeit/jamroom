@@ -1,19 +1,18 @@
 import React from "react";
+import { ButtonProps } from "../types";
 import Icon from "./Icon";
 
-interface Props {
-  text: string;
-}
+interface Props extends Omit<ButtonProps, "icon"> {}
 
 export default function RoomBar({ text }: Props) {
   return (
-    <button className="_container bar mold flex">
+    <button className="bar mold flex">
       <span className="content">{text}</span>
       <div className="icon">
-        <Icon _name="join_room" size={20} />
+        <Icon _icon="enter" size={20} />
       </div>
       <style jsx>{`
-        ._container {
+        button {
           font-size: inherit;
           justify-content: space-between;
           align-items: center;

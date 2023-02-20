@@ -1,5 +1,6 @@
 import React from "react";
 import Icon from "./Icon";
+import { Icon as IconType } from "../icons";
 
 interface Props {
   volume: number;
@@ -8,11 +9,15 @@ interface Props {
 }
 
 export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
-  const icon =
-    "volume#" + (volume === -25 ? "mute" : volume === -10 ? "full" : "partial");
+  const icon = ("volume#" +
+    (volume === -25
+      ? "mute"
+      : volume === -10
+      ? "full"
+      : "partial")) as IconType;
   return (
-    <div className="_container flex">
-      <Icon _name={icon} />
+    <div className="flex">
+      <Icon _icon={icon} />
       <input
         value={volume}
         type="range"
@@ -23,13 +28,13 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
         className={classes}
       />
       <style jsx>{`
-        ._container {
+        div {
           width: 100%;
           height: 100%;
         }
 
-        ._container input::-webkit-slider-runnable-track,
-        ._container input::-moz-range-track {
+        input::-webkit-slider-runnable-track,
+        input::-moz-range-track {
           -webkit-appearance: none;
           background: transparent;
           cursor: pointer;
@@ -39,16 +44,16 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
           border-radius: 10px;
         }
 
-        ._container input::-webkit-slider-thumb,
-        ._container input::-moz-range-thumb {
+        input::-webkit-slider-thumb,
+        input::-moz-range-thumb {
           background-color: var(--amber);
           border: 1px solid var(--black);
           border-radius: 10px;
         }
 
-        ._container input:focus,
-        ._container input:focus::-webkit-slider-thumb,
-        ._container input:focus::-moz-range-thumb {
+        input:focus,
+        input:focus::-webkit-slider-thumb,
+        input:focus::-moz-range-thumb {
           outline: none;
           border: 1px solid var(--black);
           outline: 3px solid var(--black);

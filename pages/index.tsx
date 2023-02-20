@@ -28,7 +28,7 @@ const Page: NextPage = (props) => {
   // if (page === "_Jammers") pageComponent = <Jammers />;
   // if (page === "_Drumkit") pageComponent = <Drumkit />;
   // if (page === "_Keyboard") pageComponent = <Keyboard />;
-  // if (page === "_SoundClips") pageComponent = <SoundClips />;
+  // if (page === "_Samples") pageComponent = <SoundClips />;
 
   useEffect(() => {
     // @ts-ignore
@@ -37,7 +37,7 @@ const Page: NextPage = (props) => {
 
   return (
     <div>
-      {<PageFrame _name={page}>{pageComponent}</PageFrame>}
+      {<PageFrame _page={page}>{pageComponent}</PageFrame>}
       <style jsx>
         {`
           div {

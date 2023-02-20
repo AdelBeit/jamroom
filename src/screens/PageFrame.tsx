@@ -1,24 +1,24 @@
 import React, { ReactNode, useState } from "react";
 import StatusBar from "../components/StatusBar";
-import { Page as PageType } from "../types";
+import { Page } from "../types";
 import Menu from "./Menu";
 
 interface Props {
-  _name: PageType;
+  _page: Page;
   children: ReactNode;
 }
 
-export default function PageFrame({ _name, children }: Props) {
+export default function PageFrame({ _page, children }: Props) {
   const roomID = "123";
   const [firstTime, setFirstTime] = useState(true);
   const menuOpen = firstTime && true;
   return (
     <div id="_pageFrame" className="_container flex relative">
       <div className="_content">{children}</div>
-      {!firstTime && !menuOpen && _name !== "_Lobby" && (
-        <StatusBar roomID={roomID} {...{ _name }} />
+      {!firstTime && !menuOpen && _page !== "_Lobby" && (
+        <StatusBar roomID={roomID} {...{ _page }} />
       )}
-      {menuOpen && <Menu _screen={_name} />}
+      {menuOpen && <Menu _page={_page} />}
       <style jsx>
         {`
           ._container {

@@ -1,22 +1,22 @@
 import React from "react";
-import { Instrument } from "../types";
-import Button from "./Button";
+import { Instrument, Page } from "../types";
+import SquareButton from "./SquareButton";
 import JammingToast from "./JammingToast";
 
 interface Props {
   roomID: string;
-  _name: string;
+  _page: Page;
 }
 
-export default function StatusBar({ roomID, _name }: Props) {
+export default function StatusBar({ roomID, _page }: Props) {
   const nowJamming = [
     ["spoonypan", "keyboard"],
     ["purplepeach23", "drumkit"],
   ];
   return (
-    <div className="_container">
-      <Button _name="menu" />
-      <Button _name="question" />
+    <div className="_container flex">
+      <SquareButton icon="menu" />
+      <SquareButton icon="question" />
       <div className="now_jamming">
         {nowJamming.map((user) => (
           <JammingToast

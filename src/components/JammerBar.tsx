@@ -16,15 +16,15 @@ export default function JammerBar({
   classes = "",
 }: Props) {
   return (
-    <button className={`_container bar mold flex ${classes}`}>
+    <button className={`bar mold flex ${classes}`}>
       <div className="jammer flex">
-        <Icon _name="keyboard" size={20} />
+        <Icon _icon="keyboard" size={20} />
         <span className="user_id">{userID}</span>
       </div>
       <VolumeBar {...{ volume, setVolume }} />
       <style jsx>
         {`
-          ._container {
+          button {
             justify-content: space-between;
           }
         `}
