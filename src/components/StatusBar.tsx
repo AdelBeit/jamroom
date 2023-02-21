@@ -13,10 +13,14 @@ export default function StatusBar({ roomID, _page }: Props) {
     ["spoonypan", "keyboard"],
     ["purplepeach23", "drumkit"],
   ];
+  let button1 =
+    _page === "_Config" || _page === "_Samples" ? "confirm" : "menu";
+
+  const button2 = "tutorial";
   return (
     <div className="_container flex">
-      <SquareButton icon="menu" />
-      <SquareButton icon="question" />
+      <SquareButton icon={button1} />
+      <SquareButton icon={button2} />
       <div className="now_jamming">
         {nowJamming.map((user) => (
           <JammingToast
@@ -26,7 +30,7 @@ export default function StatusBar({ roomID, _page }: Props) {
         ))}
       </div>
       <div className="room_id">
-        <span>#{roomID}</span>
+        <span className="small">#{roomID}</span>
       </div>
       <style jsx>{`
         ._container {
