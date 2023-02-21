@@ -4,21 +4,18 @@ import JammerBar from "../components/JammerBar";
 
 export default function Jammers() {
   const users = ["pumpkinman823", "gnarlybarley442", "icebucket889"];
-
+  const currentUser = "pumpkinman823";
   return (
     <div id="_Jammers" className="_page flex">
-      {users.map((user) => {
-        let classes = "";
-        if (user == "pumpkinman812") classes = "active";
-        return (
-          <JammerBar
-            setVolume={() => {}}
-            userID={user}
-            volume={-15}
-            classes="active"
-          />
-        );
-      })}
+      {users.map((user) => (
+        <JammerBar
+          key={user}
+          setVolume={() => {}}
+          userID={user}
+          volume={-15}
+          classes={user === currentUser ? "active" : ""}
+        />
+      ))}
       <button className={`add_jammer bar mold flex`}>
         <Icon _icon="plus" size={25} />
       </button>
