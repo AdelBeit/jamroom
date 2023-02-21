@@ -14,4 +14,4 @@ export type Icon =
   | "drumkit"
   | "jammers"
   | "menu"
-  | "question";
+  | "tutorial";

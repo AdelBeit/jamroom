@@ -69,50 +69,10 @@ export interface ToolBarProps {
   variant: Screen | "dropdown";
 }
 
-export interface ScreenStateStore {
-  selectedScreen: Screen;
-  selectedDropDown: DropDown | "none";
-  selectedTheme: Theme;
-  setScreen: (selectedScreen: Screen) => void;
-  setDropDown: (selectedDropDown: DropDown | "none") => void;
-}
-
-export type samples = { [name: string]: string };
-export interface SoundStateStore {
-  currentOctave: Octave;
-  drumEditMode: boolean;
-  selectedDrumToEdit: DrumType;
-  drumSounds: {
-    tom: string;
-    snare: string;
-    kick: string;
-    hi_hat: string;
-    closed_hat: string;
-  };
-  setDrumSound(drum: DrumType, soundClip: string): void;
-  setDrumToEdit(drum: DrumType): void;
-  toggleDrumEditMode(): void;
-}
-
 export type User = {
   id: string;
   instrument: Instrument;
 };
-
-export interface UserStateStore {
-  roomID: string;
-  userID: User["id"];
-  users: { [userID: User["id"]]: [User["id"], User["instrument"]] };
-  setRoomID(roomID: UserStateStore["roomID"]): void;
-  setUsers(users: { [id: User["id"]]: [User["id"], User["instrument"]] }): void;
-  setUserID(userID: User["id"]): void;
-}
-
-export interface VolumeStateStore {
-  userVolumes: { [userID: User["id"]]: number };
-  changeVolume(userID: User["id"], volume: number): void;
-  setVolumes(users: UserStateStore["users"]): void;
-}
 
 // NEW
 
@@ -121,7 +81,8 @@ export type Page =
   | "_Jammers"
   | "_Drumkit"
   | "_Keyboard"
-  | "_Samples";
+  | "_Samples"
+  | "_Config";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

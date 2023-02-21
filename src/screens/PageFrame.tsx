@@ -18,7 +18,7 @@ export default function PageFrame({ _page, children }: Props) {
       {!firstTime && !menuOpen && _page !== "_Lobby" && (
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
-      {menuOpen && <Menu _page={_page} />}
+      {menuOpen && <Menu {...{ _page }} />}
       <style jsx>
         {`
           ._container {

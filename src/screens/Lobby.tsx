@@ -27,11 +27,12 @@ export function Lobby() {
           placeholder="Enter room # to create/join a room"
         />
         <div className="room_list medium flex">
-          {roomList.map((roomID, _index) => {
-            const text =
-              (_index === 0 ? "Create" : "Join") + " Room # " + roomID;
-            return <RoomBar text={text} />;
-          })}
+          {roomList.map((roomID, _index) => (
+            <RoomBar
+              key={roomID}
+              text={(_index === 0 ? "Create" : "Join") + " Room # " + roomID}
+            />
+          ))}
         </div>
       </div>
       <style jsx>{`
