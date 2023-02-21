@@ -12,7 +12,6 @@ import * as Tone from "tone";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
 import { generateName, playWithVolume, flattenSamples } from "./utils";
 import { useSound } from "./useSound";
-import { usePage } from "./usePage";
 import { useUsers } from "./useUsers";
 import { Sample } from "../samples";
 
@@ -35,7 +34,6 @@ export const usePlayers = () => useContext(PlayersContext);
 
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
-  const page = usePage((state) => state.page);
   const [setRoomID, setUsers, setUserID] = useUsers((state) => [
     state.setRoomID,
     state.setUsers,
