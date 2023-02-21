@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import {
   createContext,
   MutableRefObject,
@@ -10,27 +9,23 @@ import {
 } from "react";
 import { Players } from "tone";
 import * as Tone from "tone";
-import { Button } from "../components/SquareButton";
-import { samples, UserStateStore } from "../types";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
-import {
-  useScreenStore,
-  useSoundStore,
-  useUserStore,
-  useVolumeStore,
-} from "./stores";
 import { generateName, playWithVolume, flattenSamples } from "./utils";
+import { useSound } from "./useSound";
+import { usePage } from "./usePage";
+import { useUsers } from "./useUsers";
+import { Sample } from "../samples";
 
 interface PlayersContext {
   players: Players | null;
-  samples: samples;
-  setSamples(samples: samples): void;
+  samples: Sample[] | [];
+  setSamples(samples: Sample[]): void;
 }
 
 const defaultState = {
   players: null,
-  samples: {},
-  setSamples: () => {},
+  samples: [],
+  setSamples: (samples: Sample[]) => {},
 };
 
 const PlayersContext = createContext<PlayersContext>(defaultState);
@@ -40,32 +35,26 @@ export const usePlayers = () => useContext(PlayersContext);
 
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
-  const screen = useScreenStore((state) => state.selectedScreen);
-  const [setRoomID, setUsers, setUserID] = useUserStore((state) => [
+  const page = usePage((state) => state.page);
+  const [setRoomID, setUsers, setUserID] = useUsers((state) => [
     state.setRoomID,
     state.setUsers,
     state.setUserID,
   ]);
-  const setVolumes = useVolumeStore((state) => state.setVolumes);
-  // const router = useRouter();
   // const { roomID } = router.query;
   const userID = generateName();
   // @ts-ignore
-  const [samples, setSamples] = useState(defaultState.samples);
-  const setDrumSound = useSoundStore((state) => state.setDrumSound);
+  const [samples, setSamples] = useState(defaultState.samples as State[]);
+  const setPadSample = useSound((state) => state.setPadSample);
 
   const handler = async () => {
-    await Tone.start();
-    useScreenStore.getState().setScreen("keys");
+    Tone.start();
   };
 
   const loadSamples = (samples) => {
     const allSamples = flattenSamples(samples);
-    setDrumSound("tom", Object.keys(samples["toms"])[0]);
-    setDrumSound("snare", Object.keys(samples["snares"])[0]);
-    setDrumSound("kick", Object.keys(samples["kicks"])[0]);
-    setDrumSound("hi_hat", Object.keys(samples["hi_hats"])[0]);
-    setDrumSound("closed_hat", Object.keys(samples["closed_hats"])[0]);
+
+    [...Array(10)].map((i) => setPadSample(i, "House Toms"));
     players.current = new Players(allSamples, () => {}).toDestination();
   };
 
@@ -77,7 +66,6 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
 
     // if (!roomID) return;
     if (Object.keys(samples).length === 0) return;
-    console.log("full samples", Object.keys(samples).length);
     loadSamples(samples);
   }, [samples]);
 
@@ -88,19 +76,28 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     connectSocket(userID, roomID);
 
     socket.on("connect", () => {
-      setRoomID(roomID as UserStateStore["roomID"]);
+      setRoomID(roomID);
       setUserID(userID);
     });
 
-    socket.on("sound-played", (userID, clipName) => {
-      const player = players!.current!.player(clipName);
-      const volume = useVolumeStore.getState().userVolumes[userID] ?? -10;
+    socket.on("sound-played", (userID, sample) => {
+      const player = players!.current!.player(sample);
+      const users = useUsers.getState().users;
+      const volume = (users[userID] && users[userID].volume) || -10;
       playWithVolume(player, volume);
     });
 
     socket.on("users-update", (users, msg) => {
-      setUsers(users);
-      setVolumes(users);
+      const oldUsers = useUsers.getState().users;
+      const newUsers = {};
+      Object.keys(users).map(
+        (id) =>
+          (newUsers[id] = {
+            instrument: users[id][1],
+            volume: (oldUsers[id] && oldUsers[id].volume) || -10,
+          })
+      );
+      setUsers(newUsers);
     });
 
     return socketCleanup;
