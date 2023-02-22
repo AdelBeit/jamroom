@@ -10,21 +10,25 @@ import {
 import { Players } from "tone";
 import * as Tone from "tone";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
-import { generateName, playWithVolume, flattenSamples } from "./utils";
+import { generateName, flattenSamples } from "./utils";
+import playSample from "./playSample";
 import { useSound } from "./useSound";
 import { useUsers } from "./useUsers";
-import { Sample } from "../samples";
+import { Sample } from "../sample";
+import { User } from "../types";
 
-interface PlayersContext {
+export interface PlayersContext {
   players: Players | null;
   samples: Sample[] | [];
   setSamples(samples: Sample[]): void;
+  playSample(sample: Sample, userID?: User["id"]): void;
 }
 
 const defaultState = {
   players: null,
   samples: [],
   setSamples: (samples: Sample[]) => {},
+  playSample: (sample: Sample, userID?: User["id"]) => {},
 };
 
 const PlayersContext = createContext<PlayersContext>(defaultState);
@@ -52,7 +56,6 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const loadSamples = (samples) => {
     const allSamples = flattenSamples(samples);
 
-    [...Array(10)].map((i) => setPadSample(i, "House Toms"));
     players.current = new Players(allSamples, () => {}).toDestination();
   };
 
@@ -79,10 +82,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     });
 
     socket.on("sound-played", (userID, sample) => {
-      const player = players!.current!.player(sample);
-      const users = useUsers.getState().users;
-      const volume = (users[userID] && users[userID].volume) || -10;
-      playWithVolume(player, volume);
+      playSample.bind(null, players!.current!)(sample, userID);
     });
 
     socket.on("users-update", (users, msg) => {
@@ -104,9 +104,9 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   return (
     <PlayersContext.Provider
       value={{
-        players: players.current,
-        samples: samples,
-        setSamples: setSamples,
+        ...{ samples, setSamples },
+        playSample: playSample.bind(null, players.current),
+        players: players.current, // TODO: eventually remove this
       }}
     >
       {props.children}
