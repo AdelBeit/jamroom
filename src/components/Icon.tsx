@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "../icons";
+import { Icon } from "../icon";
 
 export interface Props {
   _icon: Icon;

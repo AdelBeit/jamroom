@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { Players } from "tone";
 import { GetState, SetState, State, StateCreator, StoreApi } from "zustand";
-import { Icon } from "./icons";
+import { Icon } from "./icon";
 import { Props as IconProps } from "./components/Icon";
 
 export type Octave = 1 | 2 | 3 | 4 | 5 | 6 | 7;
@@ -36,7 +36,7 @@ export interface KeyProps {
   octave?: Octave;
 }
 
-export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> {}
+export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> { }
 
 export type Instrument = "drumkit" | "keyboard";
 
