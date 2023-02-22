@@ -1,11 +1,11 @@
 import React from "react";
-import { Sample } from "../samples";
+import { Sample } from "../sample";
 import { usePlayers } from "../utils/PlayersContext";
 import { socket } from "../utils/socketClient";
 import { usePage } from "../utils/usePage";
 import { useUsers } from "../utils/useUsers";
-import { playWithVolume } from "../utils/utils";
 import Icon from "./Icon";
+import { useSound } from "../utils/useSound";
 
 interface Props {
   _id: number;
@@ -14,23 +14,20 @@ interface Props {
 }
 
 export default function DrumPad({ _id, sample, config = false }: Props) {
-  const { players } = usePlayers();
+  const { playSample } = usePlayers();
   const [userID, roomID] = useUsers((state) => [state.userID, state.roomID]);
 
   const padHandler = (e: React.TouchEvent | React.MouseEvent) => {
     if (config) {
       e.preventDefault();
+      useSound.getState().setConfigPad(_id);
       usePage.getState().setPage("_Samples");
       return;
     }
 
     e.currentTarget.classList.add("active");
-    if (players) {
-      const player = players.player(sample);
-      socket.emit("play-sound", sample, roomID);
-      const volume = useUsers.getState().users[userID].volume ?? -10;
-      playWithVolume(player, volume);
-    }
+    playSample(sample);
+    socket.emit("play-sound", sample, roomID);
   };
 
   const preventDefault = (e: React.TouchEvent | React.MouseEvent) => {

@@ -1,21 +1,14 @@
 import React from "react";
 import SampleBar from "../components/SampleBar";
-import { Sample } from "../samples";
+import { useSound } from "../utils/useSound";
 
-interface Props {
-  currentSample: Sample;
-  setSample: React.MouseEventHandler<HTMLButtonElement>;
-}
+const [setSample, padID] = useSound((state) => [
+  state.setPadSample,
+  state.configPad,
+]);
 
-export default function Samples({ currentSample, setSample }: Props) {
-  const samples: Sample[] = [
-    "House Toms",
-    "Rock Toms",
-    "Cymbals",
-    "Metal Snare",
-    "Open Hats",
-    "Closed Hats",
-  ];
+export default function Samples() {
+  const samples = useSound((state) => state.samples);
 
   return (
     <div id="_Samples" className="_page flex">
@@ -24,7 +17,7 @@ export default function Samples({ currentSample, setSample }: Props) {
           <SampleBar
             key={sample}
             _sample={sample}
-            active={currentSample === sample}
+            active={samples[padID] === sample}
             {...{ setSample }}
           />
         ))}

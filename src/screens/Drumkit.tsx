@@ -1,4 +1,4 @@
-import DrumPad from "../components/Drumpad";
+import DrumPad from "../components/DrumPad";
 import { Page } from "../types";
 import { useSound } from "../utils/useSound";
 
@@ -6,8 +6,9 @@ interface Props {
   _page: Page;
 }
 
+const samples = useSound((state) => state.samples);
+
 export default function Drumkit({ _page }: Props) {
-  const samples = useSound((state) => state.samples);
   const padIDs = [...Array(10)].map((v, _i) => _i);
 
   return (
