@@ -1,5 +1,3 @@
-import { Player } from "tone";
-
 export const generateName = () => {
   const adjectives = [
     "tidy",
@@ -74,11 +72,6 @@ export const baseURL = (instrument) => {
     default:
       return "./samples/";
   }
-};
-
-export const playWithVolume = (player: Player, volume: number) => {
-  player.volume.value = volume;
-  player.start();
 };
 
 export const flattenSamples = (samples) => {
