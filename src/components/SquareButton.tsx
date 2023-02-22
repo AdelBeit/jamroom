@@ -10,10 +10,10 @@ import Icon from "./Icon";
 
 interface Props extends Omit<ButtonProps, "text"> {}
 
-export default function SquareButton({ icon }: Props) {
+export default function SquareButton({ icon: _icon }: Props) {
   return (
-    <button className={`mold flex ${icon}`}>
-      <Icon {...{ _icon: icon }} size={17} />
+    <button className={`mold flex ${_icon}`}>
+      <Icon {...{ _icon }} size={17} />
       <style jsx>
         {`
           button {
