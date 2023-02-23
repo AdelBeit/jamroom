@@ -7,11 +7,10 @@ interface Props {
   _page: Page;
 }
 
-const toggleTutorial = usePage.getState().toggleTutorial;
-
 export default function Tutorial({ _page }: Props) {
+  const toggleTutorial = usePage((state) => state.toggleTutorial);
   return (
-    <div id="_tutorial" className={`_container absolute flex`}>
+    <div id="_tutorial" className={`_container absolute`}>
       <div className="dark_underlay faded"></div>
       <div className="box mold"></div>
       <style jsx>{`
@@ -22,6 +21,7 @@ export default function Tutorial({ _page }: Props) {
           z-index: 10;
         }
         ._container {
+          display: flex;
           flex-direction: column;
           width: 100%;
           height: 100%;

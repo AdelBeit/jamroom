@@ -6,7 +6,7 @@ export default function Jammers() {
   const users = ["pumpkinman823", "gnarlybarley442", "icebucket889"];
   const currentUser = "pumpkinman823";
   return (
-    <div id="_Jammers" className="_page flex">
+    <div id="_Jammers" className="_page">
       {users.map((user) => (
         <JammerBar
           key={user}
@@ -16,13 +16,26 @@ export default function Jammers() {
           classes={user === currentUser ? "active" : ""}
         />
       ))}
-      <button className={`add_jammer bar mold flex`}>
-        <Icon _icon="plus" size={25} />
+      <button className={`add_jammer bar mold`}>
+        <Icon _icon="add" size={25} />
       </button>
       <div className="icon absolute faded">
         <Icon _icon="jammers" size={65} />
       </div>
       <style jsx>{`
+        ._page,
+        .add_jammer {
+          display: flex;
+        }
+        ._page {
+          flex-direction: column;
+          gap: 8px;
+        }
+        .add_jammer {
+          align-items: center;
+          justify-content: center;
+        }
+
         .icon {
           width: 65px;
           height: 65px;

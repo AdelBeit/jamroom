@@ -1,11 +1,10 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Key from "../components/Key";
 import { Note } from "../types";
 import { useSound } from "../utils/useSound";
 
-const setOctave = useSound((state) => [state.setOctave]);
-
 export default function Keyboard() {
+  const setOctave = useSound((state) => [state.setOctave]);
   const NOTES = [
     "C",
     "Cs",
@@ -24,7 +23,7 @@ export default function Keyboard() {
   const octave = useSound((state) => state.octave);
 
   return (
-    <div id="_Keyboard" className="_page flex">
+    <div id="_Keyboard" className="_page">
       {NOTES.map((_note) => (
         <Key key={_note + octave} {...{ _note, octave }} />
       ))}

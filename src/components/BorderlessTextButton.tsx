@@ -2,24 +2,32 @@ import React from "react";
 import cs from "classnames";
 import Icon from "./Icon";
 import { ButtonProps } from "../types";
+import { preventDefault } from "../utils/utils";
 
-export interface Props extends ButtonProps {
+export interface Props extends Omit<ButtonProps, "size"> {
   active?: boolean;
 }
 
 export default function BorderlessTextButton({
-  icon,
+  _icon,
   text,
+  handler,
   active = false,
 }: Props) {
   return (
-    <button className={cs("flex", text, active && "faded")}>
-      <Icon _icon={icon} size={20} />
+    <button
+      className={cs(text, active && "faded")}
+      onClick={handler}
+      onTouchStart={handler}
+      onTouchEnd={preventDefault}
+    >
+      <Icon {...{ _icon }} size={20} />
       <span className="medium">{text}</span>
       <style jsx>{`
         button {
           background-color: var(--black);
           color: var(--amber);
+          display: flex;
           gap: 16px;
         }
       `}</style>

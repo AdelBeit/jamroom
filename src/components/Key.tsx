@@ -5,6 +5,7 @@ import { usePlayers } from "../utils/PlayersContext";
 import { useUsers } from "../utils/useUsers";
 import { socket } from "../utils/socketClient";
 import { Sample } from "../sample";
+import { preventDefault } from "../utils/utils";
 
 interface Props {
   _note: Note;
@@ -13,7 +14,7 @@ interface Props {
 
 export default function Key({ _note, octave }: Props) {
   const { playSample } = usePlayers();
-  const [roomID] = useUsers((state) => [state.roomID]);
+  const roomID = useUsers((state) => state.roomID);
 
   const keyHandler = (e: React.MouseEvent | React.TouchEvent) => {
     const sample = (_note + octave) as Sample;
@@ -21,32 +22,28 @@ export default function Key({ _note, octave }: Props) {
     socket.emit("play-sound", sample, roomID);
   };
 
-  const preventDefault = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
-  };
-
   return (
     <button
       onTouchStart={keyHandler}
-      onMouseDown={keyHandler}
-      onMouseUp={preventDefault}
+      onClick={keyHandler}
       onTouchEnd={preventDefault}
       id={_note + octave}
-      className={cs("_key", (_note[1] && "black") || "white")}
+      className={cs("_key mold", (_note[1] && "black") || "white")}
     >
       {_note === "C" && <span>{_note + octave}</span>}
       <style jsx>{`
         button {
-          display: inline-flex;
           grid-row: 1/1;
           border-radius: 20px;
+
+          display: inline-flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-end;
-          padding-bottom: 10px !important;
 
-          padding: 0;
           position: relative;
+          padding: 0;
+          padding-bottom: 10px;
         }
 
         .C {

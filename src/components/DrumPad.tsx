@@ -15,7 +15,7 @@ interface Props {
 
 export default function DrumPad({ _id, sample, config = false }: Props) {
   const { playSample } = usePlayers();
-  const [userID, roomID] = useUsers((state) => [state.userID, state.roomID]);
+  const roomID = useUsers((state) => state.roomID);
 
   const padHandler = (e: React.TouchEvent | React.MouseEvent) => {
     if (config) {
@@ -38,10 +38,9 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
   return (
     <button
       id={`${_id}`}
-      className="mold flex"
+      className="mold"
       onClick={padHandler}
       onTouchStart={padHandler}
-      onMouseUp={preventDefault}
       onTouchEnd={preventDefault}
     >
       {config && <Icon _icon="config" size={60} />}
@@ -50,6 +49,7 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
           button {
             width: 100%;
             height: 100%;
+            display: flex;
             justify-content: center;
             align-items: center;
           }

@@ -3,41 +3,27 @@ import React from "react";
 import { Sample } from "../sample";
 import { usePlayers } from "../utils/PlayersContext";
 import { useSound } from "../utils/useSound";
+import { preventDefault } from "../utils/utils";
 
 interface Props {
   _sample: Sample;
-  setSample(sample: Sample): void;
+  handler(e: React.MouseEvent | React.TouchEvent): void;
   active?: boolean;
 }
 
-const { playSample } = usePlayers();
-
-export default function SampleBar({
-  _sample,
-  setSample,
-  active = false,
-}: Props) {
-  const handler = (e: React.MouseEvent | React.TouchEvent) => {
-    setSample(_sample);
-    playSample(_sample);
-  };
-
-  const preventDefault = (e: React.MouseEvent | React.TouchEvent) => {
-    e.preventDefault();
-  };
-
+export default function SampleBar({ _sample, handler, active = false }: Props) {
   return (
     <button
-      className={cs("bar mold flex", active && "active")}
-      onMouseDown={handler}
+      className={cs("bar mold", active && "active")}
+      onClick={handler}
       onTouchStart={handler}
-      onMouseUp={preventDefault}
       onTouchEnd={preventDefault}
     >
       <span className="medium">{_sample}</span>
       <style jsx>
         {`
           button {
+            display: flex;
             justify-content: flex-start;
           }
         `}

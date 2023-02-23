@@ -1,8 +1,8 @@
 import React from "react";
-import { Icon } from "../icon";
+import { Icon as IconType } from "../icon";
 
 export interface Props {
-  _icon: Icon;
+  _icon: IconType;
   size?: number;
 }
 
@@ -15,9 +15,13 @@ export default function Icon({ _icon, size = 30 }: Props) {
       </svg>
       <style jsx>
         {`
-          div {
+          div,
+          div * {
             width: ${size}px;
             height: ${size}px;
+          }
+          div {
+            background-color: red;
           }
         `}
       </style>

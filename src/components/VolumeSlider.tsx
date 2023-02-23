@@ -16,7 +16,7 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
       ? "full"
       : "partial")) as IconType;
   return (
-    <div className="flex">
+    <div>
       <Icon _icon={icon} />
       <input
         value={volume}
@@ -29,8 +29,10 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
       />
       <style jsx>{`
         div {
-          width: 100%;
+          width: fit-content;
           height: 100%;
+          display: flex;
+          align-items: center;
         }
 
         input::-webkit-slider-runnable-track,
