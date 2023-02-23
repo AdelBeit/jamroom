@@ -1,55 +1,147 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RoomBar from "../components/RoomBar";
+import Icon from "../components/Icon";
+import BorderedTextButton from "../components/BorderedTextButton";
+import SquareButton from "../components/SquareButton";
+import { useUsers } from "../utils/useUsers";
+import { usePage } from "../utils/usePage";
+
+type LobbyState = "initial" | "join" | "create";
 
 export function Lobby() {
-  const appTitle = "Jamroom";
-  const username = "AppleSpice8132";
-  const [roomID, setRoomID] = useState("123");
+  const title = "Jamroom";
+  const [userID, roomID, setRoomID] = useUsers((state) => [
+    state.userID,
+    state.roomID,
+    state.setRoomID,
+  ]);
+  const setPage = usePage((state) => state.setPage);
   const roomList = [roomID, "12", "48293", "128312"];
+  const [lobbyState, setLobbyState] = useState<LobbyState>("initial");
 
-  useEffect(() => {
-    const roomIDInput = document.querySelector("#roomID") as HTMLInputElement;
-    setRoomID(roomIDInput.value);
-  }, [roomID]);
-  return (
-    <div id="_Lobby" className="_page flex">
-      <div className="_header large flex">
-        <span className="title ">{appTitle}</span>
-        <span className="username ">{username}</span>
-      </div>
-      <div className="_body flex">
-        <input
-          className="bar mold active medium"
-          type="text"
-          value={roomID}
-          id="roomID"
-          onChange={(e) => setRoomID(e.target.value)}
-          placeholder="Enter room # to create/join a room"
-        />
-        <div className="room_list medium flex">
+  let LobbyContent = (
+    <div className="lobby initial">
+      <BorderedTextButton
+        handler={(e) => {
+          setLobbyState("create");
+        }}
+        _icon="add"
+        text="Create Room"
+      />
+      <BorderedTextButton
+        handler={(e) => setLobbyState("join")}
+        _icon="enter"
+        text="Join Room"
+      />
+    </div>
+  );
+
+  if (lobbyState === "join")
+    LobbyContent = (
+      <div className="lobby join">
+        <div className="list container relative">
           {roomList.map((roomID, _index) => (
             <RoomBar
               key={roomID}
-              text={(_index === 0 ? "Create" : "Join") + " Room # " + roomID}
+              text={"Join Room # " + roomID}
+              handler={(e) => {
+                setRoomID(roomID);
+                setPage("_Jammers");
+              }}
             />
           ))}
         </div>
+        <SquareButton
+          _icon="back"
+          size={40}
+          handler={(e) => setLobbyState("initial")}
+        />
       </div>
+    );
+
+  if (lobbyState === "create")
+    LobbyContent = (
+      <div className="lobby create">
+        <div className="input container relative">
+          <input
+            className="bar mold active medium"
+            type="text"
+            value={roomID}
+            id="roomID"
+            onChange={(e) => setRoomID(e.target.value)}
+            placeholder="Enter room # to create/join a room"
+          />
+          <Icon _icon="enter" size={20} />
+        </div>
+        <SquareButton
+          _icon="back"
+          size={40}
+          handler={(e) => setLobbyState("initial")}
+        />
+      </div>
+    );
+
+  // useEffect(() => {
+  //   const roomIDInput = document.querySelector("#roomID") as HTMLInputElement;
+  //   setRoomID(roomIDInput.value || "");
+  // }, [roomID]);
+
+  return (
+    <div id="_Lobby" className="_page">
+      <span className="x-large title faded absolute">{title}</span>
+      <span className="large username">
+        <Icon _icon="jammer" size={30} /> {userID}
+      </span>
+      {LobbyContent}
       <style jsx>{`
         ._page {
+          width: 100%;
+          height: 100%;
+          display: flex;
           flex-direction: column;
-          justify-content: space-between;
-        }
-        ._header {
           justify-content: space-between;
           align-items: center;
-          padding: 0 2.5%;
         }
-        ._body {
+        ._page > * {
+          z-index: 2;
+        }
+
+        .title {
+          display: block;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1;
+        }
+
+        .username {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+
+        ._page :global(.lobby) {
+          display: flex;
           flex-direction: column;
           justify-content: space-between;
-          gap: 40px;
+          gap: 30px;
         }
+        ._page :global(.lobby.initial) {
+          width: 205px;
+        }
+        ._page :global(.lobby.join) {
+          width: 95%;
+          margin: 0 5%;
+        }
+        ._page :global(.lobby.join .list.container) {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        ._page :global(.lobby.create) {
+          width: 500px;
+        }
+
         input {
           border-radius: 8px;
         }
@@ -64,10 +156,6 @@ export function Lobby() {
         }
         input::placeholder {
           color: #885f26;
-        }
-        .room_list {
-          flex-direction: column;
-          gap: 8px;
         }
       `}</style>
     </div>
