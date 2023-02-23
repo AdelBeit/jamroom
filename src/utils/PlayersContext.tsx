@@ -12,7 +12,6 @@ import * as Tone from "tone";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
 import { generateName, flattenSamples } from "./utils";
 import playSample from "./playSample";
-import { useSound } from "./useSound";
 import { useUsers } from "./useUsers";
 import { Sample } from "../sample";
 import { User } from "../types";
@@ -36,17 +35,14 @@ export const usePlayers = () => useContext(PlayersContext);
 
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
-  const [setRoomID, setUsers, setUserID] = useUsers((state) => [
+  const [setRoomID, roomID, setUsers, setUserID] = useUsers((state) => [
     state.setRoomID,
+    state.roomID,
     state.setUsers,
     state.setUserID,
   ]);
   const userID = generateName();
   const [samples, setSamples] = useState(defaultState.samples as Sample[]);
-
-  const handler = async () => {
-    Tone.start();
-  };
 
   const loadSamples = (samples) => {
     const allSamples = flattenSamples(samples);
@@ -54,19 +50,17 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   };
 
   useEffect(() => {
-    // create room if it doesn't exist
-    // if (!roomID && router.isReady) {
-    // router.replace(`/home?roomID=${Date.now()}`);
-    // }
-
-    // if (!roomID) return;
-    // if (Object.keys(samples).length === 0) return;
     loadSamples(samples);
-  }, []);
+  }, [samples]);
 
   useEffect(() => {
-    let roomID = "1";
     if (!players.current) return;
+  }, [players.current]);
+
+  useEffect(() => {
+    if (!roomID) return;
+
+    Tone.start();
 
     connectSocket(userID, roomID);
 
@@ -82,18 +76,19 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     socket.on("users-update", (users, msg) => {
       const oldUsers = useUsers.getState().users;
       const newUsers = {};
-      Object.keys(users).map(
-        (id) =>
-          (newUsers[id] = {
-            instrument: users[id][1],
-            volume: (oldUsers[id] && oldUsers[id].volume) || -10,
-          })
-      );
+      Object.keys(users).map((id) => {
+        const [userID, instrument] = users[id];
+
+        newUsers[userID] = {
+          instrument: instrument,
+          volume: (oldUsers[userID] && oldUsers[userID].volume) || -10,
+        };
+      });
       setUsers(newUsers);
     });
 
     return socketCleanup;
-  }, [players.current]);
+  }, [roomID]);
 
   return (
     <PlayersContext.Provider
@@ -104,11 +99,6 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
       }}
     >
       {props.children}
-      {/* {screen == "start" && (
-        <div className={"page_container"}>
-          <Button variant={"start"} handler={handler}></Button>
-        </div>
-      )} */}
     </PlayersContext.Provider>
   );
 };
