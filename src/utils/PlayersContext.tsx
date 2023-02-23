@@ -34,8 +34,6 @@ const defaultState = {
 const PlayersContext = createContext<PlayersContext>(defaultState);
 export const usePlayers = () => useContext(PlayersContext);
 
-// TODO: drag events cancel sample play
-
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
   const [setRoomID, setUsers, setUserID] = useUsers((state) => [
@@ -43,11 +41,8 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     state.setUsers,
     state.setUserID,
   ]);
-  // const { roomID } = router.query;
   const userID = generateName();
-  // @ts-ignore
-  const [samples, setSamples] = useState(defaultState.samples as State[]);
-  const setPadSample = useSound((state) => state.setPadSample);
+  const [samples, setSamples] = useState(defaultState.samples as Sample[]);
 
   const handler = async () => {
     Tone.start();
@@ -55,7 +50,6 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
 
   const loadSamples = (samples) => {
     const allSamples = flattenSamples(samples);
-
     players.current = new Players(allSamples, () => {}).toDestination();
   };
 
@@ -66,9 +60,9 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     // }
 
     // if (!roomID) return;
-    if (Object.keys(samples).length === 0) return;
+    // if (Object.keys(samples).length === 0) return;
     loadSamples(samples);
-  }, [samples]);
+  }, []);
 
   useEffect(() => {
     let roomID = "1";
