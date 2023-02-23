@@ -86,3 +86,7 @@ export const flattenSamples = (samples) => {
   const selectAll = (acc, instrument) => ({ ...acc, ...samples[instrument] });
   return Object.keys(samples).reduce(selectAll, {});
 };
+
+export const preventDefault = (e: React.TouchEvent) => {
+  e.preventDefault();
+};
