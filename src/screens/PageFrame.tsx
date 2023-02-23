@@ -1,6 +1,8 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import StatusBar from "../components/StatusBar";
 import { Page } from "../types";
+import { usePage } from "../utils/usePage";
+import { useUsers } from "../utils/useUsers";
 import Menu from "./Menu";
 
 interface Props {
@@ -9,21 +11,23 @@ interface Props {
 }
 
 export default function PageFrame({ _page, children }: Props) {
-  const roomID = "123";
-  const [firstTime, setFirstTime] = useState(true);
-  const menuOpen = firstTime && true;
+  const roomID = useUsers((state) => state.roomID);
+  const menuOpen = usePage((state) => state.menuOpen);
+
+  const [firstTime, setFirstTime] = useState(false);
   return (
-    <div id="_pageFrame" className="_container flex relative">
+    <div id="_pageFrame" className="_container relative">
       <div className="_content">{children}</div>
-      {!firstTime && !menuOpen && _page !== "_Lobby" && (
+      {!menuOpen && _page !== "_Lobby" && (
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
       {menuOpen && <Menu {...{ _page }} />}
       <style jsx>
         {`
           ._container {
-            width: 100vw;
-            height: 100vh;
+            width: 900px;
+            height: 900px;
+            display: flex;
             flex-direction: column;
             justify-content: space-between;
             gap: 20px;
@@ -31,6 +35,8 @@ export default function PageFrame({ _page, children }: Props) {
           }
           ._content {
             flex: 1;
+            width: 100%;
+            height: 100%;
           }
         `}
       </style>
