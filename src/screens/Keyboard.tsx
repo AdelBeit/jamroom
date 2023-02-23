@@ -30,13 +30,15 @@ export default function Keyboard() {
       <style jsx>
         {`
           ._page {
-            width: 100%;
-            height: 100%;
+            padding-top: 30px;
+
             display: inline-grid;
-            justify-content: center;
+            width: max-content;
+            height: 100%;
             grid-template-columns: repeat(7, 1fr);
             grid-template-rows: 0;
             column-gap: 10px;
+            position: relative;
           }
         `}
       </style>
