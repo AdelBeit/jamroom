@@ -28,11 +28,15 @@ export default function Key({ _note, octave }: Props) {
       onClick={keyHandler}
       onTouchEnd={preventDefault}
       id={_note + octave}
-      className={cs("_key mold", (_note[1] && "black") || "white")}
+      className={cs(
+        "_key mold relative",
+        _note,
+        (_note[1] && "black") || "white"
+      )}
     >
       {_note === "C" && <span>{_note + octave}</span>}
       <style jsx>{`
-        button {
+        ._key {
           grid-row: 1/1;
           border-radius: 20px;
 
@@ -41,7 +45,6 @@ export default function Key({ _note, octave }: Props) {
           align-items: center;
           justify-content: flex-end;
 
-          position: relative;
           padding: 0;
           padding-bottom: 10px;
         }
@@ -87,6 +90,7 @@ export default function Key({ _note, octave }: Props) {
           font-family: monospace;
           font-size: 30px;
           padding-bottom: 10px;
+          color: var(--black);
         }
 
         .white {
