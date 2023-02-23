@@ -10,7 +10,9 @@ export default function playSample(
 ) {
   if (!players) return;
   const { users, userID: currentUser } = useUsers.getState();
-  const volume = users[userID || currentUser].volume ?? -10;
+  const volume =
+    ((users[userID] && users[userID].volume) || users[currentUser].volume) ??
+    -10;
   const player = players.player(sample);
   player.volume.value = volume;
   player.start();
