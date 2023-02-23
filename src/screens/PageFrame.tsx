@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import StatusBar from "../components/StatusBar";
 import { Page } from "../types";
 import { usePage } from "../utils/usePage";
@@ -26,7 +26,7 @@ export default function PageFrame({ _page, children }: Props) {
         {`
           ._container {
             width: 900px;
-            height: 900px;
+            height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -37,6 +37,8 @@ export default function PageFrame({ _page, children }: Props) {
             flex: 1;
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
           }
         `}
       </style>
