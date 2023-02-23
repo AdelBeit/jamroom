@@ -5,6 +5,7 @@
   --font-sm: 15px;
   --font-med: 20px;
   --font-lg: 25px;
+  --font-xl: 50px;
 }
 
 html,
@@ -14,7 +15,7 @@ body {
   padding: 0;
   margin: 0;
   background-color: var(--black);
-  color: var(--black);
+  color: var(--amber);
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -33,23 +34,22 @@ a {
   box-sizing: border-box;
 }
 
-input,
-span {
-  font-weight: bold;
-  color: var(--amber);
-}
-
 ._page {
   width: 100%;
   height: 100%;
+}
+
+button:hover {
+  background-color: var(--amber);
+  color: var(--black);
 }
 
 /* utils */
 .absolute {
   position: absolute;
 }
-.flex {
-  display: flex;
+.relative {
+  position: relative;
 }
 .bar {
   width: 100%;
@@ -85,15 +85,8 @@ span {
 .large {
   font-size: var(--font-lg);
 }
-
-/* old styles! recycle remove */
-
-li {
-  list-style: none;
-}
-
-.text {
-  color: var(--black);
+.x-large {
+  font-size: var(--font-xl);
 }
 
 /* animations */
@@ -121,7 +114,7 @@ li {
 }
 
 /* Buttons styles start */
-.UNSTYLE_BUTTON {
+button {
   border: unset;
   background-color: unset;
   display: unset;
@@ -130,11 +123,11 @@ li {
   text-decoration: unset;
   color: inherit;
   font-family: unset;
+  font-weight: unset;
   font-size: unset;
   line-height: unset;
   cursor: pointer;
   text-align: unset;
-  transition: transform 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
   -webkit-appearance: none;
   -moz-appearance: none;
   -webkit-tap-highlight-color: transparent;
