@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { Sample } from "../sample";
 import { Octave } from "../types";
@@ -6,7 +6,7 @@ import { Octave } from "../types";
 export type samples = { [name: string]: string };
 export interface SoundStateStore {
   octave: Octave;
-  configPad: number,
+  configPad: number;
   samples: Sample[];
   setPadSample(sample: Sample): void;
   setConfigPad(padID: number): void;
