@@ -24,6 +24,5 @@ export const getSamples = () => {
     });
   };
   recurse(samplesDir);
-  console.log(allSamples);
   return allSamples;
 };

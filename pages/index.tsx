@@ -44,6 +44,8 @@ const Page: NextPage = (props) => {
         {`
           div {
             background-color: var(--black);
+            display: flex;
+            justify-content: center;
           }
         `}
       </style>
