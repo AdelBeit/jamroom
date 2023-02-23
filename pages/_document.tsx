@@ -18,8 +18,8 @@ export default function Document() {
 
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="application-name" content="DnK" />
-        <meta name="apple-mobile-web-app-title" content="DnK" />
+        <meta name="application-name" content="Jam" />
+        <meta name="apple-mobile-web-app-title" content="Jam" />
         <meta name="msapplication-starturl" content="/" />
         <meta
           name="viewport"

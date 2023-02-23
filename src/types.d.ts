@@ -36,7 +36,7 @@ export interface KeyProps {
   octave?: Octave;
 }
 
-export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> { }
+export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> {}
 
 export type Instrument = "drumkit" | "keyboard";
 
@@ -85,7 +85,8 @@ export type Page =
   | "_Config";
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: IconProps["icon"];
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    IconProps {
+  handler: (e: React.MouseEvent | React.TouchEvent) => void;
   text: string;
 }

@@ -1,6 +1,7 @@
 export type Icon =
-  | "plus"
+  | "add"
   | "close"
+  | "back"
   | "confirm"
   | "volume#full"
   | "volume#partial"
@@ -13,5 +14,6 @@ export type Icon =
   | "keyboard#thin"
   | "drumkit"
   | "jammers"
+  | "jammer"
   | "menu"
   | "tutorial";
