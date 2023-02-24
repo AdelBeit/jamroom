@@ -15,10 +15,18 @@ export default function Icon({ _icon, size = 30 }: Props) {
       </svg>
       <style jsx>
         {`
+          div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
           div,
           div * {
+            display: block;
             width: ${size}px;
             height: ${size}px;
+            fill: inherit;
+            stroke: inherit;
           }
         `}
       </style>

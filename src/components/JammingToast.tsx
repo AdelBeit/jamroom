@@ -14,7 +14,7 @@ export default function JammingToast({
   volume = "partial",
 }: Props) {
   return (
-    <div>
+    <div className="icon_frame">
       <Icon _icon={`volume#${volume}`} size={15} />
       <span className="small">{username}</span>
       <Icon

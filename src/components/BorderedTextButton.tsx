@@ -33,6 +33,7 @@ export default function BorderedTextButton({
           border: 2px solid var(--amber);
           display: flex;
           justify-content: space-between;
+          align-items: center;
           gap: 16px;
         }
         button:hover {

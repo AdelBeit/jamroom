@@ -39,9 +39,17 @@ a {
   height: 100%;
 }
 
+button,
+.icon_frame {
+  fill: var(--amber);
+  stroke: var(--amber);
+}
+
 button:hover {
   background-color: var(--amber);
   color: var(--black);
+  fill: var(--black);
+  stroke: var(--black);
 }
 
 /* utils */
@@ -64,6 +72,8 @@ button:hover {
 .mold.active {
   background-color: var(--amber);
   color: var(--black);
+  fill: var(--black);
+  stroke: var(--black);
 }
 .outline {
   border: solid red 2px;

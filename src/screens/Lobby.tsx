@@ -62,7 +62,7 @@ export function Lobby() {
   if (lobbyState === "create")
     LobbyContent = (
       <div className="lobby create">
-        <div className="input container relative">
+        <div className="input icon_frame container relative">
           <input
             className="bar mold active medium"
             type="text"
@@ -87,7 +87,7 @@ export function Lobby() {
   // }, [roomID]);
 
   return (
-    <div id="_Lobby" className="_page">
+    <div id="_Lobby" className="_page icon_frame">
       <span className="x-large title faded absolute">{title}</span>
       <span className="large username">
         <Icon _icon="jammer" size={30} /> {userID}
