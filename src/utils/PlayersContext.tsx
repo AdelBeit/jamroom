@@ -10,7 +10,8 @@ import {
 import { Players } from "tone";
 import * as Tone from "tone";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
-import { generateName, flattenSamples } from "./utils";
+import { flattenSamples } from "./utils";
+import { generateName } from "./generateName";
 import playSample from "./playSample";
 import { useUsers } from "./useUsers";
 import { Sample } from "../sample";

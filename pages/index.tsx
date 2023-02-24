@@ -13,12 +13,16 @@ import { usePage } from "../src/utils/usePage";
 /**
  * TODO: leave room bug: playerscontext, and handler
  * TODO: icons
+ * TODO: click anywhere to dismiss menu
+ * TODO: add gestures
+ *
  * optional:
  * TODO: implement room hosts
  * TODO: kick user functionality
  * TODO: change volume slider to be the whole info bar
  * TODO: persist configs
  * TODO: animate lobby button transitions
+ * TODO: write all sample paths into a js object and don't redo it once it's done, will have to find a way to diff the folders
  */
 
 const Page: NextPage = (props) => {
