@@ -71,6 +71,15 @@ button:hover {
 .faded {
   opacity: 0.25;
 }
+.hide-scroll-bar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.hide-scroll-bar::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
 
 /* font sizes */
 .x-small {

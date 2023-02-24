@@ -18,20 +18,20 @@ export const useSound = create<SoundStateStore>()(
     octave: 4,
     configPad: 1,
     samples: [
-      "House Toms",
-      "House Toms",
-      "House Toms",
-      "House Toms",
-      "House Toms",
-      "House Toms",
-      "House Toms",
-      "House Toms",
-      "House Toms",
-      "House Toms",
+      "Closed Hat - 808",
+      "Kick - 808",
+      "Snare - 1982 Drive",
+      "Tom - 808",
+      "Closed Hat - Stutter",
+      "Hat - 808",
+      "Kick - Hard",
+      "Snare - Clappers Delight",
+      "Tom - Accoustic 1",
+      "Hat - Cymbal",
     ],
     setPadSample: (sample) =>
       set((state) => {
-        const samples = state.samples;
+        const samples = [...state.samples];
         samples[state.configPad] = sample;
         return { ...{ samples } };
       }),

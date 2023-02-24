@@ -1,17 +1,22 @@
 import cs from "classnames";
 import React from "react";
 import { Sample } from "../sample";
-import { usePlayers } from "../utils/PlayersContext";
-import { useSound } from "../utils/useSound";
 import { preventDefault } from "../utils/utils";
 
 interface Props {
   _sample: Sample;
-  handler(e: React.MouseEvent | React.TouchEvent): void;
+  sampleHandler(sample: Sample): void;
   active?: boolean;
 }
 
-export default function SampleBar({ _sample, handler, active = false }: Props) {
+export default function SampleBar({
+  _sample,
+  sampleHandler,
+  active = false,
+}: Props) {
+  const handler = (e: React.MouseEvent | React.TouchEvent) => {
+    sampleHandler(_sample);
+  };
   return (
     <button
       className={cs("bar mold", active && "active")}
@@ -25,6 +30,8 @@ export default function SampleBar({ _sample, handler, active = false }: Props) {
           button {
             display: flex;
             justify-content: flex-start;
+            border-radius: 8px;
+            align-items: center;
           }
         `}
       </style>
