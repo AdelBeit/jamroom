@@ -39,19 +39,21 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
     <button
       id={`${_id}`}
       className="mold"
-      onClick={padHandler}
+      onMouseDown={padHandler}
       onTouchStart={padHandler}
+      onMouseUp={preventDefault}
       onTouchEnd={preventDefault}
     >
       {config && <Icon _icon="config" size={60} />}
       <style jsx>
         {`
           button {
-            width: 100%;
-            height: 100%;
+            width: 17svw;
+            height: 17svw;
             display: flex;
             justify-content: center;
             align-items: center;
+            border-radius: 8px;
           }
         `}
       </style>

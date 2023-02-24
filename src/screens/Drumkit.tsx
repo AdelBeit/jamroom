@@ -12,33 +12,25 @@ export default function Drumkit({ _page }: Props) {
 
   return (
     <div id="_Drumkit" className="_page">
-      <div className="top">
-        {padIDs.slice(padIDs.length / 2 - 1).map((id) => (
-          <DrumPad
-            _id={id}
-            sample={samples[id]}
-            key={id}
-            config={_page === "_Config"}
-          />
-        ))}
-      </div>
-      <div className="bottom">
-        {padIDs.slice(padIDs.length / 2, padIDs.length - 1).map((id) => (
-          <DrumPad
-            _id={id}
-            sample={samples[id]}
-            key={id}
-            config={_page === "_Config"}
-          />
-        ))}
-      </div>
+      {padIDs.map((id) => (
+        <DrumPad
+          _id={id}
+          sample={samples[id]}
+          key={id}
+          config={_page === "_Config"}
+        />
+      ))}
       <style jsx>
         {`
-          div {
-            display: flex;
-          }
           ._page {
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            height: max-content;
+            width: max-content;
+            column-gap: 10px;
+            row-gap: 10px;
+            margin: auto;
           }
         `}
       </style>

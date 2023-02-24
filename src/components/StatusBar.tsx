@@ -14,14 +14,26 @@ export default function StatusBar({ roomID, _page }: Props) {
     ["spoonypan", "keyboard"],
     ["purplepeach23", "drumkit"],
   ];
-  const toggleMenu = usePage((state) => state.toggleMenu);
+  const [toggleMenu, setPage] = usePage((state) => [
+    state.toggleMenu,
+    state.setPage,
+  ]);
+  const configState = ["_Config", "_Samples"].includes(_page);
+
+  const leftButtonHandler = (e: React.TouchEvent | React.MouseEvent) => {
+    if (configState) {
+      setPage("_Drumkit");
+      return;
+    }
+    toggleMenu();
+  };
 
   return (
     <div className="_container">
       <div className="buttons">
         <SquareButton
-          _icon={["_Config", "_Samples"].includes(_page) ? "confirm" : "menu"}
-          handler={(e) => toggleMenu()}
+          _icon={configState ? "confirm" : "menu"}
+          handler={leftButtonHandler}
         />
         <SquareButton _icon="tutorial" handler={(e) => {}} />
       </div>
