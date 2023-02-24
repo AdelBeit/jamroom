@@ -15,6 +15,7 @@ export default function Menu({ _page }: Props) {
   ]);
   const setRoomID = useUsers((state) => state.setRoomID);
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!ref.current) return;
 
@@ -24,6 +25,10 @@ export default function Menu({ _page }: Props) {
       container.classList.remove("show_menu");
     };
   }, [ref.current]);
+
+  const isConfigPage = _page === "_Config";
+  const isDrumkitPage = _page === "_Drumkit";
+
   return (
     <div id="_menu" ref={ref} className={`${_page} _container absolute`}>
       <div className="dark_underlay absolute faded"></div>
@@ -38,7 +43,10 @@ export default function Menu({ _page }: Props) {
             _icon="jammers"
             text="Jammers"
             active={_page === "_Jammers"}
-            handler={(e) => setPage("_Jammers")}
+            handler={(e) => {
+              setPage("_Jammers");
+              toggleMenu();
+            }}
           />
           <BorderlessTextButton
             _icon="leave"
@@ -46,20 +54,27 @@ export default function Menu({ _page }: Props) {
             handler={(e) => {
               setRoomID("");
               setPage("_Lobby");
+              toggleMenu();
             }}
           />
         </div>
         <div className="bottom">
           <BorderlessTextButton
-            _icon={_page === "_Drumkit" ? "config" : "drumkit"}
-            text={_page === "_Drumkit" ? "Config Pads" : "Drumkit"}
-            handler={(e) => setPage("_Drumkit")}
+            _icon={isConfigPage ? "config" : "drumkit"}
+            text={isDrumkitPage ? "Config Pads" : "Drumkit"}
+            handler={(e) => {
+              setPage(isDrumkitPage ? "_Config" : "_Drumkit");
+              toggleMenu();
+            }}
           />
           <BorderlessTextButton
             _icon="keyboard"
             text="Keyboard"
             active={_page === "_Keyboard"}
-            handler={(e) => setPage("_Keyboard")}
+            handler={(e) => {
+              setPage("_Keyboard");
+              toggleMenu();
+            }}
           />
         </div>
       </div>
