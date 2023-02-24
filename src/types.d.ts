@@ -22,7 +22,8 @@ export type Note =
   | "Gs"
   | "A"
   | "As"
-  | "B";
+  | "B"
+  | "N";
 
 export type classNames = String | String[];
 

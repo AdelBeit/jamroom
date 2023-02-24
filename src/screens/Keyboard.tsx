@@ -18,6 +18,7 @@ export default function Keyboard() {
     "A",
     "As",
     "B",
+    "N",
   ] as Note[];
 
   const octave = useSound((state) => state.octave);
@@ -37,7 +38,7 @@ export default function Keyboard() {
             height: 100%;
             grid-template-columns: repeat(7, 1fr);
             grid-template-rows: 0;
-            column-gap: 10px;
+            column-gap: 14px;
             position: relative;
           }
         `}

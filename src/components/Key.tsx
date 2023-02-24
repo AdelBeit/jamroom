@@ -16,6 +16,9 @@ export default function Key({ _note, octave }: Props) {
   const { playSample } = usePlayers();
   const roomID = useUsers((state) => state.roomID);
 
+  const lastNote =
+    _note === "N" ? "C" + Math.min(Math.max(octave - 1, 2), 7) : undefined;
+
   const keyHandler = (e: React.MouseEvent | React.TouchEvent) => {
     const sample = (_note + octave) as Sample;
     playSample(sample);
@@ -27,10 +30,10 @@ export default function Key({ _note, octave }: Props) {
       onTouchStart={keyHandler}
       onClick={keyHandler}
       onTouchEnd={preventDefault}
-      id={_note + octave}
+      id={(lastNote && lastNote) || _note + octave}
       className={cs(
         "_key mold relative",
-        _note,
+        (lastNote && lastNote) || _note,
         (_note[1] && "black") || "white"
       )}
     >
