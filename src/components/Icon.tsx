@@ -7,7 +7,7 @@ export interface Props {
 }
 
 export default function Icon({ _icon, size = 30 }: Props) {
-  const path = "./svg stores/icons.svg#" + _icon;
+  const path = "./svgs/stores/icons.svg#" + _icon;
   return (
     <div className={`icon ${_icon}`}>
       <svg className="_svg" xmlns="https://www.w3.org/2000/svg">
@@ -19,9 +19,6 @@ export default function Icon({ _icon, size = 30 }: Props) {
           div * {
             width: ${size}px;
             height: ${size}px;
-          }
-          div {
-            background-color: red;
           }
         `}
       </style>
