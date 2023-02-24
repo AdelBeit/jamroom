@@ -51,6 +51,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   };
 
   useEffect(() => {
+    setUserID(userID);
     loadSamples(samples);
   }, [samples]);
 
@@ -67,7 +68,6 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
 
     socket.on("connect", () => {
       setRoomID(roomID);
-      setUserID(userID);
     });
 
     socket.on("sound-played", (userID, sample) => {
