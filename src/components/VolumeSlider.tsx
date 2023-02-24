@@ -1,10 +1,11 @@
 import React from "react";
 import Icon from "./Icon";
 import { Icon as IconType } from "../icon";
+import { UserStateStore } from "../utils/useUsers";
 
 interface Props {
   volume: number;
-  setVolume: React.ChangeEventHandler<HTMLInputElement>;
+  setVolume: UserStateStore["setVolume"];
   classes?: string;
 }
 
@@ -15,6 +16,9 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
       : volume === -10
       ? "full"
       : "partial")) as IconType;
+  const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setVolume();
+  };
   return (
     <div>
       <Icon _icon={icon} />
