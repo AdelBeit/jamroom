@@ -23,7 +23,7 @@ export default function Samples() {
   const drumSamples = Object.keys(flattenSamples(allSamples)) as Sample[];
   return (
     <div id="_Samples" className="_page">
-      <div className="_samples hide-scroll-bar">
+      <div className="_samples HIDE_SCROLLBAR">
         {drumSamples.map((sample) => (
           <SampleBar
             key={sample}

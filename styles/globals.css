@@ -1,3 +1,5 @@
+@import url("./input_range_overrides.css");
+
 :root {
   --black: #282828;
   --amber: #ffb000;
@@ -39,17 +41,28 @@ a {
   height: 100%;
 }
 
-button,
 .icon_frame {
   fill: var(--amber);
   stroke: var(--amber);
 }
 
+button {
+  --background: var(--black);
+  --content: var(--amber);
+  background-color: var(--background);
+  color: var(--content);
+  fill: var(--content);
+  stroke: var(--content);
+  border-radius: 8px;
+}
+
 button:hover {
-  background-color: var(--amber);
-  color: var(--black);
-  fill: var(--black);
-  stroke: var(--black);
+  --background: var(--amber);
+  --content: var(--black);
+  background-color: var(--background);
+  color: var(--content);
+  fill: var(--content);
+  stroke: var(--content);
 }
 
 /* utils */
@@ -70,6 +83,8 @@ button:hover {
   color: var(--amber);
 }
 .mold.active {
+  --background: var(--amber);
+  --content: var(--black);
   background-color: var(--amber);
   color: var(--black);
   fill: var(--black);
@@ -81,11 +96,11 @@ button:hover {
 .faded {
   opacity: 0.25;
 }
-.hide-scroll-bar {
+.HIDE_SCROLLBAR {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
-.hide-scroll-bar::-webkit-scrollbar {
+.HIDE_SCROLLBAR::-webkit-scrollbar {
   /* WebKit */
   width: 0;
   height: 0;

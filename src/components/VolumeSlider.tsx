@@ -1,6 +1,7 @@
 import React from "react";
 import Icon from "./Icon";
 import { Icon as IconType } from "../icon";
+import cs from "classnames";
 
 interface Props {
   volume: number;
@@ -28,7 +29,7 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
         min={-25}
         max={-10}
         step="0.1"
-        className={classes}
+        className={cs(classes, "_SLIDER_")}
       />
       <style jsx>{`
         div {
@@ -38,31 +39,8 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
           align-items: center;
         }
 
-        input::-webkit-slider-runnable-track,
-        input::-moz-range-track {
-          -webkit-appearance: none;
-          background: transparent;
-          cursor: pointer;
+        input {
           width: 100%;
-          background: var(--black);
-          height: 100%;
-          border-radius: 10px;
-        }
-
-        input::-webkit-slider-thumb,
-        input::-moz-range-thumb {
-          background-color: var(--amber);
-          border: 1px solid var(--black);
-          border-radius: 10px;
-        }
-
-        input:focus,
-        input:focus::-webkit-slider-thumb,
-        input:focus::-moz-range-thumb {
-          outline: none;
-          border: 1px solid var(--black);
-          outline: 3px solid var(--black);
-          outline-offset: 0.125rem;
         }
       `}</style>
     </div>
