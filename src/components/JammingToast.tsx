@@ -15,17 +15,18 @@ export default function JammingToast({
 }: Props) {
   return (
     <div className="icon_frame">
-      <Icon _icon={`volume#${volume}`} size={15} />
-      <span className="small">{username}</span>
       <Icon
         _icon={instrument === "keyboard" ? "keyboard#thin" : instrument}
         size={15}
       />
+      <Icon _icon={`volume#${volume}`} size={15} />
+      <span className="small">{username}</span>
       <style jsx>
         {`
           div {
             display: flex;
-            gap: 8px;
+            gap: 5px;
+            align-items: center;
           }
         `}
       </style>
