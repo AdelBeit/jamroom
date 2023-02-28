@@ -21,7 +21,6 @@ export default function Samples() {
 
   delete allSamples["piano"];
   const drumSamples = Object.keys(flattenSamples(allSamples)) as Sample[];
-  // console.log(drumSamples[);
   return (
     <div id="_Samples" className="_page">
       <div className="_samples hide-scroll-bar">

@@ -11,6 +11,7 @@ import Samples from "../src/screens/Samples";
 import { usePage } from "../src/utils/usePage";
 
 /**
+ * TODO: nowjamming statusbar
  * TODO: leave room bug: playerscontext, and handler
  * TODO: icons
  * TODO: click anywhere to dismiss menu

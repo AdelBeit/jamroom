@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Icon from "../components/Icon";
 import JammerBar from "../components/JammerBar";
 import { useUsers } from "../utils/useUsers";
 
 export default function Jammers() {
-  // const users = ["pumpkinman823", "gnarlybarley442", "icebucket889"];
-  // const userID = "pumpkinman823";
   const [currentUser, users, setVolume] = useUsers((state) => [
     state.userID,
     state.users,
     state.setVolume,
   ]);
-  console.log(users);
+
   return (
     <div id="_Jammers" className="_page">
       {Object.keys(users).map((userID) => (
@@ -19,7 +17,8 @@ export default function Jammers() {
           key={userID}
           {...{ setVolume }}
           userID={userID}
-          volume={-15}
+          volume={users[userID].volume}
+          instrument={users[userID].instrument}
           classes={userID === currentUser ? "active" : ""}
         />
       ))}

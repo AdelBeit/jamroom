@@ -12,8 +12,8 @@ export default function playSample(
   const { users, userID: currentUser } = useUsers.getState();
   const volume =
     ((users[userID] && users[userID].volume) || users[currentUser].volume) ??
-    -10;
+    -15;
   const player = players.player(sample);
-  player.volume.value = volume;
+  player.volume.value = volume <= -25 ? -100 : volume;
   player.start();
 }
