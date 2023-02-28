@@ -15,12 +15,14 @@ interface Props {
 export default function Key({ _note, octave }: Props) {
   const { playSample } = usePlayers();
   const roomID = useUsers((state) => state.roomID);
+  const cappedOctave = Math.max(Math.min(octave + 1, 7), 2);
 
-  const lastNote =
-    _note === "N" ? "C" + Math.min(Math.max(octave - 1, 2), 7) : undefined;
+  const lastNote = _note === "N" ? "C" + cappedOctave : undefined;
 
   const keyHandler = (e: React.MouseEvent | React.TouchEvent) => {
-    const sample = (_note + octave) as Sample;
+    const sample = (
+      _note === "N" ? "C" + cappedOctave : _note + octave
+    ) as Sample;
     playSample(sample);
     socket.emit("play-sound", sample, roomID);
   };
@@ -110,7 +112,7 @@ export default function Key({ _note, octave }: Props) {
           background-color: var(--black);
           width: 54px;
           height: 155px;
-          left: -30%;
+          left: -35%;
         }
       `}</style>
     </button>
