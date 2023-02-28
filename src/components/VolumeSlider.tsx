@@ -1,11 +1,10 @@
 import React from "react";
 import Icon from "./Icon";
 import { Icon as IconType } from "../icon";
-import { UserStateStore } from "../utils/useUsers";
 
 interface Props {
   volume: number;
-  setVolume: UserStateStore["setVolume"];
+  setVolume: (volume: number) => void;
   classes?: string;
 }
 
@@ -16,16 +15,16 @@ export default function VolumeBar({ volume, setVolume, classes = "" }: Props) {
       : volume === -10
       ? "full"
       : "partial")) as IconType;
-  const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume();
-  };
+
   return (
     <div>
       <Icon _icon={icon} />
       <input
         value={volume}
         type="range"
-        onChange={setVolume}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setVolume(parseInt(e.target.value));
+        }}
         min={-25}
         max={-10}
         step="0.1"

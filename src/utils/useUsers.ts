@@ -20,13 +20,23 @@ export const useUsers = create<UserStateStore>()(
     userID: "",
     users: {},
     setRoomID: (roomID) => set({ roomID }),
-    setUsers: (users) => set({ users }),
+    setUsers: (users) =>
+      set((state) => {
+        let newUsers = { ...users, ...state.users };
+        if (Object.keys(users).length < Object.keys(state.users).length) {
+          Object.keys(state.users).map((oldUserID) => {
+            if (!users[oldUserID]) delete newUsers[oldUserID];
+          });
+        }
+
+        return { users: newUsers };
+      }),
     setUserID: (userID) => set({ userID }),
     setVolume: (userID, volume) =>
       set((state) => ({
         users: {
           ...state.users,
-          userID: { ...state.users[userID], ...{ volume } },
+          [userID]: { ...state.users[userID], ...{ volume } },
         },
       })),
   }))

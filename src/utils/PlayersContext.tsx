@@ -42,7 +42,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     state.setUsers,
     state.setUserID,
   ]);
-  const userID = generateName();
+  const [userID, setUserIDState] = useState<User["id"]>(generateName());
   const [samples, setSamples] = useState(defaultState.samples as Sample[]);
 
   const loadSamples = (samples) => {
@@ -51,6 +51,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   };
 
   useEffect(() => {
+    if (samples.length === 0) return;
     setUserID(userID);
     loadSamples(samples);
   }, [samples]);
@@ -75,14 +76,13 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     });
 
     socket.on("users-update", (users, msg) => {
-      const oldUsers = useUsers.getState().users;
       const newUsers = {};
       Object.keys(users).map((id) => {
         const [userID, instrument] = users[id];
 
         newUsers[userID] = {
           instrument: instrument,
-          volume: (oldUsers[userID] && oldUsers[userID].volume) || -10,
+          volume: -15,
         };
       });
       setUsers(newUsers);

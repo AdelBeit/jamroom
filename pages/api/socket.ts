@@ -45,7 +45,7 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
   io.on("connection", (socket) => {
     const roomID = socket["roomID"];
     if (!rooms[roomID]) rooms[roomID] = {};
-    rooms[roomID][socket.id] = [socket["userID"], "keyboard"];
+    rooms[roomID][socket.id] = [socket["userID"], "drumkit"];
 
     socket.join(roomID);
 

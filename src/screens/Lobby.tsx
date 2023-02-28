@@ -90,7 +90,11 @@ export function Lobby() {
     <div id="_Lobby" className="_page icon_frame">
       <span className="x-large title faded absolute">{title}</span>
       <span className="large username">
-        <Icon _icon="jammer" size={30} /> {userID}
+        {userID.length > 0 ? (
+          <>
+            <Icon _icon="jammer" size={30} /> {userID}
+          </>
+        ) : undefined}
       </span>
       {LobbyContent}
       <style jsx>{`
