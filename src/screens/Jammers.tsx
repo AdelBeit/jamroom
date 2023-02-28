@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Icon from "../components/Icon";
 import JammerBar from "../components/JammerBar";
 import { useUsers } from "../utils/useUsers";
 
 export default function Jammers() {
-  const [currentUser, users, setVolume] = useUsers((state) => [
+  const [currentUser, users, setVolume, roomID] = useUsers((state) => [
     state.userID,
     state.users,
     state.setVolume,
+    state.roomID,
   ]);
+  const [notify, setNotify] = useState(false);
+
+  const shareHandler = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("roomID", roomID);
+    let isMobile = window.matchMedia("(pointer:coarse)").matches;
+    if (!navigator.share || !isMobile) {
+      //fallback
+      navigator.clipboard
+        .writeText(url.href)
+        .then(() => {
+          setNotify(true);
+        })
+        .catch(console.error);
+      return;
+    }
+
+    navigator
+      .share({
+        title: document.title,
+        url: url.href,
+      })
+      .catch(console.error);
+  };
 
   return (
     <div id="_Jammers" className="_page">
@@ -22,8 +47,17 @@ export default function Jammers() {
           classes={userID === currentUser ? "active" : ""}
         />
       ))}
-      <button className={`add_jammer bar mold`}>
-        <Icon _icon="add" size={25} />
+      <button onClick={shareHandler} className={`add_jammer bar mold`}>
+        {notify ? (
+          <span
+            className="notification"
+            onAnimationEnd={() => setNotify(false)}
+          >
+            Join link copied to clipboard!
+          </span>
+        ) : (
+          <Icon _icon="add" size={25} />
+        )}
       </button>
       <div className="icon icon_frame absolute faded">
         <Icon _icon="jammers" size={65} />
