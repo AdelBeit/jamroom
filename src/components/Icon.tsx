@@ -28,6 +28,10 @@ export default function Icon({ _icon, size = 30 }: Props) {
             fill: inherit;
             stroke: inherit;
           }
+          div.menu svg,
+          div.tutorial svg {
+            margin-left: -1px;
+          }
         `}
       </style>
     </div>
