@@ -22,6 +22,7 @@ export default function SquareButton({ _icon, handler, size = 30 }: Props) {
             display: flex;
             justify-content: center;
             align-items: center;
+            border-width: 1px;
           }
         `}
       </style>
