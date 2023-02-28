@@ -8,6 +8,9 @@ export interface UserStateStore {
   users: {
     [user: User["id"]]: { instrument: User["instrument"]; volume: number };
   };
+  nowJamming: { [user: User["id"]]: NodeJS.Timeout };
+  setNowJamming(userID: User["id"]): void;
+  deleteNowJamming(userID: User["id"]): void;
   setRoomID(roomID: UserStateStore["roomID"]): void;
   setUsers(users: UserStateStore["users"]): void;
   setUserID(userID: User["id"]): void;
@@ -19,6 +22,20 @@ export const useUsers = create<UserStateStore>()(
     roomID: "",
     userID: "",
     users: {},
+    nowJamming: {},
+    setNowJamming: (userID) =>
+      set((state) => {
+        if (state.nowJamming[userID]) clearTimeout(state.nowJamming[userID]);
+        const timeout = setTimeout(() => {
+          useUsers.getState().deleteNowJamming(userID);
+        }, 1200);
+        return { nowJamming: { ...state.nowJamming, [userID]: timeout } };
+      }),
+    deleteNowJamming: (userID) =>
+      set((state) => {
+        if (state.nowJamming[userID]) delete state.nowJamming[userID];
+        return { ...state.nowJamming };
+      }),
     setRoomID: (roomID) => set({ roomID }),
     setUsers: (users) =>
       set((state) => {

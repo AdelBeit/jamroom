@@ -10,6 +10,9 @@ export default function playSample(
 ) {
   if (!players) return;
   const { users, userID: currentUser } = useUsers.getState();
+  if (userID && userID !== currentUser) {
+    useUsers.getState().setNowJamming(userID);
+  }
   const volume =
     ((users[userID] && users[userID].volume) || users[currentUser].volume) ??
     -15;

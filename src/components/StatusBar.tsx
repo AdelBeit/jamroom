@@ -1,8 +1,9 @@
 import React from "react";
-import { Instrument, Page } from "../types";
+import { Page } from "../types";
 import SquareButton from "./SquareButton";
 import JammingToast from "./JammingToast";
 import { usePage } from "../utils/usePage";
+import { useUsers } from "../utils/useUsers";
 
 interface Props {
   roomID: string;
@@ -10,10 +11,10 @@ interface Props {
 }
 
 export default function StatusBar({ roomID, _page }: Props) {
-  const nowJamming = [
-    ["spoonypan", "keyboard"],
-    ["purplepeach23", "drumkit"],
-  ];
+  const [nowJamming, users] = useUsers((state) => [
+    state.nowJamming,
+    state.users,
+  ]);
   const [toggleMenu, setPage] = usePage((state) => [
     state.toggleMenu,
     state.setPage,
@@ -37,13 +38,20 @@ export default function StatusBar({ roomID, _page }: Props) {
         />
         <SquareButton _icon="tutorial" handler={(e) => {}} />
       </div>
-      <div className="now_jamming">
-        {nowJamming.map((user) => (
-          <JammingToast
-            key={user[0]}
-            {...{ username: user[0], instrument: user[1] as Instrument }}
-          />
-        ))}
+      <div className="now_jamming HIDE_SCROLLBAR">
+        {Object.keys(nowJamming).map((userID) => {
+          if (!users[userID] || users[userID].volume <= -25) return;
+          return (
+            <JammingToast
+              key={userID}
+              {...{
+                username: userID,
+                volume: users[userID].volume >= -10 ? "full" : "partial",
+                instrument: "keyboard" || users[userID].instrument,
+              }}
+            />
+          );
+        })}
       </div>
       <div className="room_id">
         <span className="small">#{roomID}</span>
@@ -53,6 +61,7 @@ export default function StatusBar({ roomID, _page }: Props) {
         .buttons,
         .now_jamming {
           display: flex;
+          align-items: center;
         }
         ._container {
           width: 100%;
@@ -63,6 +72,13 @@ export default function StatusBar({ roomID, _page }: Props) {
         .buttons,
         .now_jamming {
           gap: 15px;
+        }
+        .now_jamming {
+          flex: 1 0;
+          max-width: 75svh;
+          overflow: scroll;
+          padding: 0 20px;
+          height: 30px;
         }
       `}</style>
     </div>
