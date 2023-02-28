@@ -13,6 +13,8 @@ import { usePage } from "../src/utils/usePage";
 /**
  * TODO: leave room bug: playerscontext, and handler
  * TODO: icons
+ * TODO: add loading page
+ * TODO: add tutorial
  * TODO: click anywhere to dismiss menu
  * TODO: responsive design
  * TODO: add gestures

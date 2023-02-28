@@ -16,6 +16,7 @@ import playSample from "./playSample";
 import { useUsers } from "./useUsers";
 import { Sample } from "../sample";
 import { User } from "../types";
+import { usePage } from "./usePage";
 
 export interface PlayersContext {
   players: Players | null;
@@ -42,6 +43,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     state.setUsers,
     state.setUserID,
   ]);
+  const setPage = usePage((state) => state.setPage);
   const [userID, setUserIDState] = useState<User["id"]>(generateName());
   const [samples, setSamples] = useState(defaultState.samples as Sample[]);
 
@@ -61,6 +63,14 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   }, [players.current]);
 
   useEffect(() => {
+    const roomID = new URL(window.location.href).searchParams.get("roomID");
+    if (!roomID) return;
+    console.log("roomid exists", roomID);
+    setRoomID(roomID);
+    setPage("_Jammers");
+  }, []);
+
+  useEffect(() => {
     if (!roomID) return;
 
     Tone.start();
@@ -68,7 +78,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     connectSocket(userID, roomID);
 
     socket.on("connect", () => {
-      setRoomID(roomID);
+      console.log("connection established.");
     });
 
     socket.on("sound-played", (userID, sample) => {
