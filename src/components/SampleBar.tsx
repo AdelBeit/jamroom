@@ -30,7 +30,6 @@ export default function SampleBar({
           button {
             display: flex;
             justify-content: flex-start;
-            border-radius: 8px;
             align-items: center;
           }
         `}

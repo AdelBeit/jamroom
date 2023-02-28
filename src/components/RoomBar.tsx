@@ -23,7 +23,6 @@ export default function RoomBar({ text, handler }: Props) {
           flex: auto;
           justify-content: space-between;
           align-items: center;
-          border-radius: 8px;
         }
       `}</style>
     </button>

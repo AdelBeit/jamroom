@@ -50,10 +50,11 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
           button {
             width: 17svw;
             height: 17svw;
+            max-width: 165px;
+            max-height: 165px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 8px;
           }
         `}
       </style>
