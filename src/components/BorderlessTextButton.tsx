@@ -24,9 +24,12 @@ export default function BorderlessTextButton({
       <Icon {...{ _icon }} size={20} />
       <span className="medium">{text}</span>
       <style jsx>{`
-        button {
+        button,
+        button:hover {
           background-color: var(--black);
           color: var(--amber);
+          fill: var(--amber);
+          stroke: var(--amber);
           display: flex;
           gap: 16px;
         }
