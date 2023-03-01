@@ -4,6 +4,7 @@ import SquareButton from "./SquareButton";
 import JammingToast from "./JammingToast";
 import { usePage } from "../utils/usePage";
 import { useUsers } from "../utils/useUsers";
+import { Icon } from "../icon";
 
 interface Props {
   roomID: string;
@@ -20,23 +21,33 @@ export default function StatusBar({ roomID, _page }: Props) {
     state.setPage,
   ]);
   const configState = ["_Config", "_Samples"].includes(_page);
+  let leftButton: Icon = configState ? "confirm" : "menu";
+  let rightButton: Icon = "tutorial";
+  if (_page === "_Jammers") {
+    leftButton = "drumkit";
+    rightButton = "keyboard";
+  }
 
   const leftButtonHandler = (e: React.TouchEvent | React.MouseEvent) => {
-    if (configState) {
+    if (configState || _page === "_Jammers") {
       setPage("_Drumkit");
       return;
     }
     toggleMenu();
   };
 
+  const rightButtonHandler = (e: React.TouchEvent | React.MouseEvent) => {
+    if (_page === "_Jammers") {
+      setPage("_Keyboard");
+      return;
+    }
+  };
+
   return (
     <div className="_container">
       <div className="buttons">
-        <SquareButton
-          _icon={configState ? "confirm" : "menu"}
-          handler={leftButtonHandler}
-        />
-        <SquareButton _icon="tutorial" handler={(e) => {}} />
+        <SquareButton _icon={leftButton} handler={leftButtonHandler} />
+        <SquareButton _icon={rightButton} handler={rightButtonHandler} />
       </div>
       <div className="now_jamming HIDE_SCROLLBAR">
         {Object.keys(nowJamming).map((userID) => {

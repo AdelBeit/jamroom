@@ -13,7 +13,6 @@ export default function Menu({ _page }: Props) {
     state.toggleMenu,
     state.setPage,
   ]);
-  const setRoomID = useUsers((state) => state.setRoomID);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

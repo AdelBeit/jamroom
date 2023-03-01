@@ -13,7 +13,6 @@ import { Loading } from "../src/screens/Loading";
 
 /**
  * TODO: fix menu positioning
- * TODO: add keybaord and drumkit icons to jammers page
  * TODO: fix jammers page viewbox
  * TODO: add tutorial
  * TODO: click anywhere to dismiss menu
