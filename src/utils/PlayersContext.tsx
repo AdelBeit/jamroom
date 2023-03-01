@@ -68,9 +68,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
       setPage("_Lobby");
       return;
     }
-    console.log("roomid exists", roomID);
     setRoomID(roomID);
-    setPage("_Jammers");
   }, [samplesLoaded]);
 
   useEffect(() => {
@@ -99,6 +97,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
         };
       });
       setUsers(newUsers);
+      setPage("_Jammers");
     });
 
     return socketCleanup;
