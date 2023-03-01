@@ -13,19 +13,21 @@ import { Loading } from "../src/screens/Loading";
 
 /**
  * TODO: fix menu positioning
- * TODO: fix jammers page viewbox
  * TODO: add tutorial
  * TODO: click anywhere to dismiss menu
  * TODO: responsive design
  * TODO: add gestures
  *
  * optional:
- * TODO: implement room hosts
- * TODO: kick user functionality
+ * TODO: custom scrollbar for bar lists (jammers, samples)
  * TODO: change volume slider to be the whole info bar
- * TODO: persist configs
  * TODO: animate lobby button transitions
  * TODO: write all sample paths into a js object and don't redo it once it's done, will have to find a way to diff the folders
+ *
+ * maybe:
+ * TODO: persist configs
+ * TODO: implement room hosts
+ * TODO: kick user functionality
  */
 
 const Page: NextPage = (props) => {

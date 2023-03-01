@@ -34,31 +34,33 @@ export default function Jammers() {
       })
       .catch(console.error);
   };
-
+  const userID = useUsers((state) => state.userID);
   return (
     <div id="_Jammers" className="_page">
-      {Object.keys(users).map((userID) => (
-        <JammerBar
-          key={userID}
-          {...{ setVolume }}
-          userID={userID}
-          volume={users[userID].volume}
-          instrument={users[userID].instrument}
-          classes={userID === currentUser ? "active" : ""}
-        />
-      ))}
-      <button onClick={shareHandler} className={`add_jammer bar mold`}>
-        {notify ? (
-          <span
-            className="notification"
-            onAnimationEnd={() => setNotify(false)}
-          >
-            Join link copied to clipboard!
-          </span>
-        ) : (
-          <Icon _icon="add" size={25} />
-        )}
-      </button>
+      <div className="_jammers HIDE_SCROLLBAR">
+        {Object.keys(users).map((userID) => (
+          <JammerBar
+            key={userID}
+            {...{ setVolume }}
+            userID={userID}
+            volume={users[userID].volume}
+            instrument={users[userID].instrument}
+            classes={userID === currentUser ? "active" : ""}
+          />
+        ))}
+        <button onClick={shareHandler} className={`add_jammer bar mold`}>
+          {notify ? (
+            <span
+              className="notification"
+              onAnimationEnd={() => setNotify(false)}
+            >
+              Join link copied to clipboard!
+            </span>
+          ) : (
+            <Icon _icon="add" size={25} />
+          )}
+        </button>
+      </div>
       <div className="icon icon_frame absolute faded">
         <Icon _icon="jammers" size={65} />
       </div>
@@ -71,6 +73,16 @@ export default function Jammers() {
           flex-direction: column;
           gap: 8px;
         }
+
+        ._jammers {
+          overflow: scroll;
+          width: 100%;
+          height: fit-content;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
         .add_jammer {
           align-items: center;
           justify-content: center;
