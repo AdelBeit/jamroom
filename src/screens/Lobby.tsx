@@ -5,11 +5,11 @@ import BorderedTextButton from "../components/BorderedTextButton";
 import SquareButton from "../components/SquareButton";
 import { useUsers } from "../utils/useUsers";
 import { usePage } from "../utils/usePage";
+import { Props as LoadingProps } from "./Loading";
 
 type LobbyState = "initial" | "join" | "create";
 
-export function Lobby() {
-  const title = "Jamroom";
+export function Lobby({ title }: LoadingProps) {
   const [userID, roomID, setRoomID] = useUsers((state) => [
     state.userID,
     state.roomID,

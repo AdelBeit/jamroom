@@ -46,10 +46,13 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const setPage = usePage((state) => state.setPage);
   const [userID, setUserIDState] = useState<User["id"]>(generateName());
   const [samples, setSamples] = useState(defaultState.samples as Sample[]);
+  const [samplesLoaded, setSamplesLoaded] = useState(false);
 
   const loadSamples = (samples) => {
     const allSamples = flattenSamples(samples);
-    players.current = new Players(allSamples, () => {}).toDestination();
+    players.current = new Players(allSamples, () => {
+      setSamplesLoaded(true);
+    }).toDestination();
   };
 
   useEffect(() => {
@@ -59,16 +62,16 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   }, [samples]);
 
   useEffect(() => {
-    if (!players.current) return;
-  }, [players.current]);
-
-  useEffect(() => {
+    if (!samplesLoaded) return;
     const roomID = new URL(window.location.href).searchParams.get("roomID");
-    if (!roomID) return;
+    if (!roomID) {
+      setPage("_Lobby");
+      return;
+    }
     console.log("roomid exists", roomID);
     setRoomID(roomID);
     setPage("_Jammers");
-  }, []);
+  }, [samplesLoaded]);
 
   useEffect(() => {
     if (!roomID) return;

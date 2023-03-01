@@ -9,11 +9,12 @@ import Drumkit from "../src/screens/Drumkit";
 import Keyboard from "../src/screens/Keyboard";
 import Samples from "../src/screens/Samples";
 import { usePage } from "../src/utils/usePage";
+import { Loading } from "../src/screens/Loading";
 
 /**
- * TODO: leave room bug: playerscontext, and handler
- * TODO: icons
- * TODO: add loading page
+ * TODO: fix menu positioning
+ * TODO: add keybaord and drumkit icons to jammers page
+ * TODO: fix jammers page viewbox
  * TODO: add tutorial
  * TODO: click anywhere to dismiss menu
  * TODO: responsive design
@@ -31,8 +32,10 @@ import { usePage } from "../src/utils/usePage";
 const Page: NextPage = (props) => {
   const { setSamples } = usePlayers();
   const _page = usePage((state) => state.page);
-  let pageComponent = <Lobby />;
+  const title = "Jamroom";
+  let pageComponent = <Loading title={title} />;
 
+  if (_page === "_Lobby") pageComponent = <Lobby title={title} />;
   if (_page === "_Jammers") pageComponent = <Jammers />;
   if (["_Drumkit", "_Config"].includes(_page))
     pageComponent = <Drumkit {...{ _page }} />;

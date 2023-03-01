@@ -83,6 +83,7 @@ export type Page =
   | "_Drumkit"
   | "_Keyboard"
   | "_Samples"
+  | "_Loading"
   | "_Config";
 
 export interface ButtonProps

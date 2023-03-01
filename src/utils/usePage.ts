@@ -13,7 +13,7 @@ export interface PageStateStore {
 
 export const usePage = create<PageStateStore>()(
   devtools((set) => ({
-    page: "_Lobby",
+    page: "_Loading",
     setPage: (page: Page) => set({ page }),
     menuOpen: false,
     toggleMenu: () => set((state) => ({ menuOpen: !state.menuOpen })),

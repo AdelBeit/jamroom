@@ -14,11 +14,10 @@ export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
   const menuOpen = usePage((state) => state.menuOpen);
 
-  const [firstTime, setFirstTime] = useState(false);
   return (
     <div id="_pageFrame" className="_container relative">
       <div className="_content">{children}</div>
-      {!menuOpen && _page !== "_Lobby" && (
+      {!menuOpen && !["_Lobby", "_Loading"].includes(_page) && (
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
       {menuOpen && <Menu {...{ _page }} />}
