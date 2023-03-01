@@ -12,11 +12,11 @@ import { usePage } from "../src/utils/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
- * TODO: fix menu positioning
  * TODO: add tutorial
  * TODO: click anywhere to dismiss menu
  * TODO: responsive design
  * TODO: add gestures
+ * TODO: animate menu opening
  *
  * optional:
  * TODO: custom scrollbar for bar lists (jammers, samples)

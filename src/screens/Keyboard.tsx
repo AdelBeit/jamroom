@@ -31,15 +31,14 @@ export default function Keyboard() {
       <style jsx>
         {`
           ._page {
-            padding-top: 30px;
-
-            display: inline-grid;
             width: max-content;
             height: 100%;
+
+            display: grid;
             grid-template-columns: repeat(7, 1fr);
             grid-template-rows: 0;
             column-gap: 14px;
-            position: relative;
+            padding-top: 30px;
           }
         `}
       </style>

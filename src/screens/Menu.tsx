@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import BorderlessTextButton from "../components/BorderlessTextButton";
 import { Page } from "../types";
 import { usePage } from "../utils/usePage";
-import { useUsers } from "../utils/useUsers";
 
 interface Props {
   _page: Page;

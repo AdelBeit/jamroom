@@ -23,14 +23,15 @@ export default function Drumkit({ _page }: Props) {
       <style jsx>
         {`
           ._page {
+            height: max-content;
+            width: 100%;
+
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            height: max-content;
-            width: max-content;
             column-gap: 10px;
             row-gap: 10px;
-            margin: auto;
+            padding: 30px 0;
           }
         `}
       </style>
