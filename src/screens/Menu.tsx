@@ -52,9 +52,7 @@ export default function Menu({ _page }: Props) {
             _icon="leave"
             text="Leave Room"
             handler={(e) => {
-              setRoomID("");
-              setPage("_Lobby");
-              toggleMenu();
+              window.location.href = window.location.origin;
             }}
           />
         </div>

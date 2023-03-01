@@ -16,7 +16,7 @@ export function Lobby() {
     state.setRoomID,
   ]);
   const setPage = usePage((state) => state.setPage);
-  const roomList = [roomID, "12", "48293", "128312"];
+  const roomList = ["12", "48293", "128312"];
   const [lobbyState, setLobbyState] = useState<LobbyState>("initial");
 
   let LobbyContent = (
