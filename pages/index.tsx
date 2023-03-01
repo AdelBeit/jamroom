@@ -12,6 +12,7 @@ import { usePage } from "../src/utils/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
+ * TODO: create room
  * TODO: add tutorial
  * TODO: responsive design
  * TODO: add gestures

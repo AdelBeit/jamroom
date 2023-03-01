@@ -17,8 +17,12 @@ export default function BorderlessTextButton({
   return (
     <button
       className={cs(text, active && "faded")}
-      onClick={handler}
-      onTouchStart={handler}
+      onClick={(e) => {
+        if (!active) handler(e);
+      }}
+      onTouchStart={(e) => {
+        if (!active) handler(e);
+      }}
       onTouchEnd={preventDefault}
     >
       <Icon {...{ _icon }} size={20} />
@@ -32,6 +36,10 @@ export default function BorderlessTextButton({
           stroke: var(--amber);
           display: flex;
           gap: 16px;
+        }
+
+        button.faded {
+          cursor: initial;
         }
       `}</style>
     </button>
