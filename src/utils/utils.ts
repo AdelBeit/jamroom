@@ -1,3 +1,5 @@
+import React from "react";
+
 export const baseURL = (instrument) => {
   switch (instrument) {
     case "toms":
@@ -43,6 +45,6 @@ export const flattenSamples = (samples) => {
   return Object.keys(samples).reduce(selectAll, {});
 };
 
-export const preventDefault = (e: React.TouchEvent) => {
+export const preventDefault = (e: React.TouchEvent | React.MouseEvent) => {
   e.preventDefault();
 };

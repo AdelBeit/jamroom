@@ -13,7 +13,6 @@ import { Loading } from "../src/screens/Loading";
 
 /**
  * TODO: add tutorial
- * TODO: click anywhere to dismiss menu
  * TODO: responsive design
  * TODO: add gestures
  * TODO: animate menu opening

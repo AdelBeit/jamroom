@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import BorderlessTextButton from "../components/BorderlessTextButton";
 import { Page } from "../types";
 import { usePage } from "../utils/usePage";
+import { preventDefault } from "../utils/utils";
 
 interface Props {
   _page: Page;
@@ -29,13 +30,25 @@ export default function Menu({ _page }: Props) {
 
   return (
     <div id="_menu" ref={ref} className={`${_page} _container absolute`}>
-      <div className="dark_underlay absolute faded"></div>
+      <div
+        className="dark_underlay absolute faded"
+        onClick={(e) => {
+          toggleMenu();
+        }}
+        onTouchStart={(e) => {
+          toggleMenu();
+        }}
+        onTouchEnd={preventDefault}
+      ></div>
       <div className="_content">
         <div className="top">
           <BorderlessTextButton
             _icon="close"
             text="Close"
-            handler={(e) => toggleMenu()}
+            handler={(e) => {
+              preventDefault(e);
+              toggleMenu();
+            }}
           />
           <BorderlessTextButton
             _icon="jammers"
@@ -43,6 +56,7 @@ export default function Menu({ _page }: Props) {
             active={_page === "_Jammers"}
             handler={(e) => {
               setPage("_Jammers");
+              preventDefault(e);
               toggleMenu();
             }}
           />
@@ -60,6 +74,7 @@ export default function Menu({ _page }: Props) {
             text={isDrumkitPage ? "Config Pads" : "Drumkit"}
             handler={(e) => {
               setPage(isDrumkitPage ? "_Config" : "_Drumkit");
+              preventDefault(e);
               toggleMenu();
             }}
           />
@@ -69,6 +84,7 @@ export default function Menu({ _page }: Props) {
             active={_page === "_Keyboard"}
             handler={(e) => {
               setPage("_Keyboard");
+              preventDefault(e);
               toggleMenu();
             }}
           />
