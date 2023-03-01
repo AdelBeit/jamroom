@@ -99,9 +99,9 @@ export default function Menu({ _page }: Props) {
           align-items: center;
           gap: 40px;
           padding-top: 40px;
-          border: solid white 3px;
+          border: solid var(--amber) 3px;
+          border-radius: 8px;
           background-color: var(--black);
-
           margin-bottom: -100%;
           margin-bottom: -50px;
           transition: margin-bottom 1s cubic-bezier(0.075, 0.82, 0.165, 1)

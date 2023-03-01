@@ -99,8 +99,6 @@ export function Lobby({ title }: LoadingProps) {
       {LobbyContent}
       <style jsx>{`
         ._page {
-          width: 100%;
-          height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -108,14 +106,6 @@ export function Lobby({ title }: LoadingProps) {
         }
         ._page > * {
           z-index: 2;
-        }
-
-        .title {
-          display: block;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 1;
         }
 
         .username {
