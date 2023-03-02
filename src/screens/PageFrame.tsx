@@ -5,6 +5,7 @@ import { Page } from "../types";
 import { useCookies } from "../utils/useCookies";
 import { usePage } from "../utils/usePage";
 import { useUsers } from "../utils/useUsers";
+import { getCookie } from "../utils/utils";
 import Menu from "./Menu";
 
 interface Props {
@@ -14,12 +15,13 @@ interface Props {
 
 export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
-  const [tutorialOpen, setTutorialOpen] = useState(true);
   const [menuOpen] = usePage((state) => [state.menuOpen]);
-  const firstTime = useCookies((state) => state.firstTime);
+  const visited = useCookies((state) => state.visited);
+  const [tutorialOpen, setTutorialOpen] = useState(!visited);
 
   useEffect(() => {
-    setTutorialOpen(true);
+    console.log(_page, "visited:", visited, tutorialOpen);
+    if (!visited) setTutorialOpen(true);
   }, [_page]);
 
   return (

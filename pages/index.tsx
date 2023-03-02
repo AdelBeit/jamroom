@@ -10,6 +10,8 @@ import Keyboard from "../src/screens/Keyboard";
 import Samples from "../src/screens/Samples";
 import { usePage } from "../src/utils/usePage";
 import { Loading } from "../src/screens/Loading";
+import { getCookie, setCookie } from "../src/utils/utils";
+import { useCookies } from "../src/utils/useCookies";
 
 /**
  * TODO: create room
@@ -33,6 +35,7 @@ import { Loading } from "../src/screens/Loading";
 const Page: NextPage = (props) => {
   const { setSamples } = usePlayers();
   const _page = usePage((state) => state.page);
+  const setVisited = useCookies((state) => state.setVisited);
   const title = "Jamroom";
   let pageComponent = <Loading title={title} />;
 
@@ -44,8 +47,24 @@ const Page: NextPage = (props) => {
   if (_page === "_Samples") pageComponent = <Samples />;
 
   useEffect(() => {
+    console.log("mounting index");
+  }, []);
+
+  useEffect(() => {
     // @ts-ignore
     setSamples(props.samples);
+  }, []);
+
+  useEffect(() => {
+    console.log("cookie:", getCookie("visited"));
+    if (!getCookie("visited")) setCookie("visited", "true");
+    else setVisited(true);
+
+    return () => {
+      console.log("app closed");
+      setCookie("visited", "false");
+      console.log("cookie after", getCookie("visited"));
+    };
   }, []);
 
   return (

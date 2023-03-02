@@ -17,7 +17,7 @@ export const usePage = create<PageStateStore>()(
     setPage: (page: Page) => set({ page }),
     menuOpen: false,
     toggleMenu: () => set((state) => ({ menuOpen: !state.menuOpen })),
-    tutorialOpen: true,
+    tutorialOpen: false,
     toggleTutorial: () =>
       set((state) => ({ tutorialOpen: !state.tutorialOpen })),
   }))

@@ -11,7 +11,6 @@ interface Props {
 
 export default function Tutorial({ _page, closeTutorial }: Props) {
   const content = TUTORIAL_DATA.get(_page);
-  const toggleTutorial = usePage((state) => state.toggleTutorial);
 
   return (
     <div id="_tutorial" className={`_container absolute`}>
@@ -54,6 +53,9 @@ export default function Tutorial({ _page, closeTutorial }: Props) {
         .box ul {
           padding-left: 25px;
           padding-right: 20px;
+        }
+        .dark_underlay {
+          opacity: 0.8;
         }
       `}</style>
     </div>
