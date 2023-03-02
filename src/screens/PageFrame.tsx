@@ -1,6 +1,8 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import StatusBar from "../components/StatusBar";
+import Tutorial from "../components/Tutorial";
 import { Page } from "../types";
+import { useCookies } from "../utils/useCookies";
 import { usePage } from "../utils/usePage";
 import { useUsers } from "../utils/useUsers";
 import Menu from "./Menu";
@@ -12,7 +14,13 @@ interface Props {
 
 export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
-  const menuOpen = usePage((state) => state.menuOpen);
+  const [tutorialOpen, setTutorialOpen] = useState(true);
+  const [menuOpen] = usePage((state) => [state.menuOpen]);
+  const firstTime = useCookies((state) => state.firstTime);
+
+  useEffect(() => {
+    setTutorialOpen(true);
+  }, [_page]);
 
   return (
     <div id="_pageFrame" className="_container relative">
@@ -21,6 +29,9 @@ export default function PageFrame({ _page, children }: Props) {
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
       {menuOpen && <Menu {...{ _page }} />}
+      {tutorialOpen && !["_Lobby", "_Loading"].includes(_page) && (
+        <Tutorial {...{ _page }} closeTutorial={() => setTutorialOpen(false)} />
+      )}
       <style jsx>
         {`
           ._container {
