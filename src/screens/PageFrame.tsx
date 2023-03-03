@@ -1,28 +1,20 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import StatusBar from "../components/StatusBar";
 import Tutorial from "../components/Tutorial";
 import { Page } from "../types";
-import { useCookies } from "../utils/useCookies";
 import { usePage } from "../utils/usePage";
 import { useUsers } from "../utils/useUsers";
-import { getCookie } from "../utils/utils";
 import Menu from "./Menu";
 
 interface Props {
   _page: Page;
+
   children: ReactNode;
 }
 
 export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
   const [menuOpen] = usePage((state) => [state.menuOpen]);
-  const visited = useCookies((state) => state.visited);
-  const [tutorialOpen, setTutorialOpen] = useState(!visited);
-
-  useEffect(() => {
-    console.log(_page, "visited:", visited, tutorialOpen);
-    if (!visited) setTutorialOpen(true);
-  }, [_page]);
 
   return (
     <div id="_pageFrame" className="_container relative">
@@ -31,9 +23,7 @@ export default function PageFrame({ _page, children }: Props) {
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
       {menuOpen && <Menu {...{ _page }} />}
-      {tutorialOpen && !["_Lobby", "_Loading"].includes(_page) && (
-        <Tutorial {...{ _page }} closeTutorial={() => setTutorialOpen(false)} />
-      )}
+      {!["_Lobby", "_Loading"].includes(_page) && <Tutorial {...{ _page }} />}
       <style jsx>
         {`
           ._container {

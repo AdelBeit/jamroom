@@ -1,27 +1,25 @@
 import React from "react";
 import TUTORIAL_DATA from "../../public/tutorial.data";
 import { Page } from "../types";
-import { usePage } from "../utils/usePage";
+import { usePageVisited } from "../utils/usePageVisited";
 import { preventDefault } from "../utils/utils";
 
 interface Props {
   _page: Page;
-  closeTutorial(): void;
 }
 
-export default function Tutorial({ _page, closeTutorial }: Props) {
+export default function Tutorial({ _page }: Props) {
   const content = TUTORIAL_DATA.get(_page);
+  const [visited, setVisited] = usePageVisited(_page);
+
+  if (visited === undefined || visited) return null;
 
   return (
     <div id="_tutorial" className={`_container absolute`}>
       <div
         className="dark_underlay faded absolute"
-        onClick={(e) => {
-          closeTutorial();
-        }}
-        onTouchStart={(e) => {
-          closeTutorial();
-        }}
+        onClick={setVisited.bind(null, true)}
+        onTouchStart={setVisited.bind(null, true)}
         onTouchEnd={preventDefault}
       ></div>
       <div className="box mold">
