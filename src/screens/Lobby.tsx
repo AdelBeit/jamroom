@@ -6,6 +6,7 @@ import SquareButton from "../components/SquareButton";
 import { useUsers } from "../utils/useUsers";
 import { usePage } from "../utils/usePage";
 import { Props as LoadingProps } from "./Loading";
+import { preventDefault } from "../utils/utils";
 
 type LobbyState = "initial" | "join" | "create";
 
@@ -18,6 +19,7 @@ export function Lobby({ title }: LoadingProps) {
   const setPage = usePage((state) => state.setPage);
   const roomList = ["12", "48293", "128312"];
   const [lobbyState, setLobbyState] = useState<LobbyState>("initial");
+  const [roomIDInput, setRoomIDInput] = useState<string>("");
 
   let LobbyContent = (
     <div className="lobby initial">
@@ -35,7 +37,6 @@ export function Lobby({ title }: LoadingProps) {
       />
     </div>
   );
-
   if (lobbyState === "join")
     LobbyContent = (
       <div className="lobby join">
@@ -59,19 +60,41 @@ export function Lobby({ title }: LoadingProps) {
       </div>
     );
 
-  if (lobbyState === "create")
+  if (lobbyState === "create") {
+    const createRoomHandler = () => {
+      if (isNaN(parseFloat(roomIDInput))) {
+        setRoomIDInput("Room # must only contain numbers!");
+        const timeout = setTimeout(() => {
+          setRoomIDInput("");
+          clearTimeout(timeout);
+        }, 2000);
+        return;
+      }
+
+      setRoomID(roomIDInput);
+      setPage("_Jammers");
+    };
     LobbyContent = (
       <div className="lobby create">
         <div className="input icon_frame container relative">
           <input
             className="bar mold active medium"
             type="text"
-            value={roomID}
+            value={roomIDInput}
             id="roomID"
-            onChange={(e) => setRoomID(e.target.value)}
-            placeholder="Enter room # to create/join a room"
+            onChange={(e) => setRoomIDInput(e.target.value)}
+            placeholder="Enter a # to create a room"
+            title="Room # must be a number"
           />
-          <Icon _icon="enter" size={20} />
+
+          <button
+            className="absolute"
+            onClick={createRoomHandler}
+            onTouchStart={createRoomHandler}
+            onTouchEnd={preventDefault}
+          >
+            <Icon _icon="enter" size={20} />
+          </button>
         </div>
         <SquareButton
           _icon="back"
@@ -80,6 +103,7 @@ export function Lobby({ title }: LoadingProps) {
         />
       </div>
     );
+  }
 
   // useEffect(() => {
   //   const roomIDInput = document.querySelector("#roomID") as HTMLInputElement;
@@ -136,19 +160,35 @@ export function Lobby({ title }: LoadingProps) {
           width: 500px;
         }
 
-        input {
+        ._page :global(.lobby.create .container) {
+          display: flex;
+          align-items: center;
+        }
+        ._page :global(.lobby.create .container :last-child) {
+          margin-left: -10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 30px;
+          height: 30px;
+          fill: var(--black);
+          stroke: var(--black);
+          right: 0px;
+        }
+
+        :global(input) {
           border-radius: 8px;
         }
-        input:focus {
+        :global(input:focus) {
           outline-color: var(--black);
-          outline-style: ridge;
+          outline-style: none;
           outline-offset: -3px;
         }
-        input:focus::selection {
+        :global(input:focus::selection) {
           background-color: var(--black);
           color: var(--amber);
         }
-        input::placeholder {
+        :global(input::placeholder) {
           color: #885f26;
         }
       `}</style>
