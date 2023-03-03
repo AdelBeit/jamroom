@@ -8,7 +8,6 @@ import Menu from "./Menu";
 
 interface Props {
   _page: Page;
-
   children: ReactNode;
 }
 

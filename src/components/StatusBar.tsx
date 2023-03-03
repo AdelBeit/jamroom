@@ -37,17 +37,16 @@ export default function StatusBar({ roomID, _page }: Props) {
   };
 
   const rightButtonHandler = (e: React.TouchEvent | React.MouseEvent) => {
-    if (_page === "_Jammers") {
-      setPage("_Keyboard");
-      return;
-    }
+    setPage("_Keyboard");
   };
 
   return (
     <div className="_container">
       <div className="buttons">
         <SquareButton _icon={leftButton} handler={leftButtonHandler} />
-        <SquareButton _icon={rightButton} handler={rightButtonHandler} />
+        {_page === "_Jammers" ? (
+          <SquareButton _icon={rightButton} handler={rightButtonHandler} />
+        ) : undefined}
       </div>
       <div className="now_jamming HIDE_SCROLLBAR">
         {Object.keys(nowJamming).map((userID) => {
