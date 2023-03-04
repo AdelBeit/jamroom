@@ -14,6 +14,15 @@ interface Props {
 export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
   const [menuOpen] = usePage((state) => [state.menuOpen]);
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    let isMobile = width <= 767;
+    if (height < width) isMobile = height <= 767;
+    setIsMobile(isMobile);
+  }, []);
 
   return (
     <div id="_pageFrame" className="_container relative">
@@ -22,7 +31,9 @@ export default function PageFrame({ _page, children }: Props) {
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
       {menuOpen && <Menu {...{ _page }} />}
-      {!["_Lobby", "_Loading"].includes(_page) && <Tutorial {...{ _page }} />}
+      {!["_Loading"].includes(_page) && !isMobile && (
+        <Tutorial {...{ _page }} />
+      )}
       <style jsx>
         {`
           ._container {
