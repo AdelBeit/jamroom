@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import StatusBar from "../components/StatusBar";
 import Tutorial from "../components/Tutorial";
 import { Page } from "../types";
@@ -17,7 +17,7 @@ export default function PageFrame({ _page, children }: Props) {
 
   return (
     <div id="_pageFrame" className="_container relative">
-      <div className="_content">{children}</div>
+      <div className="_content HIDE_SCROLLBAR">{children}</div>
       {!menuOpen && !["_Lobby", "_Loading"].includes(_page) && (
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
@@ -26,20 +26,24 @@ export default function PageFrame({ _page, children }: Props) {
       <style jsx>
         {`
           ._container {
-            width: 900px;
-            height: 500px;
+            min-width: 100%;
+            min-height: 100%;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             gap: 20px;
-            padding: 15px 20px 10px 20px;
+            padding: 2% 3%;
           }
+
           ._content {
-            flex: 1;
+            flex: 1 0;
             width: 100%;
             height: 100%;
             display: flex;
             justify-content: center;
+            overflow: scroll;
           }
         `}
       </style>

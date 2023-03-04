@@ -145,9 +145,10 @@ export function Lobby({ title }: LoadingProps) {
           gap: 30px;
         }
         ._page :global(.lobby.initial) {
-          width: 205px;
+          width: 28%;
         }
-        ._page :global(.lobby.join) {
+        ._page :global(.lobby.join),
+        ._page :global(.lobby.create) {
           width: 95%;
           margin: 0 5%;
         }
@@ -155,9 +156,6 @@ export function Lobby({ title }: LoadingProps) {
           display: flex;
           flex-direction: column;
           gap: 8px;
-        }
-        ._page :global(.lobby.create) {
-          width: 500px;
         }
 
         ._page :global(.lobby.create .container) {

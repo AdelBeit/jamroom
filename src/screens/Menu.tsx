@@ -106,7 +106,7 @@ export default function Menu({ _page }: Props) {
         }
         ._content {
           width: 100%;
-          height: 40%;
+          height: clamp(160px, 40%, 200px);
           align-self: flex-end;
           display: flex;
           flex-direction: column;
@@ -117,8 +117,7 @@ export default function Menu({ _page }: Props) {
           border: solid var(--amber) 3px;
           border-radius: 8px;
           background-color: var(--black);
-          margin-bottom: -100%;
-          margin-bottom: -50px;
+          margin-bottom: -1%;
           transition: margin-bottom 1s cubic-bezier(0.075, 0.82, 0.165, 1)
             alternate-reverse;
           z-index: 11;

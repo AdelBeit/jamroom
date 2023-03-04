@@ -76,6 +76,7 @@ export default function StatusBar({ roomID, _page }: Props) {
         ._container {
           width: 100%;
           height: 30px;
+          flex: 0;
           justify-content: space-between;
           align-items: center;
         }
@@ -85,7 +86,7 @@ export default function StatusBar({ roomID, _page }: Props) {
         }
         .now_jamming {
           flex: 1 0;
-          max-width: 75svh;
+          max-width: 75%;
           overflow: scroll;
           padding: 0 20px;
           height: 30px;

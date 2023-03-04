@@ -22,8 +22,8 @@ export default function Samples() {
   delete allSamples["piano"];
   const drumSamples = Object.keys(flattenSamples(allSamples)) as Sample[];
   return (
-    <div id="_Samples" className="_page">
-      <div className="_samples HIDE_SCROLLBAR">
+    <div id="_Samples" className="_page HIDE_SCROLLBAR">
+      <div className="_samples">
         {drumSamples.map((sample) => (
           <SampleBar
             key={sample}
@@ -36,13 +36,11 @@ export default function Samples() {
       <style jsx>
         {`
           ._page {
-            display: flex;
-            flex-direction: column;
+            overflow: scroll;
           }
           ._samples {
-            overflow: scroll;
             width: 100%;
-            height: fit-content;
+            height: max-content;
             display: flex;
             flex-direction: column;
             gap: 10px;

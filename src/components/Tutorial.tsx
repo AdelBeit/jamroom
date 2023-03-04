@@ -26,8 +26,8 @@ export default function Tutorial({ _page }: Props) {
         <ul>
           {content &&
             content.map((textLine) => <li key={textLine}>{textLine}</li>)}
-          <li>Tap/Click anywhere to dismiss.</li>
         </ul>
+        Tap/Click anywhere to dismiss.
       </div>
       <style jsx>{`
         .dark_underlay {
@@ -47,8 +47,13 @@ export default function Tutorial({ _page }: Props) {
         .box {
           align-self: center;
           z-index: 11;
+          padding: 20px 0;
+          text-align: center;
         }
         .box ul {
+          text-align: left;
+          margin-top: 0;
+          padding: 0;
           padding-left: 25px;
           padding-right: 20px;
         }

@@ -12,9 +12,9 @@ import { usePage } from "../src/utils/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
- * TODO: responsive design
  * TODO: add gestures
  * TODO: animate menu opening
+ * TODO: background icon shadows
  *
  * optional:
  * TODO: custom scrollbar for bar lists (jammers, samples)
@@ -47,7 +47,7 @@ const Page: NextPage = (props) => {
   }, []);
 
   return (
-    <div>
+    <div id="_app">
       {<PageFrame {...{ _page }}>{pageComponent}</PageFrame>}
       <style jsx>
         {`

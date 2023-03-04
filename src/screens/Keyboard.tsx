@@ -31,14 +31,13 @@ export default function Keyboard() {
       <style jsx>
         {`
           ._page {
-            width: max-content;
-            height: 100%;
+            width: 100%;
+            height: 33svw;
 
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-template-rows: 0;
-            column-gap: 14px;
-            padding-top: 30px;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: 1fr;
+            column-gap: clamp(10px, 2svw, 14px);
           }
         `}
       </style>

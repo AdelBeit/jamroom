@@ -31,7 +31,6 @@ export default function Drumkit({ _page }: Props) {
             grid-template-rows: repeat(2, 1fr);
             column-gap: 10px;
             row-gap: 10px;
-            padding: 30px 0;
           }
         `}
       </style>

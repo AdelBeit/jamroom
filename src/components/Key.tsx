@@ -54,6 +54,30 @@ export default function Key({ _note, octave }: Props) {
           padding-bottom: 10px;
         }
 
+        span {
+          font-family: monospace;
+          font-size: 30px;
+          padding-bottom: 10px;
+          color: var(--black);
+        }
+
+        .white {
+          z-index: 1;
+          background-color: var(--amber);
+          border: 2px solid var(--amber);
+          width: 100%;
+          height: 100%;
+          border-radius: 30px;
+        }
+
+        .black {
+          z-index: 2;
+          background-color: var(--black);
+          width: 60%;
+          height: 60%;
+          left: -40%;
+        }
+
         .C {
           grid-column-start: 1;
         }
@@ -89,30 +113,6 @@ export default function Key({ _note, octave }: Props) {
         }
         .B {
           grid-column-start: 7;
-        }
-
-        span {
-          font-family: monospace;
-          font-size: 30px;
-          padding-bottom: 10px;
-          color: var(--black);
-        }
-
-        .white {
-          z-index: 1;
-          background-color: var(--amber);
-          border: 2px solid var(--amber);
-          width: 97px;
-          height: 270px;
-          border-radius: 30px;
-        }
-
-        .black {
-          z-index: 2;
-          background-color: var(--black);
-          width: 54px;
-          height: 155px;
-          left: -35%;
         }
       `}</style>
     </button>
