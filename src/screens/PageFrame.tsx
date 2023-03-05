@@ -1,11 +1,10 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import StatusBar from "../components/StatusBar";
 import Tutorial from "../components/Tutorial";
 import { Page } from "../types";
 import { usePage } from "../utils/usePage";
 import { useUsers } from "../utils/useUsers";
 import Menu from "./Menu";
-import { CSSTransition } from "react-transition-group";
 
 interface Props {
   _page: Page;
@@ -16,7 +15,6 @@ export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
   const [menuOpen] = usePage((state) => [state.menuOpen]);
   const [isMobile, setIsMobile] = useState(true);
-  const menuRef = useRef(null);
 
   useEffect(() => {
     const width = window.innerWidth;
@@ -29,21 +27,13 @@ export default function PageFrame({ _page, children }: Props) {
   return (
     <div id="_pageFrame" className="_container relative">
       <div className="_content HIDE_SCROLLBAR">{children}</div>
-      {!menuOpen && !["_Lobby", "_Loading"].includes(_page) && (
+
+      {!["_Lobby", "_Loading"].includes(_page) && (
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
 
-      <CSSTransition
-        in={menuOpen}
-        appear={menuOpen}
-        nodeRef={menuRef}
-        timeout={200}
-        classNames="menu"
-        unmountOnExit
-        mountOnEnter={false}
-      >
-        <Menu {...{ _page, menuRef }} />
-      </CSSTransition>
+      {menuOpen && <Menu {...{ _page }} />}
+
       {!["_Loading"].includes(_page) && !isMobile && (
         <Tutorial {...{ _page }} />
       )}

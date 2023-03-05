@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { usePlayers } from "../src/utils/PlayersContext";
 import { getSamples } from "../src/utils/data/getSampleNames";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Lobby } from "../src/screens/Lobby";
 import PageFrame from "../src/screens/PageFrame";
 import Jammers from "../src/screens/Jammers";
@@ -10,11 +10,9 @@ import Keyboard from "../src/screens/Keyboard";
 import Samples from "../src/screens/Samples";
 import { usePage } from "../src/utils/usePage";
 import { Loading } from "../src/screens/Loading";
-import Menu from "../src/screens/Menu";
-import { CSSTransition } from "react-transition-group";
 
 /**
- * TODO: animate menu opening
+ * TODO: bug with clicking to dismiss menu/tutorial, click leaks through
  * TODO: add gestures
  * TODO: background icon shadows
  *
@@ -47,64 +45,6 @@ const Page: NextPage = (props) => {
     // @ts-ignore
     setSamples(props.samples);
   }, []);
-
-  const menuRef = useRef(null);
-  const [menuOpen] = usePage((state) => [state.menuOpen]);
-
-  return (
-    <div id="_app">
-      <CSSTransition
-        in={menuOpen}
-        nodeRef={menuRef}
-        timeout={200}
-        classNames={"menu"}
-        appear
-      >
-        <Menu {...{ _page, menuRef }} />
-      </CSSTransition>
-      <style jsx>
-        {`
-          .menu-enter {
-            margin-bottom: -50%;
-            opacity: 0;
-          }
-          .menu-enter-active {
-            margin-bottom: -7%;
-            opacity: 1;
-            transition: margin-bottom 1s, opacity 1s;
-          }
-          .menu-exit {
-            margin-bottom: -7%;
-            opacity: 1;
-          }
-          .menu-exit-active {
-            margin-bottom: -50%;
-            opacity: 0;
-            transition: margin-bottom 1s, opacity 1s;
-          }
-        `}
-      </style>
-      <style jsx>
-        {`
-          div {
-            background-color: var(--black);
-            display: flex;
-            justify-content: center;
-          }
-        `}
-      </style>
-      <style jsx global>{`
-        ._page .title {
-          display: block;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 1;
-          user-select: none;
-        }
-      `}</style>
-    </div>
-  );
 
   return (
     <div id="_app">

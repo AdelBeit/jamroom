@@ -1,16 +1,14 @@
-import React, { Ref, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import BorderlessTextButton from "../components/BorderlessTextButton";
 import { Page } from "../types";
 import { usePage } from "../utils/usePage";
 import { preventDefault } from "../utils/utils";
-import { CSSTransition } from "react-transition-group";
 
 interface Props {
   _page: Page;
-  menuRef: Ref<HTMLDivElement>;
 }
 
-export default function Menu({ _page, menuRef }: Props) {
+export default function Menu({ _page }: Props) {
   const [toggleMenu, setPage] = usePage((state) => [
     state.toggleMenu,
     state.setPage,
@@ -19,36 +17,59 @@ export default function Menu({ _page, menuRef }: Props) {
   const isConfigPage = _page === "_Config";
   const isDrumkitPage = _page === "_Drumkit";
 
+  const menuOpen = usePage((state) => state.menuOpen);
+  const tDelay = 350;
+
+  useEffect(() => {
+    console.log(menuOpen);
+    if (menuOpen) {
+      const menuContainer = document.querySelector(
+        "#_menu ._content"
+      ) as HTMLDivElement;
+      const timeout = setTimeout(() => {
+        menuContainer.style.transform = "translateY(5%)";
+        clearTimeout(timeout);
+      }, 10);
+    }
+  }, [menuOpen]);
+
+  const handleCloseMenu = (e: React.MouseEvent | React.TouchEvent) => {
+    if (menuOpen) {
+      const container = document.querySelector("#_menu") as HTMLDivElement;
+      const menuContainer = document.querySelector(
+        "#_menu ._content"
+      ) as HTMLDivElement;
+      menuContainer.style.transform = "translateY(110%)";
+      const timeout = setTimeout(() => {
+        container.style.display = "none";
+        toggleMenu();
+        clearTimeout(timeout);
+      }, tDelay);
+    }
+  };
+
   return (
     <div id="_menu" className={`${_page} _container absolute`}>
       <div
         className="dark_underlay absolute faded"
-        onClick={(e) => {
-          toggleMenu();
-        }}
-        onTouchStart={(e) => {
-          toggleMenu();
-        }}
+        onClick={handleCloseMenu}
+        onTouchStart={handleCloseMenu}
         onTouchEnd={preventDefault}
       ></div>
-      <div ref={menuRef} className="_content">
+      <div className="_content">
         <div className="top">
           <BorderlessTextButton
             _icon="close"
             text="Close"
-            handler={(e) => {
-              preventDefault(e);
-              toggleMenu();
-            }}
+            handler={handleCloseMenu}
           />
           <BorderlessTextButton
             _icon="jammers"
             text="Jammers"
             active={_page === "_Jammers"}
             handler={(e) => {
+              handleCloseMenu(e);
               setPage("_Jammers");
-              preventDefault(e);
-              toggleMenu();
             }}
           />
           <BorderlessTextButton
@@ -64,9 +85,8 @@ export default function Menu({ _page, menuRef }: Props) {
             _icon={isConfigPage ? "config" : "drumkit"}
             text={isDrumkitPage ? "Config Pads" : "Drumkit"}
             handler={(e) => {
+              handleCloseMenu(e);
               setPage(isDrumkitPage ? "_Config" : "_Drumkit");
-              preventDefault(e);
-              toggleMenu();
             }}
           />
           <BorderlessTextButton
@@ -74,20 +94,13 @@ export default function Menu({ _page, menuRef }: Props) {
             text="Keyboard"
             active={_page === "_Keyboard"}
             handler={(e) => {
+              handleCloseMenu(e);
               setPage("_Keyboard");
-              preventDefault(e);
-              toggleMenu();
             }}
           />
         </div>
       </div>
       <style jsx>{`
-        .dark_underlay {
-          width: 100%;
-          height: 100%;
-          background-color: #000;
-          z-index: 10;
-        }
         ._container {
           width: 100%;
           height: 100%;
@@ -95,6 +108,14 @@ export default function Menu({ _page, menuRef }: Props) {
           display: flex;
           overflow-y: hidden;
         }
+
+        .dark_underlay {
+          width: 100%;
+          height: 100%;
+          background-color: #000;
+          z-index: 10;
+        }
+
         ._content {
           width: 100%;
           height: clamp(160px, 40%, 200px);
@@ -109,8 +130,10 @@ export default function Menu({ _page, menuRef }: Props) {
           border-radius: 8px;
           background-color: var(--black);
           z-index: 11;
-          margin-bottom: -7%;
+          transition: transform ${tDelay / 1000}s;
+          transform: translateY(110%);
         }
+
         .top,
         .bottom {
           display: flex;
