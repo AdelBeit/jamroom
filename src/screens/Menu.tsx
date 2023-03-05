@@ -1,35 +1,26 @@
-import React, { useEffect, useRef } from "react";
+import React, { Ref, useEffect, useRef } from "react";
 import BorderlessTextButton from "../components/BorderlessTextButton";
 import { Page } from "../types";
 import { usePage } from "../utils/usePage";
 import { preventDefault } from "../utils/utils";
+import { CSSTransition } from "react-transition-group";
 
 interface Props {
   _page: Page;
+  menuRef: Ref<HTMLDivElement>;
 }
 
-export default function Menu({ _page }: Props) {
+export default function Menu({ _page, menuRef }: Props) {
   const [toggleMenu, setPage] = usePage((state) => [
     state.toggleMenu,
     state.setPage,
   ]);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const container = ref.current;
-    container.classList.add("show_menu");
-    return () => {
-      container.classList.remove("show_menu");
-    };
-  }, [ref.current]);
 
   const isConfigPage = _page === "_Config";
   const isDrumkitPage = _page === "_Drumkit";
 
   return (
-    <div id="_menu" ref={ref} className={`${_page} _container absolute`}>
+    <div id="_menu" className={`${_page} _container absolute`}>
       <div
         className="dark_underlay absolute faded"
         onClick={(e) => {
@@ -40,7 +31,7 @@ export default function Menu({ _page }: Props) {
         }}
         onTouchEnd={preventDefault}
       ></div>
-      <div className="_content">
+      <div ref={menuRef} className="_content">
         <div className="top">
           <BorderlessTextButton
             _icon="close"
@@ -117,12 +108,7 @@ export default function Menu({ _page }: Props) {
           border: solid var(--amber) 3px;
           border-radius: 8px;
           background-color: var(--black);
-          margin-bottom: -1%;
-          transition: margin-bottom 1s cubic-bezier(0.075, 0.82, 0.165, 1)
-            alternate-reverse;
           z-index: 11;
-        }
-        .show_menu {
           margin-bottom: -7%;
         }
         .top,
