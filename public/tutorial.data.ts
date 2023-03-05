@@ -6,6 +6,12 @@ TUTORIAL_DATA.set("_Lobby", [
   "For the best experience please use this app on a mobile device instead.",
 ]);
 
+TUTORIAL_DATA.set("_Jammers", [
+  "Use the + sign to invite more jammers to your room.",
+  "Your room # is displayed at the bottom right.",
+  "Use the volume slider to adjust the volume for each individual jammer.",
+]);
+
 TUTORIAL_DATA.set("_Drumkit", [
   "Swipe down with 3 fingers to enter sample configuration mode.",
   "Swip up with 3 fingers to open the menu.",
