@@ -18,8 +18,8 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
   const roomID = useUsers((state) => state.roomID);
 
   const padHandler = (e: React.TouchEvent | React.MouseEvent) => {
+    e.preventDefault();
     if (config) {
-      e.preventDefault();
       useSound.getState().setConfigPad(_id);
       usePage.getState().setPage("_Samples");
       return;

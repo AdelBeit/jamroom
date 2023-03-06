@@ -10,7 +10,10 @@ export default function RoomBar({ text, handler }: Props) {
     <button
       className="bar mold"
       onMouseDown={handler}
-      onTouchStart={handler}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        handler(e);
+      }}
       onTouchEnd={preventDefault}
       onMouseUp={preventDefault}
     >

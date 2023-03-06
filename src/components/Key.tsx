@@ -19,6 +19,7 @@ export default function Key({ _note, octave }: Props) {
   const lastNote = _note === "N" ? "C" + cappedOctave : undefined;
 
   const keyHandler = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
     const key = e.currentTarget;
     key.classList.add("pressed");
     const sample = (

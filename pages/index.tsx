@@ -13,7 +13,6 @@ import { Loading } from "../src/screens/Loading";
 
 /**
  * TODO: add gestures
- * TODO: background icon shadows
  *
  * optional:
  * TODO: custom scrollbar for bar lists (jammers, samples)

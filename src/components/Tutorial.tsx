@@ -11,28 +11,30 @@ export default function Tutorial({ _page, closeTutorial }: Props) {
   const content = TUTORIAL_DATA.get(_page);
 
   return (
-    <div id="_tutorial" className={`_container absolute`}>
-      <div
-        className="dark_underlay faded absolute"
-        onMouseDown={(e) => {
-          e.stopPropagation();
-          e.nativeEvent.stopImmediatePropagation();
-          closeTutorial();
-        }}
-        onTouchStart={(e) => {
-          e.stopPropagation();
-          e.nativeEvent.stopImmediatePropagation();
-          closeTutorial();
-        }}
-        onTouchEnd={(e) => {
-          e.stopPropagation();
-          e.nativeEvent.stopImmediatePropagation();
-        }}
-        onMouseUp={(e) => {
-          e.stopPropagation();
-          e.nativeEvent.stopImmediatePropagation();
-        }}
-      ></div>
+    <div
+      id="_tutorial"
+      className={`_container absolute`}
+      onMouseDown={(e) => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        closeTutorial();
+      }}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+        closeTutorial();
+      }}
+      onTouchEnd={(e) => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+      }}
+      onMouseUp={(e) => {
+        e.stopPropagation();
+        e.nativeEvent.stopImmediatePropagation();
+      }}
+    >
+      <div className="dark_underlay faded absolute"></div>
       <div className="box mold">
         <ul>
           {content &&

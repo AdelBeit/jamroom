@@ -21,7 +21,10 @@ export default function SampleBar({
     <button
       className={cs("bar mold", active && "active")}
       onMouseDown={handler}
-      onTouchStart={handler}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        handler(e);
+      }}
       onTouchEnd={preventDefault}
       onMouseUp={preventDefault}
     >

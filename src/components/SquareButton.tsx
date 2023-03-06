@@ -9,7 +9,10 @@ export default function SquareButton({ _icon, handler, size = 30 }: Props) {
   return (
     <button
       onMouseDown={handler}
-      onTouchStart={handler}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        handler(e);
+      }}
       onTouchEnd={preventDefault}
       onMouseUp={preventDefault}
       className={`mold ${_icon}`}

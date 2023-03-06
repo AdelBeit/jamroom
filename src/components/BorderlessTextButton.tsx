@@ -21,7 +21,10 @@ export default function BorderlessTextButton({
         if (!active) handler(e);
       }}
       onTouchStart={(e) => {
-        if (!active) handler(e);
+        if (!active) {
+          e.preventDefault();
+          handler(e);
+        }
       }}
       onTouchEnd={preventDefault}
       onMouseUp={preventDefault}

@@ -34,6 +34,7 @@ export default function Menu({ _page }: Props) {
 
   const handleCloseMenu = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     if (menuOpen) {
       const container = document.querySelector("#_menu") as HTMLDivElement;
       const menuContainer = document.querySelector(

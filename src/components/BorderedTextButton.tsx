@@ -18,7 +18,10 @@ export default function BorderedTextButton({
     <button
       className={cs(text, active && "faded")}
       onMouseDown={handler}
-      onTouchStart={handler}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        handler(e);
+      }}
       onTouchEnd={preventDefault}
       onMouseUp={preventDefault}
     >
