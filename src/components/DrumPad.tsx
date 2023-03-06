@@ -30,8 +30,7 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
     socket.emit("play-sound", sample, roomID);
   };
 
-  const preventDefault = (e: React.TouchEvent | React.MouseEvent) => {
-    e.preventDefault();
+  const drumHandlerLeave = (e: React.TouchEvent | React.MouseEvent) => {
     e.currentTarget.classList.remove("active");
   };
 
@@ -41,8 +40,9 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
       className="mold"
       onMouseDown={padHandler}
       onTouchStart={padHandler}
-      onMouseUp={preventDefault}
-      onTouchEnd={preventDefault}
+      onMouseUp={drumHandlerLeave}
+      onTouchEnd={drumHandlerLeave}
+      onMouseLeave={drumHandlerLeave}
     >
       {config && <Icon _icon="config" size={60} />}
       <style jsx>

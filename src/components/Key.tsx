@@ -5,7 +5,6 @@ import { usePlayers } from "../utils/PlayersContext";
 import { useUsers } from "../utils/useUsers";
 import { socket } from "../utils/socketClient";
 import { Sample } from "../sample";
-import { preventDefault } from "../utils/utils";
 
 interface Props {
   _note: Note;
@@ -20,6 +19,8 @@ export default function Key({ _note, octave }: Props) {
   const lastNote = _note === "N" ? "C" + cappedOctave : undefined;
 
   const keyHandler = (e: React.MouseEvent | React.TouchEvent) => {
+    const key = e.currentTarget;
+    key.classList.add("pressed");
     const sample = (
       _note === "N" ? "C" + cappedOctave : _note + octave
     ) as Sample;
@@ -27,11 +28,17 @@ export default function Key({ _note, octave }: Props) {
     socket.emit("play-sound", sample, roomID);
   };
 
+  const keyHandlerEnd = (e: React.MouseEvent | React.TouchEvent) => {
+    e.currentTarget.classList.remove("pressed");
+  };
+
   return (
     <button
       onTouchStart={keyHandler}
-      onClick={keyHandler}
-      onTouchEnd={preventDefault}
+      onMouseDown={keyHandler}
+      onTouchEnd={keyHandlerEnd}
+      onMouseUp={keyHandlerEnd}
+      onMouseLeave={keyHandlerEnd}
       id={(lastNote && lastNote) || _note + octave}
       className={cs(
         "_key mold relative",
@@ -69,6 +76,9 @@ export default function Key({ _note, octave }: Props) {
           height: 100%;
           border-radius: 30px;
         }
+        .white.pressed {
+          background-color: var(--black);
+        }
 
         .black {
           z-index: 2;
@@ -76,6 +86,10 @@ export default function Key({ _note, octave }: Props) {
           width: 60%;
           height: 60%;
           left: -40%;
+        }
+        .black.pressed {
+          background-color: var(--amber);
+          border: 2px solid var(--black);
         }
 
         .C {

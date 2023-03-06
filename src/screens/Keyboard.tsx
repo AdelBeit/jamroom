@@ -4,7 +4,10 @@ import { Note } from "../types";
 import { useSound } from "../utils/useSound";
 
 export default function Keyboard() {
-  const setOctave = useSound((state) => [state.setOctave]);
+  const [octave, setOctave] = useSound((state) => [
+    state.octave,
+    state.setOctave,
+  ]);
   const NOTES = [
     "C",
     "Cs",
@@ -20,8 +23,6 @@ export default function Keyboard() {
     "B",
     "N",
   ] as Note[];
-
-  const octave = useSound((state) => state.octave);
 
   return (
     <div id="_Keyboard" className="_page">
