@@ -17,9 +17,10 @@ export default function BorderedTextButton({
   return (
     <button
       className={cs(text, active && "faded")}
-      onClick={handler}
+      onMouseDown={handler}
       onTouchStart={handler}
       onTouchEnd={preventDefault}
+      onMouseUp={preventDefault}
     >
       <span className="medium">{text}</span>
       <Icon {...{ _icon }} size={20} />

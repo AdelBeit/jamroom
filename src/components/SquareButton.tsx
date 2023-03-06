@@ -8,9 +8,10 @@ interface Props extends Omit<ButtonProps, "text"> {}
 export default function SquareButton({ _icon, handler, size = 30 }: Props) {
   return (
     <button
-      onClick={handler}
+      onMouseDown={handler}
       onTouchStart={handler}
       onTouchEnd={preventDefault}
+      onMouseUp={preventDefault}
       className={`mold ${_icon}`}
     >
       <Icon {...{ _icon }} size={17} />

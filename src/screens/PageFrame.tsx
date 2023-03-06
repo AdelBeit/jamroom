@@ -15,6 +15,11 @@ export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
   const [menuOpen] = usePage((state) => [state.menuOpen]);
   const [isMobile, setIsMobile] = useState(true);
+  const [visited, setVisited] = useState(true);
+
+  useEffect(() => {
+    setVisited(!!localStorage.getItem("visited_" + _page));
+  }, [_page]);
 
   useEffect(() => {
     const width = window.innerWidth;
@@ -34,9 +39,17 @@ export default function PageFrame({ _page, children }: Props) {
 
       {menuOpen && <Menu {...{ _page }} />}
 
-      {!["_Loading"].includes(_page) && !isMobile && (
-        <Tutorial {...{ _page }} />
-      )}
+      {!visited &&
+        (!["_Loading"].includes(_page) ||
+          (["_Loading"].includes(_page) && !isMobile)) && (
+          <Tutorial
+            {...{ _page }}
+            closeTutorial={() => {
+              setVisited(true);
+              localStorage.setItem("visited_" + _page, new Date().toString());
+            }}
+          />
+        )}
 
       <style jsx>
         {`

@@ -12,7 +12,6 @@ import { usePage } from "../src/utils/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
- * TODO: bug with clicking to dismiss menu/tutorial, click leaks through
  * TODO: add gestures
  * TODO: background icon shadows
  *

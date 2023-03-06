@@ -17,13 +17,14 @@ export default function BorderlessTextButton({
   return (
     <button
       className={cs(text, active && "faded")}
-      onClick={(e) => {
+      onMouseDown={(e) => {
         if (!active) handler(e);
       }}
       onTouchStart={(e) => {
         if (!active) handler(e);
       }}
       onTouchEnd={preventDefault}
+      onMouseUp={preventDefault}
     >
       <Icon {...{ _icon }} size={20} />
       <span className="medium">{text}</span>

@@ -20,9 +20,10 @@ export default function SampleBar({
   return (
     <button
       className={cs("bar mold", active && "active")}
-      onClick={handler}
+      onMouseDown={handler}
       onTouchStart={handler}
       onTouchEnd={preventDefault}
+      onMouseUp={preventDefault}
     >
       <span className="medium">{_sample}</span>
       <style jsx>

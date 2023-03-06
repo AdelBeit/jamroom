@@ -21,7 +21,6 @@ export default function Menu({ _page }: Props) {
   const tDelay = 350;
 
   useEffect(() => {
-    console.log(menuOpen);
     if (menuOpen) {
       const menuContainer = document.querySelector(
         "#_menu ._content"
@@ -34,6 +33,7 @@ export default function Menu({ _page }: Props) {
   }, [menuOpen]);
 
   const handleCloseMenu = (e: React.MouseEvent | React.TouchEvent) => {
+    e.stopPropagation();
     if (menuOpen) {
       const container = document.querySelector("#_menu") as HTMLDivElement;
       const menuContainer = document.querySelector(
@@ -52,9 +52,10 @@ export default function Menu({ _page }: Props) {
     <div id="_menu" className={`${_page} _container absolute`}>
       <div
         className="dark_underlay absolute faded"
-        onClick={handleCloseMenu}
+        onMouseDown={handleCloseMenu}
         onTouchStart={handleCloseMenu}
         onTouchEnd={preventDefault}
+        onMouseUp={preventDefault}
       ></div>
       <div className="_content">
         <div className="top">
