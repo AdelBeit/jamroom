@@ -1,7 +1,7 @@
 import { Sample } from "../sample";
 import { User } from "../types";
 import { PlayersContext } from "./PlayersContext";
-import { useUsers } from "./useUsers";
+import { useUsers } from "../hooks/useUsers";
 
 export default function playSample(
   players: PlayersContext["players"],

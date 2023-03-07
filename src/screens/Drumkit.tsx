@@ -1,6 +1,6 @@
 import DrumPad from "../components/DrumPad";
 import { Page } from "../types";
-import { useSound } from "../utils/useSound";
+import { useSound } from "../hooks/useSound";
 
 interface Props {
   _page: Page;

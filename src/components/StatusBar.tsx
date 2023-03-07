@@ -2,8 +2,8 @@ import React from "react";
 import { Page } from "../types";
 import SquareButton from "./SquareButton";
 import JammingToast from "./JammingToast";
-import { usePage } from "../utils/usePage";
-import { useUsers } from "../utils/useUsers";
+import { usePage } from "../hooks/usePage";
+import { useUsers } from "../hooks/useUsers";
 import { Icon } from "../icon";
 
 interface Props {

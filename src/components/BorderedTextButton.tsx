@@ -2,7 +2,7 @@ import React from "react";
 import cs from "classnames";
 import Icon from "./Icon";
 import { ButtonProps } from "../types";
-import { preventDefault } from "../utils/utils";
+import { preventDefault } from "../utils/preventDefault";
 
 export interface Props extends Omit<ButtonProps, "size"> {
   active?: boolean;

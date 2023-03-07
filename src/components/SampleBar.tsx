@@ -1,7 +1,7 @@
 import cs from "classnames";
 import React from "react";
 import { Sample } from "../sample";
-import { preventDefault } from "../utils/utils";
+import { preventDefault } from "../utils/preventDefault";
 
 interface Props {
   _sample: Sample;

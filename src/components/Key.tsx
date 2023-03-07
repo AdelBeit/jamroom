@@ -2,7 +2,7 @@ import cs from "classnames";
 import React from "react";
 import { Note, Octave } from "../types";
 import { usePlayers } from "../utils/PlayersContext";
-import { useUsers } from "../utils/useUsers";
+import { useUsers } from "../hooks/useUsers";
 import { socket } from "../utils/socketClient";
 import { Sample } from "../sample";
 

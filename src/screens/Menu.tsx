@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import BorderlessTextButton from "../components/BorderlessTextButton";
 import { Page } from "../types";
-import { usePage } from "../utils/usePage";
-import { preventDefault } from "../utils/utils";
+import { usePage } from "../hooks/usePage";
+import { preventDefault } from "../utils/preventDefault";
 
 interface Props {
   _page: Page;
@@ -25,10 +25,11 @@ export default function Menu({ _page }: Props) {
       const menuContainer = document.querySelector(
         "#_menu ._content"
       ) as HTMLDivElement;
-      const timeout = setTimeout(() => {
-        menuContainer.style.transform = "translateY(5%)";
-        clearTimeout(timeout);
-      }, 10);
+      const timeout = setTimeout(
+        () => (menuContainer.style.transform = "translateY(5%)"),
+        10
+      );
+      return () => clearTimeout(timeout);
     }
   }, [menuOpen]);
 

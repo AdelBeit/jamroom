@@ -2,8 +2,8 @@ import React from "react";
 import SampleBar from "../components/SampleBar";
 import { Sample } from "../sample";
 import { usePlayers } from "../utils/PlayersContext";
-import { useSound } from "../utils/useSound";
-import { flattenSamples } from "../utils/utils";
+import { useSound } from "../hooks/useSound";
+import { flattenSamples } from "../utils/flattenSamples";
 
 export default function Samples() {
   const [setSample, padID, selectedSamples] = useSound((state) => [

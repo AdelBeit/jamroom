@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Server } from "socket.io";
 import { User } from "../../src/types";
-import { UserStateStore } from "../../src/utils/useUsers";
+import { UserStateStore } from "../../src/hooks/useUsers";
 
 const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
   // @ts-ignore

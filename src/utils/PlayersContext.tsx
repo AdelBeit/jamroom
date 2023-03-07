@@ -10,13 +10,13 @@ import {
 import { Players } from "tone";
 import * as Tone from "tone";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
-import { flattenSamples } from "./utils";
+import { flattenSamples } from "./flattenSamples";
 import { generateName } from "./generateName";
 import playSample from "./playSample";
-import { useUsers } from "./useUsers";
+import { useUsers } from "../hooks/useUsers";
 import { Sample } from "../sample";
 import { User } from "../types";
-import { usePage } from "./usePage";
+import { usePage } from "../hooks/usePage";
 
 export interface PlayersContext {
   players: Players | null;

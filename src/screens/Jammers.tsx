@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Icon from "../components/Icon";
 import JammerBar from "../components/JammerBar";
-import { useUsers } from "../utils/useUsers";
+import { useUsers } from "../hooks/useUsers";
 
 export default function Jammers() {
   const [currentUser, users, setVolume, roomID] = useUsers((state) => [
@@ -35,35 +35,8 @@ export default function Jammers() {
       .catch(console.error);
   };
 
-  const tpCache: = [];
-
-  function handle_pinch_zoom(e:React.TouchEvent){
-    if(e.targetTouches.length === 2 && e.changedTouches.length===2){
-      const p1 = tpCache.findLastIndex(tp=>tp.identifier === e.targetTouches[0].identifier)
-    }
-  }
-
-  const startHandler = (e:React.TouchEvent)=>{
-
-  }
-
   return (
-    <div
-      id="_Jammers"
-      className="_page"
-      onTouchStart={(e) => {
-        startHandler(e);
-      }}
-      onTouchMove={(e) => {
-        moveHandler(e);
-      }}
-      onTouchCancel={(e) => {
-        endHandler(e);
-      }}
-      onTouchEnd={(e) => {
-        endHandler(e);
-      }}
-    >
+    <div id="_Jammers" className="_page">
       <div className="_jammers HIDE_SCROLLBAR">
         {Object.keys(users).map((userID) => (
           <JammerBar

@@ -10,7 +10,8 @@ export interface SoundStateStore {
   samples: Sample[];
   setPadSample(sample: Sample): void;
   setConfigPad(padID: number): void;
-  setOctave(octave: Octave): void;
+  octaveUp(): void;
+  octaveDown(): void;
 }
 
 export const useSound = create<SoundStateStore>()(
@@ -36,6 +37,9 @@ export const useSound = create<SoundStateStore>()(
         return { ...{ samples } };
       }),
     setConfigPad: (padID) => set({ configPad: padID }),
-    setOctave: (octave) => set({ octave }),
+    octaveUp: () =>
+      set((state) => ({ octave: Math.min(state.octave + 1, 7) as Octave })),
+    octaveDown: () =>
+      set((state) => ({ octave: Math.max(state.octave - 1, 1) as Octave })),
   }))
 );

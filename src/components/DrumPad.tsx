@@ -2,10 +2,10 @@ import React from "react";
 import { Sample } from "../sample";
 import { usePlayers } from "../utils/PlayersContext";
 import { socket } from "../utils/socketClient";
-import { usePage } from "../utils/usePage";
-import { useUsers } from "../utils/useUsers";
+import { usePage } from "../hooks/usePage";
+import { useUsers } from "../hooks/useUsers";
 import Icon from "./Icon";
-import { useSound } from "../utils/useSound";
+import { useSound } from "../hooks/useSound";
 
 interface Props {
   _id: number;

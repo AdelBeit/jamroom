@@ -1,13 +1,10 @@
 import React from "react";
 import Key from "../components/Key";
 import { Note } from "../types";
-import { useSound } from "../utils/useSound";
+import { useSound } from "../hooks/useSound";
 
 export default function Keyboard() {
-  const [octave, setOctave] = useSound((state) => [
-    state.octave,
-    state.setOctave,
-  ]);
+  const [octave] = useSound((state) => [state.octave]);
   const NOTES = [
     "C",
     "Cs",

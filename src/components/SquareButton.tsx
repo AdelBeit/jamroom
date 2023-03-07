@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonProps } from "../types";
 import Icon from "./Icon";
-import { preventDefault } from "../utils/utils";
+import { preventDefault } from "../utils/preventDefault";
 
 interface Props extends Omit<ButtonProps, "text"> {}
 

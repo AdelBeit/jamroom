@@ -1,6 +1,6 @@
 import React from "react";
 import { User } from "../types";
-import { UserStateStore } from "../utils/useUsers";
+import { UserStateStore } from "../hooks/useUsers";
 import Icon from "./Icon";
 import VolumeBar from "./VolumeSlider";
 

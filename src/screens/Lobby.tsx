@@ -3,10 +3,10 @@ import RoomBar from "../components/RoomBar";
 import Icon from "../components/Icon";
 import BorderedTextButton from "../components/BorderedTextButton";
 import SquareButton from "../components/SquareButton";
-import { useUsers } from "../utils/useUsers";
-import { usePage } from "../utils/usePage";
+import { useUsers } from "../hooks/useUsers";
+import { usePage } from "../hooks/usePage";
 import { Props as LoadingProps } from "./Loading";
-import { preventDefault } from "../utils/utils";
+import { preventDefault } from "../utils/preventDefault";
 
 type LobbyState = "initial" | "join" | "create";
 

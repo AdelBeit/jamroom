@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonProps } from "../types";
-import { preventDefault } from "../utils/utils";
+import { preventDefault } from "../utils/preventDefault";
 import Icon from "./Icon";
 
 interface Props extends Omit<ButtonProps, "_icon" | "size"> {}

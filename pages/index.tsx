@@ -3,12 +3,12 @@ import { usePlayers } from "../src/utils/PlayersContext";
 import { getSamples } from "../src/utils/data/getSampleNames";
 import { useEffect } from "react";
 import { Lobby } from "../src/screens/Lobby";
-import PageFrame from "../src/screens/PageFrame";
+import PageFrame from "../src/components/PageFrame";
 import Jammers from "../src/screens/Jammers";
 import Drumkit from "../src/screens/Drumkit";
 import Keyboard from "../src/screens/Keyboard";
 import Samples from "../src/screens/Samples";
-import { usePage } from "../src/utils/usePage";
+import { usePage } from "../src/hooks/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
