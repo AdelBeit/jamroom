@@ -1,10 +1,10 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import StatusBar from "../components/StatusBar";
-import Tutorial from "../components/Tutorial";
+import StatusBar from "./StatusBar";
+import Tutorial from "./Tutorial";
 import { Page } from "../types";
-import { usePage } from "../utils/usePage";
-import { useUsers } from "../utils/useUsers";
-import Menu from "./Menu";
+import { usePage } from "../hooks/usePage";
+import { useUsers } from "../hooks/useUsers";
+import Menu from "../screens/Menu";
 
 interface Props {
   _page: Page;
@@ -16,6 +16,8 @@ export default function PageFrame({ _page, children }: Props) {
   const [menuOpen] = usePage((state) => [state.menuOpen]);
   const [isMobile, setIsMobile] = useState(true);
   const [visited, setVisited] = useState(true);
+  const onLoadingScreen = _page === "_Loading";
+  const onDesktopLoadingScreen = onLoadingScreen && !isMobile;
 
   useEffect(() => {
     setVisited(!!localStorage.getItem("visited_" + _page));
@@ -39,17 +41,15 @@ export default function PageFrame({ _page, children }: Props) {
 
       {menuOpen && <Menu {...{ _page }} />}
 
-      {!visited &&
-        (!["_Loading"].includes(_page) ||
-          (["_Loading"].includes(_page) && !isMobile)) && (
-          <Tutorial
-            {...{ _page }}
-            closeTutorial={() => {
-              setVisited(true);
-              localStorage.setItem("visited_" + _page, new Date().toString());
-            }}
-          />
-        )}
+      {!visited && (!onLoadingScreen || onDesktopLoadingScreen) && (
+        <Tutorial
+          {...{ _page }}
+          closeTutorial={() => {
+            setVisited(true);
+            localStorage.setItem("visited_" + _page, new Date().toString());
+          }}
+        />
+      )}
 
       <style jsx>
         {`
