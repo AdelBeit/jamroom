@@ -24,7 +24,7 @@ export default function Drumkit({ _page }: Props) {
         {`
           ._page {
             height: max-content;
-            width: 100%;
+            width: min(900px, 100%);
 
             display: grid;
             grid-template-columns: repeat(5, 1fr);
