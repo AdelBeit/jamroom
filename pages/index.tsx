@@ -12,6 +12,7 @@ import { usePage } from "../src/hooks/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
+ * TODO: finish <toast />
  * TODO: add gestures
  *
  * optional:

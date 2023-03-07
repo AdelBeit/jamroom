@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Key from "../components/Key";
 import { Note } from "../types";
 import { useSound } from "../hooks/useSound";
+import { swipe } from "../utils/swipe";
 
 export default function Keyboard() {
-  const [octave] = useSound((state) => [state.octave]);
+  const [octave, octaveUp, octaveDown] = useSound((state) => [
+    state.octave,
+    state.octaveUp,
+    state.octaveDown,
+  ]);
   const NOTES = [
     "C",
     "Cs",
@@ -20,9 +25,18 @@ export default function Keyboard() {
     "B",
     "N",
   ] as Note[];
+  const [notify, setNotify] = useState(false);
 
   return (
-    <div id="_Keyboard" className="_page">
+    <div
+      id="_Keyboard"
+      className="_page"
+      {...{
+        onTouchStart: swipe.onTouchStart.bind(swipe),
+        onTouchMove: swipe.onTouchMove.bind(swipe),
+        onTouchEnd: swipe.onTouchEnd.bind(swipe, octaveDown, octaveUp),
+      }}
+    >
       {NOTES.map((_note) => (
         <Key key={_note + octave} {...{ _note, octave }} />
       ))}
