@@ -8,7 +8,7 @@ TUTORIAL_DATA.set("_Lobby", [
 
 TUTORIAL_DATA.set("_Jammers", [
   "Use the + sign to invite more jammers to your room.",
-  "Your room # is displayed at the bottom right.",
+  "Navigate to Drumkit/Keyboard using a 3 finger left/right swipe gesture.",
   "Use the volume slider to adjust the volume for each individual jammer.",
 ]);
 

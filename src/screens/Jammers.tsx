@@ -34,9 +34,36 @@ export default function Jammers() {
       })
       .catch(console.error);
   };
-  const userID = useUsers((state) => state.userID);
+
+  const tpCache: = [];
+
+  function handle_pinch_zoom(e:React.TouchEvent){
+    if(e.targetTouches.length === 2 && e.changedTouches.length===2){
+      const p1 = tpCache.findLastIndex(tp=>tp.identifier === e.targetTouches[0].identifier)
+    }
+  }
+
+  const startHandler = (e:React.TouchEvent)=>{
+
+  }
+
   return (
-    <div id="_Jammers" className="_page">
+    <div
+      id="_Jammers"
+      className="_page"
+      onTouchStart={(e) => {
+        startHandler(e);
+      }}
+      onTouchMove={(e) => {
+        moveHandler(e);
+      }}
+      onTouchCancel={(e) => {
+        endHandler(e);
+      }}
+      onTouchEnd={(e) => {
+        endHandler(e);
+      }}
+    >
       <div className="_jammers HIDE_SCROLLBAR">
         {Object.keys(users).map((userID) => (
           <JammerBar
