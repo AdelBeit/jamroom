@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TUTORIAL_DATA from "../../public/tutorial.data";
 import { Page } from "../types";
 
@@ -9,6 +9,11 @@ interface Props {
 
 export default function Tutorial({ _page, closeTutorial }: Props) {
   const content = TUTORIAL_DATA.get(_page);
+
+  if (!content) return null;
+  useEffect(() => {
+    if (!content) return;
+  }, [content]);
 
   return (
     <div
