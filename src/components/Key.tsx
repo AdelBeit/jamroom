@@ -30,6 +30,7 @@ export default function Key({ _note, octave }: Props) {
   };
 
   const keyHandlerEnd = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
     e.currentTarget.classList.remove("pressed");
   };
 

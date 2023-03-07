@@ -31,6 +31,7 @@ export default function DrumPad({ _id, sample, config = false }: Props) {
   };
 
   const drumHandlerLeave = (e: React.TouchEvent | React.MouseEvent) => {
+    e.preventDefault();
     e.currentTarget.classList.remove("active");
   };
 

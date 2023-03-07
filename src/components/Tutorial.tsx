@@ -26,10 +26,12 @@ export default function Tutorial({ _page, closeTutorial }: Props) {
         closeTutorial();
       }}
       onTouchEnd={(e) => {
+        e.preventDefault();
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
       }}
       onMouseUp={(e) => {
+        e.preventDefault();
         e.stopPropagation();
         e.nativeEvent.stopImmediatePropagation();
       }}
