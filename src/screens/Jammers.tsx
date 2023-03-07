@@ -16,6 +16,7 @@ export default function Jammers() {
     const url = new URL(window.location.href);
     url.searchParams.set("roomID", roomID);
     let isMobile = window.matchMedia("(pointer:coarse)").matches;
+    if (!navigator.clipboard) return;
     if (!navigator.share || !isMobile) {
       //fallback
       navigator.clipboard
