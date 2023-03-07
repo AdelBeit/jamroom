@@ -43,7 +43,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     state.setUsers,
     state.setUserID,
   ]);
-  const setPage = usePage((state) => state.setPage);
+  const [_page, setPage] = usePage((state) => [state.page, state.setPage]);
   const [userID, setUserIDState] = useState<User["id"]>(generateName());
   const [samples, setSamples] = useState(defaultState.samples as Sample[]);
   const [samplesLoaded, setSamplesLoaded] = useState(false);
@@ -97,7 +97,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
         };
       });
       setUsers(newUsers);
-      setPage("_Jammers");
+      if (["_Loading", "_Lobby"].includes(_page)) setPage("_Jammers");
     });
 
     return socketCleanup;
