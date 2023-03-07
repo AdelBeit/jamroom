@@ -28,8 +28,7 @@ TUTORIAL_DATA.set("_Samples", [
 ]);
 
 TUTORIAL_DATA.set("_Keyboard", [
-  "Swipe up with 3 fingers to open menu.",
-  "Swipe down with 3 fingers to close menu.",
+  "Swipe left and right with 3 fingers to +/- octaves.",
 ]);
 
 export default TUTORIAL_DATA;
