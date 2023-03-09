@@ -10,10 +10,11 @@ interface Props {
 export default function Tutorial({ _page, closeTutorial }: Props) {
   const content = TUTORIAL_DATA.get(_page);
 
-  if (!content) return null;
   useEffect(() => {
     if (!content) return;
   }, [content]);
+
+  if (!content) return null;
 
   return (
     <div

@@ -13,7 +13,6 @@ import { Loading } from "../src/screens/Loading";
 
 /**
  * optional:
- * TODO: custom scrollbar for bar lists (jammers, samples)
  * TODO: change volume slider to be the whole info bar
  * TODO: animate lobby button transitions
  * TODO: write all sample paths into a js object and don't redo it once it's done, will have to find a way to diff the folders
