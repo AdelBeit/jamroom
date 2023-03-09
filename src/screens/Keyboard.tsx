@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Key from "../components/Key";
 import { Note } from "../types";
 import { useSound } from "../hooks/useSound";
@@ -25,7 +25,6 @@ export default function Keyboard() {
     "B",
     "N",
   ] as Note[];
-  const [notify, setNotify] = useState(false);
 
   return (
     <div
@@ -34,17 +33,18 @@ export default function Keyboard() {
       {...{
         onTouchStart: swipe.onTouchStart.bind(swipe),
         onTouchMove: swipe.onTouchMove.bind(swipe),
-        onTouchEnd: swipe.onTouchEnd.bind(swipe, octaveDown, octaveUp),
+        onTouchEnd: swipe.onTouchEnd.bind(swipe, octaveUp, octaveDown),
       }}
     >
       {NOTES.map((_note) => (
         <Key key={_note + octave} {...{ _note, octave }} />
       ))}
+
       <style jsx>
         {`
           ._page {
             width: 100%;
-            height: 33svw;
+            height: 30svw;
 
             display: grid;
             grid-template-columns: repeat(8, 1fr);

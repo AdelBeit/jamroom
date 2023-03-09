@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Icon from "../components/Icon";
 import JammerBar from "../components/JammerBar";
+import { usePage } from "../hooks/usePage";
 import { useUsers } from "../hooks/useUsers";
+import { swipe } from "../utils/swipe";
 
 export default function Jammers() {
   const [currentUser, users, setVolume, roomID] = useUsers((state) => [
@@ -10,13 +12,14 @@ export default function Jammers() {
     state.setVolume,
     state.roomID,
   ]);
+  const setPage = usePage((state) => state.setPage);
+
   const [notify, setNotify] = useState(false);
 
   const shareHandler = () => {
     const url = new URL(window.location.href);
     url.searchParams.set("roomID", roomID);
     let isMobile = window.matchMedia("(pointer:coarse)").matches;
-    if (!navigator.clipboard) return;
     if (!navigator.share || !isMobile) {
       //fallback
       navigator.clipboard
@@ -37,7 +40,19 @@ export default function Jammers() {
   };
 
   return (
-    <div id="_Jammers" className="_page">
+    <div
+      id="_Jammers"
+      className="_page"
+      {...{
+        onTouchStart: swipe.onTouchStart.bind(swipe),
+        onTouchMove: swipe.onTouchMove.bind(swipe),
+        onTouchEnd: swipe.onTouchEnd.bind(
+          swipe,
+          () => setPage("_Drumkit"),
+          () => setPage("_Keyboard")
+        ),
+      }}
+    >
       <div className="_jammers HIDE_SCROLLBAR">
         {Object.keys(users).map((userID) => (
           <JammerBar

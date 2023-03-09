@@ -13,9 +13,7 @@ TUTORIAL_DATA.set("_Jammers", [
 ]);
 
 TUTORIAL_DATA.set("_Drumkit", [
-  "Swipe down with 3 fingers to enter sample configuration mode.",
-  "Swip up with 3 fingers to open the menu.",
-  "Swipe down with 3 fingers to close the menu.",
+  "Tap on the menu to access configuration mode, allowing you to change samples attached to each drumpad.",
 ]);
 
 TUTORIAL_DATA.set("_Config", [
@@ -24,7 +22,6 @@ TUTORIAL_DATA.set("_Config", [
 
 TUTORIAL_DATA.set("_Samples", [
   "Tap on any sample to preview and set it as the current drumpad sample.",
-  "Swipe down with 3 fingers to close the configuration menu.",
 ]);
 
 TUTORIAL_DATA.set("_Keyboard", [

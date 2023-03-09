@@ -11,9 +11,8 @@ import { preventDefault } from "../utils/preventDefault";
 type LobbyState = "initial" | "join" | "create";
 
 export function Lobby({ title }: LoadingProps) {
-  const [userID, roomID, setRoomID] = useUsers((state) => [
+  const [userID, setRoomID] = useUsers((state) => [
     state.userID,
-    state.roomID,
     state.setRoomID,
   ]);
   const setPage = usePage((state) => state.setPage);
@@ -104,11 +103,6 @@ export function Lobby({ title }: LoadingProps) {
       </div>
     );
   }
-
-  // useEffect(() => {
-  //   const roomIDInput = document.querySelector("#roomID") as HTMLInputElement;
-  //   setRoomID(roomIDInput.value || "");
-  // }, [roomID]);
 
   return (
     <div id="_Lobby" className="_page icon_frame">

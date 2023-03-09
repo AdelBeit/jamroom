@@ -12,9 +12,6 @@ import { usePage } from "../src/hooks/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
- * TODO: finish <toast />
- * TODO: add gestures
- *
  * optional:
  * TODO: custom scrollbar for bar lists (jammers, samples)
  * TODO: change volume slider to be the whole info bar
