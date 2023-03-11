@@ -1,6 +1,6 @@
 {
   "name": "Jamroom",
-  "short_name": "JAM",
+  "short_name": "jam",
   "lang": "en-US",
   "start_url": "./",
   "display": "standalone",
