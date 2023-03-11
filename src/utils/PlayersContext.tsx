@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import {
   createContext,
   MutableRefObject,
@@ -10,115 +9,109 @@ import {
 } from "react";
 import { Players } from "tone";
 import * as Tone from "tone";
-import { Button } from "../components/Button";
-import { samples, UserStateStore } from "../types";
 import { connectSocket, socket, socketCleanup } from "./socketClient";
-import {
-  useScreenStore,
-  useSoundStore,
-  useUserStore,
-  useVolumeStore,
-} from "./stores";
-import { generateName, playWithVolume, flattenSamples } from "./utils";
+import { flattenSamples } from "./flattenSamples";
+import { generateName } from "./generateName";
+import playSample from "./playSample";
+import { useUsers } from "../hooks/useUsers";
+import { Sample } from "../sample";
+import { User } from "../types";
+import { usePage } from "../hooks/usePage";
 
-interface PlayersContext {
+export interface PlayersContext {
   players: Players | null;
-  samples: samples;
-  setSamples(samples: samples): void;
+  samples: Sample[] | [];
+  setSamples(samples: Sample[]): void;
+  playSample(sample: Sample, userID?: User["id"]): void;
 }
 
 const defaultState = {
   players: null,
-  samples: {},
-  setSamples: () => {},
+  samples: [],
+  setSamples: (samples: Sample[]) => {},
+  playSample: (sample: Sample, userID?: User["id"]) => {},
 };
 
 const PlayersContext = createContext<PlayersContext>(defaultState);
 export const usePlayers = () => useContext(PlayersContext);
 
-// CHECK: make sound play on touch start not touch end
-// TODO: drag events cancel sample play
-
 export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
   const players: MutableRefObject<null | Players> = useRef(null);
-  const screen = useScreenStore((state) => state.selectedScreen);
-  const [setRoomID, setUsers, setUserID] = useUserStore((state) => [
+  const [setRoomID, roomID, setUsers, setUserID] = useUsers((state) => [
     state.setRoomID,
+    state.roomID,
     state.setUsers,
     state.setUserID,
   ]);
-  const setVolumes = useVolumeStore((state) => state.setVolumes);
-  const router = useRouter();
-  const { roomID } = router.query;
-  const userID = generateName();
-  // @ts-ignore
-  const [samples, setSamples] = useState(defaultState.samples);
-  const setDrumSound = useSoundStore((state) => state.setDrumSound);
-
-  const handler = async () => {
-    await Tone.start();
-    useScreenStore.getState().setScreen("keys");
-  };
+  const [_page, setPage] = usePage((state) => [state.page, state.setPage]);
+  const [userID, setUserIDState] = useState<User["id"]>(generateName());
+  const [samples, setSamples] = useState(defaultState.samples as Sample[]);
+  const [samplesLoaded, setSamplesLoaded] = useState(false);
 
   const loadSamples = (samples) => {
     const allSamples = flattenSamples(samples);
-    setDrumSound("tom", Object.keys(samples["toms"])[0]);
-    setDrumSound("snare", Object.keys(samples["snares"])[0]);
-    setDrumSound("kick", Object.keys(samples["kicks"])[0]);
-    setDrumSound("hi_hat", Object.keys(samples["hi_hats"])[0]);
-    setDrumSound("closed_hat", Object.keys(samples["closed_hats"])[0]);
-    players.current = new Players(allSamples, () => {}).toDestination();
+    players.current = new Players(allSamples, () => {
+      setSamplesLoaded(true);
+    }).toDestination();
   };
 
   useEffect(() => {
-    // create room if it doesn't exist
-    if (!roomID && router.isReady) {
-      router.replace(`/home?roomID=${Date.now()}`);
-    }
-
-    if (!roomID) return;
-
+    if (samples.length === 0) return;
+    setUserID(userID);
     loadSamples(samples);
-  }, [roomID, samples]);
+  }, [samples]);
 
   useEffect(() => {
-    if (!players.current) return;
+    if (!samplesLoaded) return;
+    const roomID = new URL(window.location.href).searchParams.get("roomID");
+    if (!roomID) {
+      setPage("_Lobby");
+      return;
+    }
+    setRoomID(roomID);
+  }, [samplesLoaded]);
+
+  useEffect(() => {
+    if (!roomID) return;
+
+    Tone.start();
 
     connectSocket(userID, roomID);
 
     socket.on("connect", () => {
-      setRoomID(roomID as UserStateStore["roomID"]);
-      setUserID(userID);
+      console.log("connection established.");
     });
 
-    socket.on("sound-played", (userID, clipName) => {
-      const player = players!.current!.player(clipName);
-      const volume = useVolumeStore.getState().userVolumes[userID] ?? -10;
-      playWithVolume(player, volume);
+    socket.on("sound-played", (userID, sample) => {
+      playSample.bind(null, players!.current!)(sample, userID);
     });
 
     socket.on("users-update", (users, msg) => {
-      setUsers(users);
-      setVolumes(users);
+      const newUsers = {};
+      Object.keys(users).map((id) => {
+        const [userID, instrument] = users[id];
+
+        newUsers[userID] = {
+          instrument: instrument,
+          volume: -15,
+        };
+      });
+      setUsers(newUsers);
+      if (["_Loading", "_Lobby"].includes(_page)) setPage("_Jammers");
     });
 
     return socketCleanup;
-  }, [players.current]);
+  }, [roomID]);
 
   return (
     <PlayersContext.Provider
       value={{
-        players: players.current,
-        samples: samples,
-        setSamples: setSamples,
+        ...{ samples, setSamples },
+        playSample: playSample.bind(null, players.current),
+        players: players.current, // TODO: eventually remove this
       }}
     >
       {props.children}
-      {screen == "start" && (
-        <div className={"page_container"}>
-          <Button variant={"start"} handler={handler}></Button>
-        </div>
-      )}
     </PlayersContext.Provider>
   );
 };

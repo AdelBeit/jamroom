@@ -6,6 +6,8 @@ import React, {
 } from "react";
 import { Players } from "tone";
 import { GetState, SetState, State, StateCreator, StoreApi } from "zustand";
+import { Icon } from "./icon";
+import { Props as IconProps } from "./components/Icon";
 
 export type Octave = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type Note =
@@ -20,7 +22,8 @@ export type Note =
   | "Gs"
   | "A"
   | "As"
-  | "B";
+  | "B"
+  | "N";
 
 export type classNames = String | String[];
 
@@ -36,11 +39,9 @@ export interface KeyProps {
 
 export interface KeyboardTemplateProps extends Omit<KeyProps, "note"> {}
 
-export type Instrument = "drums" | "keys";
+export type Instrument = "drumkit" | "keyboard";
 
 export type Screen = Instrument | "start";
-
-export type DropDown = "drum_selector" | "users" | "soundclips";
 
 export type Actions =
   | "back"
@@ -57,12 +58,6 @@ export type ButtonStyle = "raised" | "inset" | "plain";
 
 export type ButtonVariant = Actions | Exclude<Screen, "start"> | DropDown;
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: ButtonVariant;
-  handler?(): void;
-}
-
 export type DrumType = "kick" | "tom" | "snare" | "hi_hat" | "closed_hat";
 
 export type SoundClipType = DrumType | "loop";
@@ -75,48 +70,25 @@ export interface ToolBarProps {
   variant: Screen | "dropdown";
 }
 
-export interface ScreenStateStore {
-  selectedScreen: Screen;
-  selectedDropDown: DropDown | "none";
-  selectedTheme: Theme;
-  setScreen: (selectedScreen: Screen) => void;
-  setDropDown: (selectedDropDown: DropDown | "none") => void;
-  setTheme: (selectedTheme: Theme) => void;
-}
-
-export type samples = { [name: string]: string };
-export interface SoundStateStore {
-  currentOctave: Octave;
-  drumEditMode: boolean;
-  selectedDrumToEdit: DrumType;
-  drumSounds: {
-    tom: string;
-    snare: string;
-    kick: string;
-    hi_hat: string;
-    closed_hat: string;
-  };
-  setDrumSound(drum: DrumType, soundClip: string): void;
-  setDrumToEdit(drum: DrumType): void;
-  toggleDrumEditMode(): void;
-}
-
 export type User = {
   id: string;
   instrument: Instrument;
 };
 
-export interface UserStateStore {
-  roomID: string;
-  userID: User["id"];
-  users: { [userID: User["id"]]: [User["id"], User["instrument"]] };
-  setRoomID(roomID: UserStateStore["roomID"]): void;
-  setUsers(users: { [id: User["id"]]: [User["id"], User["instrument"]] }): void;
-  setUserID(userID: User["id"]): void;
-}
+// NEW
 
-export interface VolumeStateStore {
-  userVolumes: { [userID: User["id"]]: number };
-  changeVolume(userID: User["id"], volume: number): void;
-  setVolumes(users: UserStateStore["users"]): void;
+export type Page =
+  | "_Lobby"
+  | "_Jammers"
+  | "_Drumkit"
+  | "_Keyboard"
+  | "_Samples"
+  | "_Loading"
+  | "_Config";
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    IconProps {
+  handler: (e: React.MouseEvent | React.TouchEvent) => void;
+  text: string;
 }

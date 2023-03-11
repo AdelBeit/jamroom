@@ -2,12 +2,12 @@
   "name": "Jamroom",
   "short_name": "jam",
   "lang": "en-US",
-  "start_url": "./pwa-app-icons_no_border",
-  "display": "fullscreen",
+  "start_url": "./",
+  "display": "standalone",
   "orientation": "landscape-primary",
-  "theme_color": "#EBF4FF",
+  "theme_color": "#ffb000",
   "scope": "./",
-  "background_color": "#EBF4FF",
+  "background_color": "#282828",
   "icons": [
     {
       "src": "app_icons/icon-72x72.png",

@@ -20,7 +20,6 @@
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1",
     "tone": "^14.7.77",
-    "use-draggable-scroll": "^0.1.0",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {

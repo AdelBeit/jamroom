@@ -1,0 +1,18 @@
+export type Icon =
+  | "add"
+  | "back"
+  | "close"
+  | "config"
+  | "confirm"
+  | "drumkit"
+  | "enter"
+  | "jammers"
+  | "jammer"
+  | "keyboard"
+  | "keyboard#thin"
+  | "leave"
+  | "menu"
+  | "tutorial"
+  | "volume#full"
+  | "volume#partial"
+  | "volume#mute";
