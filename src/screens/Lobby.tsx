@@ -16,7 +16,7 @@ export function Lobby({ title }: LoadingProps) {
     state.setRoomID,
   ]);
   const setPage = usePage((state) => state.setPage);
-  const roomList = ["12", "48293", "128312"];
+  const roomList = ["1", "2", "3", "4", "5", "6"];
   const [lobbyState, setLobbyState] = useState<LobbyState>("initial");
   const [roomIDInput, setRoomIDInput] = useState<string>("");
 

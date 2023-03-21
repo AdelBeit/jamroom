@@ -12,6 +12,26 @@ import { usePage } from "../src/hooks/usePage";
 import { Loading } from "../src/screens/Loading";
 
 /**
+ * TODO: join room needs to pull from socket
+ *
+ * 
+ * release notes
+ * 
+ * 1. Improved accessibility by using a monochrome and high contrast theme
+2. Optimized keyboard layout for small screens
+3. Streamlined SVG icon usage and pulled all icons from the same source, resulting in better performance and consistency
+4. Reworked layout and user journeys to improve user experience
+5. New tutorial boxes for first-time users to highlight features
+6. New features such as swipe gesture controls and join/create room
+7. New real-time visual indicators for who is playing sound
+8. Visual bug fixes
+9. Introduction of menu feature to help navigate through the app
+10. Improved leave room functionality 
+11. Streamlined drum pads and pad sample configuration for better user experience
+12. Codebase now follows atomic design principles to improve consistency and maintainability.
+added loading screen
+
+ *
  * optional:
  * TODO: change volume slider to be the whole info bar
  * TODO: animate lobby button transitions
