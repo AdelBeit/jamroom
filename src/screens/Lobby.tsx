@@ -38,19 +38,16 @@ export function Lobby({ title }: LoadingProps) {
           handler={createRoomHandler}
           _icon="add"
           text="Create Random Room"
-          useClick
         />
         <BorderedTextButton
           handler={() => joinRoomHandler("1")}
           _icon="enter"
           text="Join Room #1"
-          useClick
         />
         <BorderedTextButton
           handler={() => joinRoomHandler("2")}
           _icon="enter"
           text="Join Room #2"
-          useClick
         />
       </div>
       <style jsx>{`
