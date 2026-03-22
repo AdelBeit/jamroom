@@ -1,6 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import StatusBar from "./StatusBar";
 import Tutorial from "./Tutorial";
+import TUTORIAL_DATA from "../../public/tutorial.data";
 import { Page } from "../types";
 import { usePage } from "../hooks/usePage";
 import { useUsers } from "../hooks/useUsers";
@@ -29,8 +30,9 @@ export default function PageFrame({ _page, children }: Props) {
   const [visited, setVisited] = useState(true);
   const onLoadingScreen = _page === "_Loading";
   const isLobby = _page === "_Lobby";
+  const hasTutorialContent = TUTORIAL_DATA.has(_page);
   const shouldShowTutorial =
-    !visited && !onLoadingScreen && (!isLobby || isDesktop);
+    hasTutorialContent && !visited && !onLoadingScreen && (!isLobby || isDesktop);
 
   useEffect(() => {
     if (disableTutorialCache) {
