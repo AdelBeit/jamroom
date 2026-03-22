@@ -66,8 +66,9 @@ export default function JammersModal() {
       </button>
       <style jsx>{`
         .jammers_box {
-          width: min(680px, 95%);
-          max-height: 82vh;
+          width: min(900px, 92vw);
+          max-height: 85vh;
+          min-height: 360px;
           display: flex;
           flex-direction: column;
           gap: 10px;
@@ -89,6 +90,7 @@ export default function JammersModal() {
             width: min(320px, 85%);
             max-height: 75vh;
             padding: 12px;
+            min-height: auto;
           }
         }
 

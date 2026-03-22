@@ -58,7 +58,7 @@ export function Lobby({ title }: LoadingProps) {
         <BorderedTextButton
           handler={() => joinRoomHandler("1")}
           _icon="enter"
-          text="Join Room #1"
+          text="Quick Join Room #1"
         />
         <div className="join_custom">
           <div className="join_input_box mold">

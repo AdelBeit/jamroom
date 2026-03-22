@@ -1,21 +1,21 @@
 export const generateName = () => {
   const adjectives = [
     "tidy",
-    "glistening",
-    "ubiquitous",
+    "bright",
+    "common",
     "rustic",
-    "nutritious",
-    "tangible",
-    "competent",
+    "hearty",
+    "earthy",
+    "skilled",
     "dizzy",
-    "organic",
+    "nature",
     "tall",
-    "upstanding",
+    "honest",
     "chief",
-    "nebulous",
+    "cloudy",
     "quaint",
-    "loquacious",
-    "nervous",
+    "chatty",
+    "jitter",
   ];
   const nouns = [
     "smile",
@@ -25,10 +25,10 @@ export const generateName = () => {
     "yam",
     "llama",
     "egg",
-    "chandellier",
+    "candle",
     "fish",
     "jello",
-    "cabbage",
+    "veggie",
     "circle",
     "square",
     "shelf",
@@ -38,6 +38,6 @@ export const generateName = () => {
   let adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   noun = noun[0].toUpperCase() + noun.slice(1);
   adjective = adjective[0].toUpperCase() + adjective.slice(1);
-  const number = Math.floor(1000 + Math.random() * 9000);
+  const number = Math.floor(10 + Math.random() * 90);
   return adjective + noun + "#" + number;
 };
