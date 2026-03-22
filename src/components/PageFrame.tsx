@@ -25,15 +25,23 @@ export default function PageFrame({ _page, children }: Props) {
   );
   const { openModal, closeModal } = useModal();
   const [isMobile, setIsMobile] = useState(true);
+  const [disableTutorialCache, setDisableTutorialCache] = useState(false);
   const [visited, setVisited] = useState(true);
   const onLoadingScreen = _page === "_Loading";
   const onDesktopLoadingScreen = onLoadingScreen && !isMobile;
 
   useEffect(() => {
+    if (disableTutorialCache) {
+      setVisited(false);
+      return;
+    }
     setVisited(!!localStorage.getItem("visited_" + _page));
-  }, [_page]);
+  }, [_page, disableTutorialCache]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setDisableTutorialCache(params.get("tutorials") === "always");
+
     const width = window.innerWidth;
     const height = window.innerHeight;
     let isMobile = width <= 767;
@@ -78,7 +86,9 @@ export default function PageFrame({ _page, children }: Props) {
           {...{ _page }}
           closeTutorial={() => {
             setVisited(true);
-            localStorage.setItem("visited_" + _page, new Date().toString());
+            if (!disableTutorialCache) {
+              localStorage.setItem("visited_" + _page, new Date().toString());
+            }
           }}
         />
       )}
