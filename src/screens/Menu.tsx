@@ -33,7 +33,6 @@ export default function Menu({ _page }: Props) {
           _icon="close"
           text="Close"
           className="menu-button"
-          useClick
           iconFirst
           handler={handleCloseMenu}
         />
@@ -42,7 +41,6 @@ export default function Menu({ _page }: Props) {
           text="Keyboard"
           active={_page === "_Keyboard"}
           className="menu-button"
-          useClick
           iconFirst
           handler={(e) => {
             handleCloseMenu(e);
@@ -53,7 +51,6 @@ export default function Menu({ _page }: Props) {
           _icon={isDrumkitPage ? "config" : "drumkit"}
           text={isDrumkitPage ? "Config Pads" : "Drumkit"}
           className="menu-button"
-          useClick
           iconFirst
           handler={(e) => {
             handleCloseMenu(e);
@@ -65,7 +62,6 @@ export default function Menu({ _page }: Props) {
           text="Jammers"
           active={_page === "_Jammers"}
           className="menu-button"
-          useClick
           iconFirst
           handler={(e) => {
             handleCloseMenu(e);
@@ -76,7 +72,6 @@ export default function Menu({ _page }: Props) {
           _icon="leave"
           text="Leave Room"
           className="menu-button"
-          useClick
           iconFirst
           handler={() => {
             window.location.href = window.location.origin;
