@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import BorderlessTextButton from "../components/BorderlessTextButton";
+import ReactDOM from "react-dom";
+import BorderedTextButton from "../components/BorderedTextButton";
 import { Page } from "../types";
 import { usePage } from "../hooks/usePage";
 import { preventDefault } from "../utils/preventDefault";
@@ -18,17 +19,20 @@ export default function Menu({ _page }: Props) {
   const isDrumkitPage = _page === "_Drumkit";
 
   const menuOpen = usePage((state) => state.menuOpen);
-  const tDelay = 350;
+  const tDelay = 50;
 
   useEffect(() => {
     if (menuOpen) {
       const menuContainer = document.querySelector(
         "#_menu ._content"
       ) as HTMLDivElement;
-      const timeout = setTimeout(
-        () => (menuContainer.style.transform = "translateY(5%)"),
-        10
-      );
+      const underlay = document.querySelector(
+        "#_menu .dark_underlay"
+      ) as HTMLDivElement;
+      const timeout = setTimeout(() => {
+        menuContainer.style.opacity = "1";
+        underlay.style.opacity = "1";
+      }, 10);
       return () => clearTimeout(timeout);
     }
   }, [menuOpen]);
@@ -41,7 +45,11 @@ export default function Menu({ _page }: Props) {
       const menuContainer = document.querySelector(
         "#_menu ._content"
       ) as HTMLDivElement;
-      menuContainer.style.transform = "translateY(110%)";
+      const underlay = document.querySelector(
+        "#_menu .dark_underlay"
+      ) as HTMLDivElement;
+      menuContainer.style.opacity = "0";
+      underlay.style.opacity = "0";
       const timeout = setTimeout(() => {
         container.style.display = "none";
         toggleMenu();
@@ -50,101 +58,130 @@ export default function Menu({ _page }: Props) {
     }
   };
 
-  return (
-    <div id="_menu" className={`${_page} _container absolute`}>
+  if (typeof window === "undefined") return null;
+
+  return ReactDOM.createPortal(
+    <div id="_menu" className={`${_page} _container`}>
       <div
-        className="dark_underlay absolute faded"
+        className="dark_underlay absolute faded backdrop-blur"
         onMouseDown={handleCloseMenu}
         onTouchStart={handleCloseMenu}
         onTouchEnd={preventDefault}
         onMouseUp={preventDefault}
       ></div>
       <div className="_content">
-        <div className="top">
-          <BorderlessTextButton
-            _icon="close"
-            text="Close"
-            handler={handleCloseMenu}
-          />
-          <BorderlessTextButton
-            _icon="jammers"
-            text="Jammers"
-            active={_page === "_Jammers"}
-            handler={(e) => {
-              handleCloseMenu(e);
-              setPage("_Jammers");
-            }}
-          />
-          <BorderlessTextButton
-            _icon="leave"
-            text="Leave Room"
-            handler={(e) => {
-              window.location.href = window.location.origin;
-            }}
-          />
-        </div>
-        <div className="bottom">
-          <BorderlessTextButton
-            _icon={isConfigPage ? "config" : "drumkit"}
-            text={isDrumkitPage ? "Config Pads" : "Drumkit"}
-            handler={(e) => {
-              handleCloseMenu(e);
-              setPage(isDrumkitPage ? "_Config" : "_Drumkit");
-            }}
-          />
-          <BorderlessTextButton
-            _icon="keyboard"
-            text="Keyboard"
-            active={_page === "_Keyboard"}
-            handler={(e) => {
-              handleCloseMenu(e);
-              setPage("_Keyboard");
-            }}
-          />
-        </div>
+        <BorderedTextButton
+          _icon="close"
+          text="Close"
+          className="menu-button"
+          useClick
+          iconFirst
+          handler={handleCloseMenu}
+        />
+        <BorderedTextButton
+          _icon="keyboard"
+          text="Keyboard"
+          active={_page === "_Keyboard"}
+          className="menu-button"
+          useClick
+          iconFirst
+          handler={(e) => {
+            handleCloseMenu(e);
+            setPage("_Keyboard");
+          }}
+        />
+        <BorderedTextButton
+          _icon={isDrumkitPage ? "config" : "drumkit"}
+          text={isDrumkitPage ? "Config Pads" : "Drumkit"}
+          className="menu-button"
+          useClick
+          iconFirst
+          handler={(e) => {
+            handleCloseMenu(e);
+            setPage(isDrumkitPage ? "_Config" : "_Drumkit");
+          }}
+        />
+        <BorderedTextButton
+          _icon="jammers"
+          text="Jammers"
+          active={_page === "_Jammers"}
+          className="menu-button"
+          useClick
+          iconFirst
+          handler={(e) => {
+            handleCloseMenu(e);
+            setPage("_Jammers");
+          }}
+        />
+        <BorderedTextButton
+          _icon="leave"
+          text="Leave Room"
+          className="menu-button"
+          useClick
+          iconFirst
+          handler={() => {
+            window.location.href = window.location.origin;
+          }}
+        />
       </div>
       <style jsx>{`
         ._container {
+          position: fixed;
           width: 100%;
           height: 100%;
           inset: 0;
           display: flex;
           overflow-y: hidden;
+          align-items: center;
+          justify-content: center;
+          z-index: 10000;
         }
 
         .dark_underlay {
           width: 100%;
           height: 100%;
-          background-color: #000;
+          background-color: rgba(0, 0, 0, 0.4);
           z-index: 10;
+          opacity: 0;
+          transition: opacity ${tDelay / 1000}s;
         }
 
         ._content {
-          width: 100%;
-          height: clamp(160px, 40%, 200px);
-          align-self: flex-end;
+          width: 360px;
           display: flex;
           flex-direction: column;
-          justify-content: flex-start;
+          justify-content: center;
           align-items: center;
-          gap: 40px;
-          padding-top: 40px;
+          gap: 14px;
+          padding: 16px 16px;
           border: solid var(--amber) 3px;
           border-radius: 8px;
           background-color: var(--black);
           z-index: 11;
-          transition: transform ${tDelay / 1000}s;
-          transform: translateY(110%);
+          opacity: 0;
+          transition: opacity ${tDelay / 1000}s;
         }
 
-        .top,
-        .bottom {
-          display: flex;
-          justify-content: space-between;
-          width: fit-content;
-          gap: 100px;
+        @media screen and (max-height: 500px) {
+          ._content {
+            width: min(224px, 60%);
+          }
+        }
+
+        ._content :global(.menu-button) {
+          width: 100%;
+          justify-content: flex-start;
+          padding: clamp(6px, 1.6vw, 9px) clamp(8px, 2.2vw, 12px);
+          border: 2px solid var(--amber);
+          border-radius: 8px;
+          background-color: #1f1f1f;
+        }
+
+        ._content :global(.menu-button .medium) {
+          font-size: clamp(12px, 2.2vw, 18px);
         }
       `}</style>
-    </div>
+    </div>,
+    document.body
   );
 }

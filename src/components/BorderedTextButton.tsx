@@ -7,6 +7,8 @@ import { preventDefault } from "../utils/preventDefault";
 export interface Props extends Omit<ButtonProps, "size"> {
   active?: boolean;
   className?: string;
+  useClick?: boolean;
+  iconFirst?: boolean;
 }
 
 export default function BorderedTextButton({
@@ -15,20 +17,36 @@ export default function BorderedTextButton({
   handler,
   active = false,
   className,
+  useClick = false,
+  iconFirst = false,
 }: Props) {
   return (
     <button
       className={cs(text, className, active && "faded")}
-      onMouseDown={handler}
-      onTouchStart={(e) => {
-        e.preventDefault();
-        handler(e);
-      }}
-      onTouchEnd={preventDefault}
-      onMouseUp={preventDefault}
+      onMouseDown={useClick ? undefined : handler}
+      onTouchStart={
+        useClick
+          ? undefined
+          : (e) => {
+              e.preventDefault();
+              handler(e);
+            }
+      }
+      onTouchEnd={useClick ? undefined : preventDefault}
+      onMouseUp={useClick ? undefined : preventDefault}
+      onClick={useClick ? handler : undefined}
     >
-      <span className="medium">{text}</span>
-      <Icon {...{ _icon }} size={20} />
+      {iconFirst ? (
+        <>
+          <Icon {...{ _icon }} size={20} />
+          <span className="medium">{text}</span>
+        </>
+      ) : (
+        <>
+          <span className="medium">{text}</span>
+          <Icon {...{ _icon }} size={20} />
+        </>
+      )}
       <style jsx>{`
         button {
           width: 100%;
