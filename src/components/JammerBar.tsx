@@ -55,7 +55,7 @@ export default function JammerBar({
 
           .jammer_info {
             height: 40px;
-            width: 180px;
+            width: 200px;
             flex: 0 0 auto;
             padding: 6px 10px;
             border: 2px solid var(--amber);
