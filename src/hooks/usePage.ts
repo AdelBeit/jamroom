@@ -7,6 +7,7 @@ export interface PageStateStore {
   setPage(page: Page): void;
   menuOpen: boolean;
   toggleMenu(): void;
+  closeMenu(): void;
   tutorialOpen: boolean;
   toggleTutorial(): void;
   jammersModalOpen: boolean;
@@ -20,6 +21,7 @@ export const usePage = create<PageStateStore>()(
     setPage: (page: Page) => set({ page }),
     menuOpen: false,
     toggleMenu: () => set((state) => ({ menuOpen: !state.menuOpen })),
+    closeMenu: () => set({ menuOpen: false }),
     tutorialOpen: false,
     toggleTutorial: () =>
       set((state) => ({ tutorialOpen: !state.tutorialOpen })),

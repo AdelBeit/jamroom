@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import JammerBar from "./JammerBar";
 import { useUsers } from "../hooks/useUsers";
 import { usePage } from "../hooks/usePage";
-import { preventDefault } from "../utils/preventDefault";
 import Icon from "./Icon";
 
 export default function JammersModal() {
@@ -13,45 +11,12 @@ export default function JammersModal() {
     state.setVolume,
     state.roomID,
   ]);
-  const closeJammersModal = usePage((state) => state.closeJammersModal);
   const jammersModalOpen = usePage((state) => state.jammersModalOpen);
   const [notify, setNotify] = useState(false);
-  const tDelay = 50;
-
   useEffect(() => {
-    if (jammersModalOpen) {
-      const modal = document.querySelector(
-        "#_jammers_modal ._content"
-      ) as HTMLDivElement;
-      const underlay = document.querySelector(
-        "#_jammers_modal .dark_underlay"
-      ) as HTMLDivElement;
-      const timeout = setTimeout(() => {
-        modal.style.opacity = "1";
-        underlay.style.opacity = "1";
-      }, 10);
-      return () => clearTimeout(timeout);
-    }
+    if (!jammersModalOpen) return;
+    // No local fade logic; handled by ModalProvider.
   }, [jammersModalOpen]);
-
-  const handleClose = (e: React.MouseEvent | React.TouchEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const modal = document.querySelector(
-      "#_jammers_modal ._content"
-    ) as HTMLDivElement;
-    const underlay = document.querySelector(
-      "#_jammers_modal .dark_underlay"
-    ) as HTMLDivElement;
-    modal.style.opacity = "0";
-    underlay.style.opacity = "0";
-    const timeout = setTimeout(() => {
-      closeJammersModal();
-      clearTimeout(timeout);
-    }, tDelay);
-  };
-
-  if (typeof window === "undefined") return null;
 
   const shareHandler = () => {
     const url = new URL(window.location.href);
@@ -75,63 +40,32 @@ export default function JammersModal() {
       .catch(console.error);
   };
 
-  return ReactDOM.createPortal(
-    <div id="_jammers_modal" className="_container">
-      <div
-        className="dark_underlay absolute faded backdrop-blur"
-        onClick={handleClose}
-        onTouchEnd={preventDefault}
-      ></div>
-      <div
-        className="_content HIDE_SCROLLBAR"
-        onMouseDown={(e) => e.stopPropagation()}
-        onTouchStart={(e) => e.stopPropagation()}
-      >
-        {Object.keys(users).map((userID) => (
-          <JammerBar
-            key={userID}
-            {...{ setVolume }}
-            userID={userID}
-            volume={users[userID].volume}
-            instrument={users[userID].instrument}
-            classes={userID === currentUser ? "active" : ""}
-          />
-        ))}
-        <button onClick={shareHandler} className={`add_jammer bar mold`}>
-          {notify ? (
-            <span
-              className="notification"
-              onAnimationEnd={() => setNotify(false)}
-            >
-              Join link copied to clipboard!
-            </span>
-          ) : (
-            <Icon _icon="add" size={25} />
-          )}
-        </button>
-      </div>
+  return (
+    <div id="_jammers_modal" className="jammers_box HIDE_SCROLLBAR">
+      {Object.keys(users).map((userID) => (
+        <JammerBar
+          key={userID}
+          {...{ setVolume }}
+          userID={userID}
+          volume={users[userID].volume}
+          instrument={users[userID].instrument}
+          classes={userID === currentUser ? "active" : ""}
+        />
+      ))}
+      <button onClick={shareHandler} className={`add_jammer bar mold`}>
+        {notify ? (
+          <span
+            className="notification"
+            onAnimationEnd={() => setNotify(false)}
+          >
+            Join link copied to clipboard!
+          </span>
+        ) : (
+          <Icon _icon="add" size={25} />
+        )}
+      </button>
       <style jsx>{`
-        ._container {
-          position: fixed;
-          width: 100%;
-          height: 100%;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 10001;
-        }
-
-        .dark_underlay {
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.4);
-          z-index: 10;
-          opacity: 0;
-          transition: opacity ${tDelay / 1000}s;
-        }
-
-        ._content {
+        .jammers_box {
           width: min(680px, 95%);
           max-height: 82vh;
           display: flex;
@@ -141,9 +75,6 @@ export default function JammersModal() {
           border: solid var(--amber) 3px;
           border-radius: 8px;
           background-color: var(--black);
-          z-index: 11;
-          opacity: 0;
-          transition: opacity ${tDelay / 1000}s;
           overflow: scroll;
         }
 
@@ -161,14 +92,13 @@ export default function JammersModal() {
         }
 
         @media screen and (max-height: 500px) {
-          ._content {
+          .jammers_box {
             width: min(320px, 85%);
             max-height: 75vh;
             padding: 12px;
           }
         }
       `}</style>
-    </div>,
-    document.body
+    </div>
   );
 }

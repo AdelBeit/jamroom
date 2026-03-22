@@ -6,6 +6,7 @@ import { usePage } from "../hooks/usePage";
 import { useUsers } from "../hooks/useUsers";
 import Menu from "../screens/Menu";
 import JammersModal from "./JammersModal";
+import { useModal } from "./ModalProvider";
 
 interface Props {
   _page: Page;
@@ -14,10 +15,15 @@ interface Props {
 
 export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
-  const [menuOpen, jammersModalOpen] = usePage((state) => [
-    state.menuOpen,
-    state.jammersModalOpen,
-  ]);
+  const [menuOpen, jammersModalOpen, closeMenu, closeJammersModal] = usePage(
+    (state) => [
+      state.menuOpen,
+      state.jammersModalOpen,
+      state.closeMenu,
+      state.closeJammersModal,
+    ]
+  );
+  const { openModal, closeModal } = useModal();
   const [isMobile, setIsMobile] = useState(true);
   const [visited, setVisited] = useState(true);
   const onLoadingScreen = _page === "_Loading";
@@ -35,6 +41,26 @@ export default function PageFrame({ _page, children }: Props) {
     setIsMobile(isMobile);
   }, []);
 
+  useEffect(() => {
+    if (jammersModalOpen) {
+      openModal(<JammersModal />, closeJammersModal);
+      return;
+    }
+    if (menuOpen) {
+      openModal(<Menu {...{ _page }} />, closeMenu);
+      return;
+    }
+    closeModal();
+  }, [
+    jammersModalOpen,
+    menuOpen,
+    _page,
+    openModal,
+    closeModal,
+    closeMenu,
+    closeJammersModal,
+  ]);
+
   return (
     <div id="_pageFrame" className="_container relative">
       <div className="_content HIDE_SCROLLBAR">{children}</div>
@@ -43,8 +69,9 @@ export default function PageFrame({ _page, children }: Props) {
         <StatusBar roomID={roomID} {...{ _page }} />
       )}
 
-      {menuOpen && <Menu {...{ _page }} />}
-      {jammersModalOpen && <JammersModal />}
+      {/*
+        Modal orchestration moved to the top-level useEffect.
+      */}
 
       {!visited && (!onLoadingScreen || onDesktopLoadingScreen) && (
         <Tutorial
