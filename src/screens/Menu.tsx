@@ -96,9 +96,9 @@ export default function Menu({ _page }: Props) {
           background-color: var(--black);
         }
 
-        @media screen and (max-height: 500px) {
-          ._content {
-            width: min(224px, 60%);
+        @media screen and (max-width: 950px) and (orientation: landscape) {
+          .menu_box {
+            width: 30vw;
           }
         }
 
