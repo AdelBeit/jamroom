@@ -11,6 +11,8 @@ RUN yarn
 FROM node:20.20.1-alpine AS builder
 WORKDIR /app
 COPY next.config.js tsconfig.json next-env.d.ts ./
+COPY --from=deps /app/package.json ./package.json
+COPY --from=deps /app/yarn.lock ./yarn.lock
 COPY public ./public
 COPY pages ./pages
 COPY src ./src
