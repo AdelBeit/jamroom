@@ -1,5 +1,9 @@
 import { Page } from "../src/types";
 
+export const KEYBOARD_TUTORIAL_MOBILE =
+  "Swipe left and right with 3 fingers to +/- octaves.";
+export const KEYBOARD_TUTORIAL_DESKTOP = "Use N/M keys to +/- octaves.";
+
 const TUTORIAL_DATA: Map<Page, string[]> = new Map();
 
 TUTORIAL_DATA.set("_Lobby", [
@@ -25,7 +29,7 @@ TUTORIAL_DATA.set("_Samples", [
 ]);
 
 TUTORIAL_DATA.set("_Keyboard", [
-  "Swipe left and right with 3 fingers to +/- octaves.",
+  KEYBOARD_TUTORIAL_MOBILE,
 ]);
 
 export default TUTORIAL_DATA;

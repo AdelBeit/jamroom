@@ -2,6 +2,10 @@ import React, { ReactNode, useEffect, useState } from "react";
 import StatusBar from "./StatusBar";
 import Tutorial from "./Tutorial";
 import TUTORIAL_DATA from "../../public/tutorial.data";
+import {
+  KEYBOARD_TUTORIAL_DESKTOP,
+  KEYBOARD_TUTORIAL_MOBILE,
+} from "../../public/tutorial.data";
 import { Page } from "../types";
 import { usePage } from "../hooks/usePage";
 import { useUsers } from "../hooks/useUsers";
@@ -30,7 +34,14 @@ export default function PageFrame({ _page, children }: Props) {
   const [visited, setVisited] = useState(true);
   const onLoadingScreen = _page === "_Loading";
   const isLobby = _page === "_Lobby";
-  const hasTutorialContent = TUTORIAL_DATA.has(_page);
+  const baseTutorialContent = TUTORIAL_DATA.get(_page);
+  const tutorialContent =
+    _page === "_Keyboard"
+      ? isDesktop
+        ? [KEYBOARD_TUTORIAL_DESKTOP]
+        : [KEYBOARD_TUTORIAL_MOBILE]
+      : baseTutorialContent;
+  const hasTutorialContent = !!tutorialContent && tutorialContent.length > 0;
   const shouldShowTutorial =
     hasTutorialContent && !visited && !onLoadingScreen && (!isLobby || isDesktop);
 
@@ -77,7 +88,11 @@ export default function PageFrame({ _page, children }: Props) {
     }
     if (shouldShowTutorial) {
       openModal(
-        <Tutorial _page={_page} closeTutorial={handleTutorialClose} />,
+        <Tutorial
+          _page={_page}
+          closeTutorial={handleTutorialClose}
+          contentOverride={tutorialContent}
+        />,
         handleTutorialRequestClose
       );
       return;
