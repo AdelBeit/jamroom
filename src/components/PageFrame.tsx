@@ -24,7 +24,6 @@ export default function PageFrame({ _page, children }: Props) {
     ]
   );
   const { openModal, closeModal } = useModal();
-  const [isMobile, setIsMobile] = useState(true);
   const [isDesktop, setIsDesktop] = useState(true);
   const [disableTutorialCache, setDisableTutorialCache] = useState(false);
   const [visited, setVisited] = useState(true);
@@ -49,11 +48,6 @@ export default function PageFrame({ _page, children }: Props) {
     const anyHoverCapable = window.matchMedia("(any-hover: hover)").matches;
     setIsDesktop((finePointer || anyFinePointer) && (hoverCapable || anyHoverCapable));
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    let isMobile = width <= 767;
-    if (height < width) isMobile = height <= 767;
-    setIsMobile(isMobile);
   }, []);
 
   useEffect(() => {
