@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Key from "../components/Key";
 import { Note } from "../types";
 import { useSound } from "../hooks/useSound";
@@ -25,6 +25,32 @@ export default function Keyboard() {
     "B",
     "N",
   ] as Note[];
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      const key = event.key.toLowerCase();
+      if (key === "n") {
+        octaveDown();
+        return;
+      }
+      if (key === "m") {
+        octaveUp();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [octaveUp, octaveDown]);
 
   return (
     <div

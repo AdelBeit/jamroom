@@ -5,10 +5,15 @@ import { Page } from "../types";
 interface Props {
   _page: Page;
   closeTutorial(): void;
+  contentOverride?: string[];
 }
 
-export default function Tutorial({ _page, closeTutorial }: Props) {
-  const content = TUTORIAL_DATA.get(_page);
+export default function Tutorial({
+  _page,
+  closeTutorial,
+  contentOverride,
+}: Props) {
+  const content = contentOverride ?? TUTORIAL_DATA.get(_page);
 
   useEffect(() => {
     if (!content) return;
