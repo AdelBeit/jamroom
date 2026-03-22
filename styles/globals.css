@@ -191,7 +191,6 @@ button {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--black);
     color: var(--amber);
     fill: var(--amber);
     stroke: var(--amber);
@@ -205,6 +204,24 @@ button {
 
   #rotate-notice p {
     margin: 0;
+  }
+
+  #rotate-notice .dark_underlay {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 10;
+    opacity: 0.6;
+  }
+
+  #rotate-notice .box {
+    align-self: center;
+    z-index: 11;
+    padding: 20px 24px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   #rotate-notice .rotate-row {
