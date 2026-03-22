@@ -6,6 +6,7 @@ import { preventDefault } from "../utils/preventDefault";
 
 export interface Props extends Omit<ButtonProps, "size"> {
   active?: boolean;
+  className?: string;
 }
 
 export default function BorderedTextButton({
@@ -13,10 +14,11 @@ export default function BorderedTextButton({
   text,
   handler,
   active = false,
+  className,
 }: Props) {
   return (
     <button
-      className={cs(text, active && "faded")}
+      className={cs(text, className, active && "faded")}
       onMouseDown={handler}
       onTouchStart={(e) => {
         e.preventDefault();
@@ -40,9 +42,10 @@ export default function BorderedTextButton({
           align-items: center;
           gap: 16px;
         }
-        button:hover {
+        button:hover, button:active {
           background-color: var(--amber);
           color: var(--black);
+          --content: var(--black);
         }
       `}</style>
     </button>
