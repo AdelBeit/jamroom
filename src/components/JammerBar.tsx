@@ -20,32 +20,57 @@ export default function JammerBar({
   classes = "",
 }: Props) {
   return (
-    <button className={`bar mold highlight ${classes}`}>
-      <div className="jammer">
-        <Icon
-          _icon={instrument === "keyboard" ? "keyboard#thin" : instrument}
-          size={20}
-        />
-        <span className="user_id">{userID}</span>
+    <div className={`jammer_row ${classes}`}>
+      <div className="jammer_info">
+        <div className="jammer">
+          <Icon
+            _icon={instrument === "keyboard" ? "keyboard#thin" : instrument}
+            size={20}
+          />
+          <span className="user_id">{userID}</span>
+        </div>
       </div>
-      <VolumeBar {...{ volume, setVolume: setVolume.bind(null, userID) }} />
+      <div className="jammer_volume">
+        <VolumeBar {...{ volume, setVolume: setVolume.bind(null, userID) }} />
+      </div>
       <style jsx>
         {`
-          .bar,
-          .jammer {
+          .jammer_row,
+          .jammer,
+          .jammer_info,
+          .jammer_volume {
             display: flex;
             align-items: center;
           }
 
-          .bar {
-            justify-content: space-between;
+          .jammer_row {
+            gap: 12px;
+            padding: 0;
+            background: transparent;
           }
 
           .jammer {
             gap: 12px;
           }
+
+          .jammer_info {
+            height: 40px;
+            flex: 0 0 auto;
+            padding: 6px 10px;
+            border: 2px solid var(--amber);
+            border-radius: 8px;
+            background-color: #1f1f1f;
+            color: var(--amber);
+            fill: var(--amber);
+            stroke: var(--amber);
+          }
+
+          .jammer_volume {
+            flex: 1;
+            height: 40px;
+          }
         `}
       </style>
-    </button>
+    </div>
   );
 }
