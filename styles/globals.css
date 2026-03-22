@@ -216,7 +216,7 @@ button {
     height: 100%;
     background-color: #000;
     z-index: 10;
-    opacity: 0.6;
+    opacity: 1;
   }
 
   #rotate-notice .box {
