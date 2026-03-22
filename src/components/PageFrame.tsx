@@ -29,6 +29,8 @@ export default function PageFrame({ _page, children }: Props) {
   const [visited, setVisited] = useState(true);
   const onLoadingScreen = _page === "_Loading";
   const isLobby = _page === "_Lobby";
+  const shouldShowTutorial =
+    !visited && !onLoadingScreen && (!isLobby || isDesktop);
 
   useEffect(() => {
     if (disableTutorialCache) {
@@ -50,6 +52,18 @@ export default function PageFrame({ _page, children }: Props) {
 
   }, []);
 
+  const handleTutorialRequestClose = () => {
+    setVisited(true);
+    if (!disableTutorialCache) {
+      localStorage.setItem("visited_" + _page, new Date().toString());
+    }
+  };
+
+  const handleTutorialClose = () => {
+    handleTutorialRequestClose();
+    closeModal();
+  };
+
   useEffect(() => {
     if (jammersModalOpen) {
       openModal(<JammersModal />, closeJammersModal);
@@ -57,6 +71,13 @@ export default function PageFrame({ _page, children }: Props) {
     }
     if (menuOpen) {
       openModal(<Menu {...{ _page }} />, closeMenu);
+      return;
+    }
+    if (shouldShowTutorial) {
+      openModal(
+        <Tutorial _page={_page} closeTutorial={handleTutorialClose} />,
+        handleTutorialRequestClose
+      );
       return;
     }
     closeModal();
@@ -68,6 +89,7 @@ export default function PageFrame({ _page, children }: Props) {
     closeModal,
     closeMenu,
     closeJammersModal,
+    shouldShowTutorial,
   ]);
 
   return (
@@ -81,18 +103,6 @@ export default function PageFrame({ _page, children }: Props) {
       {/*
         Modal orchestration moved to the top-level useEffect.
       */}
-
-      {!visited && !onLoadingScreen && (!isLobby || isDesktop) && (
-        <Tutorial
-          {...{ _page }}
-          closeTutorial={() => {
-            setVisited(true);
-            if (!disableTutorialCache) {
-              localStorage.setItem("visited_" + _page, new Date().toString());
-            }
-          }}
-        />
-      )}
 
       <style jsx>
         {`

@@ -19,30 +19,13 @@ export default function Tutorial({ _page, closeTutorial }: Props) {
   return (
     <div
       id="_tutorial"
-      className={`_container absolute`}
-      onMouseDown={(e) => {
+      className={`_container`}
+      onPointerDown={(e) => {
+        e.preventDefault();
         e.stopPropagation();
-        e.nativeEvent.stopImmediatePropagation();
         closeTutorial();
-      }}
-      onTouchStart={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        e.nativeEvent.stopImmediatePropagation();
-        closeTutorial();
-      }}
-      onTouchEnd={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        e.nativeEvent.stopImmediatePropagation();
-      }}
-      onMouseUp={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        e.nativeEvent.stopImmediatePropagation();
       }}
     >
-      <div className="dark_underlay faded absolute"></div>
       <div className="box mold">
         <ul>
           {content &&
@@ -51,12 +34,6 @@ export default function Tutorial({ _page, closeTutorial }: Props) {
         Tap/Click anywhere to dismiss.
       </div>
       <style jsx>{`
-        .dark_underlay {
-          width: 100%;
-          height: 100%;
-          background-color: #000;
-          z-index: 10;
-        }
         ._container {
           display: flex;
           flex-direction: column;
@@ -67,7 +44,7 @@ export default function Tutorial({ _page, closeTutorial }: Props) {
         }
         .box {
           align-self: center;
-          z-index: 11;
+          z-index: 1;
           padding: 20px 0;
           text-align: center;
         }
@@ -77,9 +54,6 @@ export default function Tutorial({ _page, closeTutorial }: Props) {
           padding: 0;
           padding-left: 25px;
           padding-right: 20px;
-        }
-        .dark_underlay {
-          opacity: 0.8;
         }
       `}</style>
     </div>
