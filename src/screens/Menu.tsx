@@ -29,54 +29,54 @@ export default function Menu({ _page }: Props) {
 
   return (
     <div id="_menu" className={`${_page} menu_box`}>
-        <BorderedTextButton
-          _icon="close"
-          text="Close"
-          className="menu-button"
-          iconFirst
-          handler={handleCloseMenu}
-        />
-        <BorderedTextButton
-          _icon="keyboard"
-          text="Keyboard"
-          active={_page === "_Keyboard"}
-          className="menu-button"
-          iconFirst
-          handler={(e) => {
-            handleCloseMenu(e);
-            setPage("_Keyboard");
-          }}
-        />
-        <BorderedTextButton
-          _icon={isDrumkitPage ? "config" : "drumkit"}
-          text={isDrumkitPage ? "Config Pads" : "Drumkit"}
-          className="menu-button"
-          iconFirst
-          handler={(e) => {
-            handleCloseMenu(e);
-            setPage(isDrumkitPage ? "_Config" : "_Drumkit");
-          }}
-        />
-        <BorderedTextButton
-          _icon="jammers"
-          text="Jammers"
-          active={_page === "_Jammers"}
-          className="menu-button"
-          iconFirst
-          handler={(e) => {
-            handleCloseMenu(e);
-            openJammersModal();
-          }}
-        />
-        <BorderedTextButton
-          _icon="leave"
-          text="Leave Room"
-          className="menu-button"
-          iconFirst
-          handler={() => {
-            window.location.href = window.location.origin;
-          }}
-        />
+      <BorderedTextButton
+        _icon="close"
+        text="Close"
+        className="menu-button"
+        iconFirst
+        handler={handleCloseMenu}
+      />
+      <BorderedTextButton
+        _icon="keyboard"
+        text="Keyboard"
+        active={_page === "_Keyboard"}
+        className="menu-button"
+        iconFirst
+        handler={(e) => {
+          handleCloseMenu(e);
+          setPage("_Keyboard");
+        }}
+      />
+      <BorderedTextButton
+        _icon={isDrumkitPage ? "config" : "drumkit"}
+        text={isDrumkitPage ? "Config Pads" : "Drumkit"}
+        className="menu-button"
+        iconFirst
+        handler={(e) => {
+          handleCloseMenu(e);
+          setPage(isDrumkitPage ? "_Config" : "_Drumkit");
+        }}
+      />
+      <BorderedTextButton
+        _icon="jammers"
+        text="Jammers"
+        active={_page === "_Jammers"}
+        className="menu-button"
+        iconFirst
+        handler={(e) => {
+          handleCloseMenu(e);
+          openJammersModal();
+        }}
+      />
+      <BorderedTextButton
+        _icon="leave"
+        text="Leave Room"
+        className="menu-button"
+        iconFirst
+        handler={() => {
+          window.location.href = window.location.origin;
+        }}
+      />
       <style jsx>{`
         .menu_box {
           width: 360px;
@@ -98,16 +98,14 @@ export default function Menu({ _page }: Props) {
         }
 
         .menu_box :global(.menu-button) {
-          width: 100%;
           justify-content: flex-start;
           padding: clamp(6px, 1.6vw, 9px) clamp(8px, 2.2vw, 12px);
-          border: 2px solid var(--amber);
-          border-radius: 8px;
           background-color: #1f1f1f;
         }
-
-        .menu_box :global(.menu-button .medium) {
-          font-size: clamp(12px, 2.2vw, 18px);
+        .menu_box :global(.menu-button:not(.faded):hover), .menu_box :global(.menu-button:not(.faded):active) {
+          background-color: var(--amber);
+          color: var(--black);
+          --content: var(--black);
         }
       `}</style>
     </div>
