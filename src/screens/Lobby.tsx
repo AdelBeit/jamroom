@@ -15,12 +15,12 @@ export function Lobby({ title }: LoadingProps) {
   const createRoomHandler = () => {
     const roomID = Math.floor(Math.random() * 1000) + 1;
     setRoomID(String(roomID));
-    setPage("_Jammers");
+    setPage("_InstrumentSelect");
   };
 
   const joinRoomHandler = (roomID: string) => {
     setRoomID(roomID);
-    setPage("_Jammers");
+    setPage("_InstrumentSelect");
   };
 
   return (
@@ -38,16 +38,19 @@ export function Lobby({ title }: LoadingProps) {
           handler={createRoomHandler}
           _icon="add"
           text="Create Random Room"
+          useClick
         />
         <BorderedTextButton
           handler={() => joinRoomHandler("1")}
           _icon="enter"
           text="Join Room #1"
+          useClick
         />
         <BorderedTextButton
           handler={() => joinRoomHandler("2")}
           _icon="enter"
           text="Join Room #2"
+          useClick
         />
       </div>
       <style jsx>{`

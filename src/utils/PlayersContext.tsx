@@ -97,7 +97,8 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
         };
       });
       setUsers(newUsers);
-      if (["_Loading", "_Lobby"].includes(_page)) setPage("_Jammers");
+      if (["_Loading", "_Lobby"].includes(_page))
+        setPage("_InstrumentSelect");
     });
 
     return socketCleanup;

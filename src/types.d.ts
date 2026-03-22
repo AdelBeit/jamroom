@@ -84,7 +84,8 @@ export type Page =
   | "_Keyboard"
   | "_Samples"
   | "_Loading"
-  | "_Config";
+  | "_Config"
+  | "_InstrumentSelect";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,

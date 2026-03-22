@@ -8,6 +8,7 @@ import Jammers from "../src/screens/Jammers";
 import Drumkit from "../src/screens/Drumkit";
 import Keyboard from "../src/screens/Keyboard";
 import Samples from "../src/screens/Samples";
+import InstrumentSelect from "../src/screens/InstrumentSelect";
 import { usePage } from "../src/hooks/usePage";
 import { Loading } from "../src/screens/Loading";
 
@@ -55,6 +56,7 @@ const Page: NextPage = (props) => {
     pageComponent = <Drumkit {...{ _page }} />;
   if (_page === "_Keyboard") pageComponent = <Keyboard />;
   if (_page === "_Samples") pageComponent = <Samples />;
+  if (_page === "_InstrumentSelect") pageComponent = <InstrumentSelect />;
 
   useEffect(() => {
     // @ts-ignore
