@@ -12,6 +12,7 @@ export type Icon =
   | "keyboard#thin"
   | "leave"
   | "menu"
+  | "rotateDevice"
   | "tutorial"
   | "volume#full"
   | "volume#partial"

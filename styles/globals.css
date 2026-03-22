@@ -23,6 +23,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+#rotate-notice {
+  display: none;
+}
+
 #__next,
 #_app,
 ._page {
@@ -177,5 +181,36 @@ button {
     position: absolute;
     top: 100%;
     left: 0;
+  }
+
+  #rotate-notice {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+    color: var(--amber);
+    fill: var(--amber);
+    stroke: var(--amber);
+    font-size: 18px;
+    text-align: left;
+    padding: 24px;
+    pointer-events: auto;
+    touch-action: none;
+    gap: 12px;
+  }
+
+  #rotate-notice p {
+    margin: 0;
+  }
+
+  #rotate-notice .rotate-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
   }
 }
