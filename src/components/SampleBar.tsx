@@ -1,8 +1,6 @@
 import cs from "classnames";
 import React from "react";
 import { Sample } from "../sample";
-import { preventDefault } from "../utils/preventDefault";
-
 interface Props {
   _sample: Sample;
   sampleHandler(sample: Sample): void;
@@ -20,13 +18,7 @@ export default function SampleBar({
   return (
     <button
       className={cs("bar mold", active && "active")}
-      onMouseDown={handler}
-      onTouchStart={(e) => {
-        e.preventDefault();
-        handler(e);
-      }}
-      onTouchEnd={preventDefault}
-      onMouseUp={preventDefault}
+      onClick={handler}
     >
       <span className="medium">{_sample}</span>
       <style jsx>

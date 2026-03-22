@@ -6,6 +6,7 @@ import { preventDefault } from "../utils/preventDefault";
 
 export interface Props extends Omit<ButtonProps, "size"> {
   active?: boolean;
+  useClick?: boolean;
 }
 
 export default function BorderlessTextButton({
@@ -13,21 +14,31 @@ export default function BorderlessTextButton({
   text,
   handler,
   active = false,
+  useClick = true,
 }: Props) {
   return (
     <button
       className={cs(text, active && "faded")}
-      onMouseDown={(e) => {
-        if (!active) handler(e);
-      }}
-      onTouchStart={(e) => {
-        if (!active) {
-          e.preventDefault();
-          handler(e);
-        }
-      }}
-      onTouchEnd={preventDefault}
-      onMouseUp={preventDefault}
+      onMouseDown={
+        useClick
+          ? undefined
+          : (e) => {
+              if (!active) handler(e);
+            }
+      }
+      onTouchStart={
+        useClick
+          ? undefined
+          : (e) => {
+              if (!active) {
+                e.preventDefault();
+                handler(e);
+              }
+            }
+      }
+      onTouchEnd={useClick ? undefined : preventDefault}
+      onMouseUp={useClick ? undefined : preventDefault}
+      onClick={useClick ? handler : undefined}
     >
       <Icon {...{ _icon }} size={20} />
       <span className="medium">{text}</span>

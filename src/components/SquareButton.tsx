@@ -1,46 +1,45 @@
 import React from "react";
 import { ButtonProps } from "../types";
 import Icon from "./Icon";
-import { preventDefault } from "../utils/preventDefault";
+interface Props extends Omit<ButtonProps, "text"> {
+  label?: string;
+  borderWidth?: number;
+}
 
-interface Props extends Omit<ButtonProps, "text"> {}
-
-export default function SquareButton({ _icon, handler, size = 30 }: Props) {
-  const isCoarse =
-    typeof window !== "undefined" &&
-    window.matchMedia("(pointer: coarse)").matches;
+export default function SquareButton({
+  _icon,
+  handler,
+  size = 30,
+  label,
+  className,
+  borderWidth = 1,
+}: Props) {
+  const iconSize = Math.max(16, Math.round(size * 0.5));
+  const labelSize = Math.max(10, Math.round(size * 0.12));
 
   return (
     <button
-      onMouseDown={
-        isCoarse
-          ? undefined
-          : (e) => {
-              handler(e);
-            }
-      }
-      onTouchStart={
-        isCoarse
-          ? (e) => {
-              e.preventDefault();
-              handler(e);
-            }
-          : undefined
-      }
-      onTouchEnd={isCoarse ? preventDefault : undefined}
-      onMouseUp={isCoarse ? undefined : preventDefault}
-      className={`mold ${_icon}`}
+      onClick={handler}
+      className={["mold", _icon, className].filter(Boolean).join(" ")}
     >
-      <Icon {...{ _icon }} size={17} />
+      <Icon {...{ _icon }} size={iconSize} />
+      {label && <span className="label">{label}</span>}
       <style jsx>
         {`
           button {
             width: ${size}px;
             height: ${size}px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-width: 1px;
+            border-width: ${borderWidth}px;
+            gap: 6px;
+            border-radius: 8px;
+          }
+
+          .label {
+            font-size: ${labelSize}px;
           }
         `}
       </style>
