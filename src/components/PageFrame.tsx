@@ -25,10 +25,11 @@ export default function PageFrame({ _page, children }: Props) {
   );
   const { openModal, closeModal } = useModal();
   const [isMobile, setIsMobile] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(true);
   const [disableTutorialCache, setDisableTutorialCache] = useState(false);
   const [visited, setVisited] = useState(true);
   const onLoadingScreen = _page === "_Loading";
-  const onDesktopLoadingScreen = onLoadingScreen && !isMobile;
+  const isLobby = _page === "_Lobby";
 
   useEffect(() => {
     if (disableTutorialCache) {
@@ -41,6 +42,12 @@ export default function PageFrame({ _page, children }: Props) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setDisableTutorialCache(params.get("tutorials") === "always");
+
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    const anyFinePointer = window.matchMedia("(any-pointer: fine)").matches;
+    const hoverCapable = window.matchMedia("(hover: hover)").matches;
+    const anyHoverCapable = window.matchMedia("(any-hover: hover)").matches;
+    setIsDesktop((finePointer || anyFinePointer) && (hoverCapable || anyHoverCapable));
 
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -81,7 +88,7 @@ export default function PageFrame({ _page, children }: Props) {
         Modal orchestration moved to the top-level useEffect.
       */}
 
-      {!visited && (!onLoadingScreen || onDesktopLoadingScreen) && (
+      {!visited && !onLoadingScreen && (!isLobby || isDesktop) && (
         <Tutorial
           {...{ _page }}
           closeTutorial={() => {
