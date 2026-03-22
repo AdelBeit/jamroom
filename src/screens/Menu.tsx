@@ -10,9 +10,10 @@ interface Props {
 }
 
 export default function Menu({ _page }: Props) {
-  const [toggleMenu, setPage] = usePage((state) => [
+  const [toggleMenu, setPage, openJammersModal] = usePage((state) => [
     state.toggleMenu,
     state.setPage,
+    state.openJammersModal,
   ]);
 
   const isConfigPage = _page === "_Config";
@@ -64,12 +65,14 @@ export default function Menu({ _page }: Props) {
     <div id="_menu" className={`${_page} _container`}>
       <div
         className="dark_underlay absolute faded backdrop-blur"
-        onMouseDown={handleCloseMenu}
-        onTouchStart={handleCloseMenu}
+        onClick={handleCloseMenu}
         onTouchEnd={preventDefault}
-        onMouseUp={preventDefault}
       ></div>
-      <div className="_content">
+      <div
+        className="_content"
+        onMouseDown={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+      >
         <BorderedTextButton
           _icon="close"
           text="Close"
@@ -110,7 +113,7 @@ export default function Menu({ _page }: Props) {
           iconFirst
           handler={(e) => {
             handleCloseMenu(e);
-            setPage("_Jammers");
+            openJammersModal();
           }}
         />
         <BorderedTextButton

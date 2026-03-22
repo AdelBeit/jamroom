@@ -5,6 +5,7 @@ import { Page } from "../types";
 import { usePage } from "../hooks/usePage";
 import { useUsers } from "../hooks/useUsers";
 import Menu from "../screens/Menu";
+import JammersModal from "./JammersModal";
 
 interface Props {
   _page: Page;
@@ -13,7 +14,10 @@ interface Props {
 
 export default function PageFrame({ _page, children }: Props) {
   const roomID = useUsers((state) => state.roomID);
-  const [menuOpen] = usePage((state) => [state.menuOpen]);
+  const [menuOpen, jammersModalOpen] = usePage((state) => [
+    state.menuOpen,
+    state.jammersModalOpen,
+  ]);
   const [isMobile, setIsMobile] = useState(true);
   const [visited, setVisited] = useState(true);
   const onLoadingScreen = _page === "_Loading";
@@ -40,6 +44,7 @@ export default function PageFrame({ _page, children }: Props) {
       )}
 
       {menuOpen && <Menu {...{ _page }} />}
+      {jammersModalOpen && <JammersModal />}
 
       {!visited && (!onLoadingScreen || onDesktopLoadingScreen) && (
         <Tutorial
