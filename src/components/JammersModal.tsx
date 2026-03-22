@@ -84,18 +84,18 @@ export default function JammersModal() {
           justify-content: center;
         }
 
-        @media screen and (max-height: 1000px) {
-          ._content {
-            width: 80vh;
-            height: 80vh;
-          }
-        }
-
         @media screen and (max-height: 500px) {
           .jammers_box {
             width: min(320px, 85%);
             max-height: 75vh;
             padding: 12px;
+          }
+        }
+
+        @media screen and (max-width: 950px) and (orientation: landscape) {
+          .jammers_box {
+            width: 90vw;
+            height: 80vh;
           }
         }
       `}</style>
