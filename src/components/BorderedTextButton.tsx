@@ -17,7 +17,7 @@ export default function BorderedTextButton({
   handler,
   active = false,
   className,
-  useClick = false,
+  useClick = true,
   iconFirst = false,
 }: Props) {
   return (
