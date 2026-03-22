@@ -74,7 +74,12 @@ export function Lobby({ title }: LoadingProps) {
           gap: 14px;
         }
         ._page :global(.lobby.initial) {
-          width: 28%;
+          width: 420px;
+        }
+        @media screen and (max-width: 767px) {
+          ._page :global(.lobby.initial) {
+            width: 360px;
+          }
         }
       `}</style>
     </div>
