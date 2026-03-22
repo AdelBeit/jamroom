@@ -48,6 +48,11 @@ a {
   stroke: var(--amber);
 }
 
+.backdrop-blur {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
 button {
   --background: var(--black);
   --content: var(--amber);

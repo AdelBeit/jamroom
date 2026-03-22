@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <PlayersContextProvider>
       {showRotateNotice && (
         <div id="rotate-notice">
-          <div className="dark_underlay faded absolute"></div>
+          <div className="dark_underlay faded absolute backdrop-blur"></div>
           <div className="box mold">
             <div className="rotate-row">
               <Icon _icon="rotateDevice" size={60} />
