@@ -16,11 +16,13 @@ export default function StatusBar({ roomID, _page }: Props) {
     state.nowJamming,
     state.users,
   ]);
-  const [toggleMenu, setPage] = usePage((state) => [
+  const [toggleMenu, setPage, openJammersModal] = usePage((state) => [
     state.toggleMenu,
     state.setPage,
+    state.openJammersModal,
   ]);
   const configState = ["_Config", "_Samples"].includes(_page);
+  const showJammersButton = _page === "_Keyboard" || _page === "_Drumkit";
   let leftButton: Icon = configState ? "confirm" : "menu";
   let rightButton: Icon = "tutorial";
   if (_page === "_Jammers") {
@@ -40,13 +42,20 @@ export default function StatusBar({ roomID, _page }: Props) {
     setPage("_Keyboard");
   };
 
+  const jammersButtonHandler = () => {
+    openJammersModal();
+  };
+
   return (
     <div className="_container">
       <div className="buttons">
         <SquareButton _icon={leftButton} handler={leftButtonHandler} />
+        {showJammersButton ? (
+          <SquareButton _icon="jammers" handler={jammersButtonHandler} />
+        ) : null}
         {_page === "_Jammers" ? (
           <SquareButton _icon={rightButton} handler={rightButtonHandler} />
-        ) : undefined}
+        ) : null}
       </div>
       <div className="now_jamming HIDE_SCROLLBAR">
         {Object.keys(nowJamming).map((userID) => {
