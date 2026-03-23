@@ -12,6 +12,7 @@ import { useUsers } from "../hooks/useUsers";
 import Menu from "../screens/Menu";
 import JammersModal from "./JammersModal";
 import { useModal } from "./ModalProvider";
+import { socket } from "../utils/socketClient";
 
 interface Props {
   _page: Page;
@@ -108,6 +109,17 @@ export default function PageFrame({ _page, children }: Props) {
     closeJammersModal,
     shouldShowTutorial,
   ]);
+
+  useEffect(() => {
+    if (!roomID) return;
+    if (_page === "_Keyboard") {
+      socket.emit("change-instrument", "keyboard", roomID);
+      return;
+    }
+    if (_page === "_Drumkit") {
+      socket.emit("change-instrument", "drumkit", roomID);
+    }
+  }, [_page, roomID]);
 
   return (
     <div id="_pageFrame" className="_container relative">

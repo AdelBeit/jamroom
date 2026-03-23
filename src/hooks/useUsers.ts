@@ -34,20 +34,18 @@ export const useUsers = create<UserStateStore>()(
     deleteNowJamming: (userID) =>
       set((state) => {
         if (state.nowJamming[userID]) delete state.nowJamming[userID];
-        return { ...state.nowJamming };
+        return { nowJamming: { ...state.nowJamming } };
       }),
     setRoomID: (roomID) => set({ roomID }),
     setUsers: (users) =>
-      set((state) => {
-        let newUsers = { ...users, ...state.users };
-        if (Object.keys(users).length < Object.keys(state.users).length) {
-          Object.keys(state.users).map((oldUserID) => {
-            if (!users[oldUserID]) delete newUsers[oldUserID];
-          });
-        }
-
-        return { users: newUsers };
-      }),
+      set((state) => ({
+        users: Object.fromEntries(
+          Object.entries(users).map(([id, data]) => [
+            id,
+            { ...data, volume: state.users[id]?.volume ?? data.volume },
+          ])
+        ),
+      })),
     setUserID: (userID) => set({ userID }),
     setVolume: (userID, volume) =>
       set((state) => ({

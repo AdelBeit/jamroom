@@ -57,7 +57,7 @@ export default function StatusBar({ roomID, _page }: Props) {
               {...{
                 username: userID,
                 volume: users[userID].volume >= -10 ? "full" : "partial",
-                instrument: "keyboard" || users[userID].instrument,
+                instrument: users[userID].instrument || "keyboard",
               }}
             />
           );
