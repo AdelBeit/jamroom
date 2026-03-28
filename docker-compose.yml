@@ -3,8 +3,7 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    ports:
-      - "8080:8080"
+    restart: unless-stopped
     environment:
       - REDIS_URL=${REDIS_URL}
     depends_on:
@@ -13,10 +12,30 @@ services:
 
   redis:
     image: redis:7-alpine
+    restart: unless-stopped
     command: redis-server --requirepass ${REDIS_PASSWORD}
     healthcheck:
       test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
       interval: 5s
       timeout: 3s
       retries: 5
-    # No host port binding — Redis is internal only
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - DOMAIN
+    depends_on:
+      - app
+
+volumes:
+  caddy_data:
+  caddy_config:
