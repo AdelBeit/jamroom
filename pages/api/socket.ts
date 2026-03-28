@@ -6,7 +6,7 @@ import { User } from "../../src/types";
 import { UserStateStore } from "../../src/hooks/useUsers";
 import debugLog from "../../src/utils/debugLog";
 
-const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
+const SocketHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   debugLog("/api/socket handler called");
   // @ts-ignore
   if (res.socket.server.io) {
@@ -34,6 +34,12 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
   io.adapter(createAdapter(pubClient, subClient) as any);
   console.log("Redis adapter connected");
   debugLog("Redis pub/sub adapter initialized");
+
+  const staleKeys = await pubClient.keys("room:*");
+  if (staleKeys.length) {
+    await pubClient.del(...staleKeys);
+    debugLog("Cleared stale room keys on startup:", staleKeys);
+  }
 
   const parseRoomState = (raw: Record<string, string>) =>
     Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, JSON.parse(v)]));
