@@ -18,8 +18,17 @@ Powered by:
 - ReactJS
 - NextJS
 - Socket.io (Websocket)
-- Docker
+- Redis (pub/sub adapter for multi-instance broadcasting)
+- Docker / Docker Compose
 - ToneJS (Web Audio API)
 - Zustand
+
+## Running locally
+
+```bash
+cp .env.example .env
+# fill in REDIS_PASSWORD and REDIS_URL in .env
+docker compose up
+```
 
 [Figma File](https://www.figma.com/file/mL6jPwkLXq2MvPu1FzyQnt/Music-App?node-id=0%3A1)
