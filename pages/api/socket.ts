@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Server } from "socket.io";
+import Redis from "ioredis";
+import { createAdapter } from "@socket.io/redis-adapter";
 import { User } from "../../src/types";
 import { UserStateStore } from "../../src/hooks/useUsers";
 
@@ -11,18 +13,26 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
+  const redisUrl = process.env.REDIS_URL;
+  if (!redisUrl) {
+    throw new Error("REDIS_URL is required. Set it in your .env file.");
+  }
+
   console.log("Socket is initializing");
-  const rooms: {
-    [roomID: UserStateStore["roomID"]]: {
-      [socketID: string]: [User["id"], User["instrument"]];
-    };
-  } = {};
   // @ts-ignore
   const io = new Server(res.socket.server, {
     cors: { origin: req.headers.host },
   });
   // @ts-ignore
   res.socket.server.io = io;
+
+  const pubClient = new Redis(redisUrl);
+  const subClient = pubClient.duplicate();
+  io.adapter(createAdapter(pubClient, subClient));
+  console.log("Redis adapter connected");
+
+  const parseRoomState = (raw: Record<string, string>) =>
+    Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, JSON.parse(v)]));
 
   /*
    *  middleware
@@ -42,18 +52,24 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
   /*
    *  connect
    */
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
     const roomID = socket["roomID"];
-    if (!rooms[roomID]) rooms[roomID] = {};
-    rooms[roomID][socket.id] = [socket["userID"], "drumkit"];
+    try {
+      await pubClient.hset(`room:${roomID}`, socket.id, JSON.stringify([socket["userID"], "drumkit"]));
+      await pubClient.persist(`room:${roomID}`);
 
-    socket.join(roomID);
+      socket.join(roomID);
 
-    io.to(roomID).emit(
-      "users-update",
-      rooms[roomID],
-      `${socket.id} joined room ${roomID}`
-    );
+      const roomState = parseRoomState(await pubClient.hgetall(`room:${roomID}`));
+      io.to(roomID).emit(
+        "users-update",
+        roomState,
+        `${socket.id} joined room ${roomID}`
+      );
+    } catch (err) {
+      console.error("Redis error on connection:", err);
+      socket.disconnect();
+    }
 
     socket.on(
       "play-sound",
@@ -64,28 +80,39 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
     socket.on(
       "change-instrument",
-      (instrument: User["instrument"], roomID: UserStateStore["roomID"]) => {
-        const user = rooms[roomID][socket.id];
-        rooms[roomID][socket.id] = [user[0], instrument];
-        io.to(roomID).emit(
-          "users-update",
-          rooms[roomID],
-          `${user[0]} changed instruments`
-        );
+      async (instrument: User["instrument"], roomID: UserStateStore["roomID"]) => {
+        try {
+          await pubClient.hset(`room:${roomID}`, socket.id, JSON.stringify([socket["userID"], instrument]));
+          const roomState = parseRoomState(await pubClient.hgetall(`room:${roomID}`));
+          io.to(roomID).emit(
+            "users-update",
+            roomState,
+            `${socket["userID"]} changed instruments`
+          );
+        } catch (err) {
+          console.error("Redis error on change-instrument:", err);
+          socket.disconnect();
+        }
       }
     );
 
-    socket.on("disconnect", (reason) => {
+    socket.on("disconnect", async (reason) => {
       socket.removeAllListeners();
-      let roomID = socket["roomID"];
-      if (rooms[roomID] && rooms[roomID][socket.id]) {
-        delete rooms[roomID][socket.id];
-        if (Object.keys(rooms[roomID]).length < 1) delete rooms[roomID];
+      const roomID = socket["roomID"];
+      try {
+        await pubClient.hdel(`room:${roomID}`, socket.id);
+        const remaining = await pubClient.hlen(`room:${roomID}`);
+        if (remaining === 0) {
+          await pubClient.expire(`room:${roomID}`, 60);
+        }
+        const roomState = parseRoomState(await pubClient.hgetall(`room:${roomID}`));
         io.to(roomID).emit(
           "users-update",
-          rooms[roomID],
+          roomState,
           `${socket.id} left room ${roomID}`
         );
+      } catch (err) {
+        console.error("Redis error on disconnect:", err);
       }
     });
   });
