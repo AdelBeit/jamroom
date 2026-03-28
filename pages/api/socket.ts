@@ -4,8 +4,10 @@ import Redis from "ioredis";
 import { createAdapter } from "@socket.io/redis-adapter";
 import { User } from "../../src/types";
 import { UserStateStore } from "../../src/hooks/useUsers";
+import debugLog from "../../src/utils/debugLog";
 
 const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
+  debugLog("/api/socket handler called");
   // @ts-ignore
   if (res.socket.server.io) {
     console.log("socket already initialized");
@@ -18,6 +20,7 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
     throw new Error("REDIS_URL is required. Set it in your .env file.");
   }
 
+  debugLog("REDIS_URL:", redisUrl);
   console.log("Socket is initializing");
   // @ts-ignore
   const io = new Server(res.socket.server, {
@@ -28,8 +31,9 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
 
   const pubClient = new Redis(redisUrl);
   const subClient = pubClient.duplicate();
-  io.adapter(createAdapter(pubClient, subClient));
+  io.adapter(createAdapter(pubClient, subClient) as any);
   console.log("Redis adapter connected");
+  debugLog("Redis pub/sub adapter initialized");
 
   const parseRoomState = (raw: Record<string, string>) =>
     Object.fromEntries(Object.entries(raw).map(([k, v]) => [k, JSON.parse(v)]));
@@ -54,6 +58,7 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
    */
   io.on("connection", async (socket) => {
     const roomID = socket["roomID"];
+    debugLog("socket connected:", socket.id, "userID:", socket["userID"], "roomID:", roomID);
     try {
       await pubClient.hset(`room:${roomID}`, socket.id, JSON.stringify([socket["userID"], "drumkit"]));
       await pubClient.persist(`room:${roomID}`);
@@ -61,6 +66,7 @@ const SocketHandler = (req: NextApiRequest, res: NextApiResponse) => {
       socket.join(roomID);
 
       const roomState = parseRoomState(await pubClient.hgetall(`room:${roomID}`));
+      debugLog("emitting users-update on connect:", JSON.stringify(roomState));
       io.to(roomID).emit(
         "users-update",
         roomState,

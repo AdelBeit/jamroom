@@ -10,19 +10,22 @@
     "docker:start": "next start -p 8080",
     "prod": "yarn && yarn build && yarn start"
   },
+  "resolutions": {
+    "socket.io-adapter": "2.5.6"
+  },
   "dependencies": {
-    "@socket.io/redis-adapter": "^8.3.0",
-    "classnames": "^2.3.1",
-    "ioredis": "^5.3.2",
-    "nanoid": "^4.0.0",
+    "@socket.io/redis-adapter": "8.3.0",
+    "classnames": "2.3.2",
+    "ioredis": "5.10.1",
+    "nanoid": "4.0.1",
     "next": "12.1.6",
-    "next-pwa": "^5.6.0",
+    "next-pwa": "5.6.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "socket.io": "^4.5.1",
-    "socket.io-client": "^4.5.1",
-    "tone": "^14.7.77",
-    "zustand": "^4.0.0-rc.1"
+    "socket.io": "4.8.3",
+    "socket.io-client": "4.8.3",
+    "tone": "14.7.77",
+    "zustand": "4.3.5"
   },
   "devDependencies": {
     "@types/node": "^18.7.11",

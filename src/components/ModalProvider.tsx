@@ -59,6 +59,7 @@ export default function ModalProvider({ children }: PropsWithChildren<{}>) {
 
   return (
     <ModalContext.Provider value={ctxValue}>
+      <>
       {children}
       {content && typeof window !== "undefined"
         ? ReactDOM.createPortal(
@@ -115,6 +116,7 @@ export default function ModalProvider({ children }: PropsWithChildren<{}>) {
             document.body
           )
         : null}
+      </>
     </ModalContext.Provider>
   );
 }

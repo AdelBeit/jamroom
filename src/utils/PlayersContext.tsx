@@ -13,6 +13,7 @@ import { connectSocket, socket, socketCleanup } from "./socketClient";
 import { flattenSamples } from "./flattenSamples";
 import { generateName } from "./generateName";
 import playSample from "./playSample";
+import debugLog from "./debugLog";
 import { useUsers } from "../hooks/useUsers";
 import { Sample } from "../sample";
 import { User } from "../types";
@@ -80,6 +81,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
 
     socket.on("connect", () => {
       console.log("connection established.");
+      debugLog("socket connected, id:", socket.id);
     });
 
     socket.on("sound-played", (userID, sample) => {
@@ -87,6 +89,7 @@ export const PlayersContextProvider = (props: PropsWithChildren<{}>) => {
     });
 
     socket.on("users-update", (users, msg) => {
+      debugLog("users-update received:", JSON.stringify(users), "msg:", msg);
       const newUsers = {};
       Object.keys(users).map((id) => {
         const [userID, instrument] = users[id];
