@@ -21,7 +21,6 @@ const SocketHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   debugLog("REDIS_URL:", redisUrl);
-  console.log("Socket is initializing");
   // @ts-ignore
   const io = new Server(res.socket.server, {
     cors: { origin: req.headers.host },
@@ -32,7 +31,6 @@ const SocketHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const pubClient = new Redis(redisUrl);
   const subClient = pubClient.duplicate();
   io.adapter(createAdapter(pubClient, subClient) as any);
-  console.log("Redis adapter connected");
   debugLog("Redis pub/sub adapter initialized");
 
   const staleKeys = await pubClient.keys("room:*");
