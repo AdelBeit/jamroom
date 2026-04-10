@@ -10,7 +10,7 @@ const SocketHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   debugLog("/api/socket handler called");
   // @ts-ignore
   if (res.socket.server.io) {
-    console.log("socket already initialized");
+    debugLog("socket already initialized");
     res.end();
     return;
   }
