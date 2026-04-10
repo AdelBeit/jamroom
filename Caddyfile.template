@@ -1,0 +1,5 @@
+{$DOMAIN} {
+	reverse_proxy {{UPSTREAMS}} {
+		lb_policy cookie
+	}
+}

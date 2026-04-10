@@ -34,20 +34,26 @@ services:
       retries: 5
 
   caddy:
-    image: caddy:2-alpine
+    build:
+      context: .
+      dockerfile: infra/caddy-updater/Dockerfile
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
       - "443:443/udp"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./Caddyfile.template:/etc/caddy/Caddyfile.template:ro
       - caddy_data:/data
       - caddy_config:/config
     environment:
       - DOMAIN
+      - CONSUL_HTTP_ADDR=consul:8500
+      - SERVICE_NAME=jamroom-app
+      - CADDYFILE_TEMPLATE=/etc/caddy/Caddyfile.template
+      - CADDYFILE_PATH=/etc/caddy/Caddyfile
     depends_on:
-      - app
+      - consul
 
 volumes:
   caddy_data:

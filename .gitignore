@@ -61,3 +61,6 @@ docs/
 .dolt/
 *.db
 .beads-credential-key
+
+# Generated Caddyfile (created by caddy-updater, template is Caddyfile.template)
+/Caddyfile
