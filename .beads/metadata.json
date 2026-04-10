@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "jamroom",
+  "project_id": "82ed34be-3786-46e0-b96b-f1fc018499e8"
+}
