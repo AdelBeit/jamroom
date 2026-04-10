@@ -1,8 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: dockerfile
+    image: ghcr.io/adelbeit/jamroom:${IMAGE_TAG}
     restart: unless-stopped
     environment:
       - REDIS_URL=${REDIS_URL}

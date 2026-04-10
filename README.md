@@ -31,4 +31,10 @@ cp .env.example .env
 docker compose up
 ```
 
+## Deploy
+
+- CI builds and pushes `ghcr.io/adelbeit/jamroom:<sha>` on each `main` push.
+- Deploy SSH writes `IMAGE_TAG=<sha>` to `/opt/jamroom/.env`, then runs `docker compose pull app && docker compose up -d`.
+- Rollback: set `IMAGE_TAG` to a prior SHA and run `docker compose up -d`.
+
 [Figma File](https://www.figma.com/file/mL6jPwkLXq2MvPu1FzyQnt/Music-App?node-id=0%3A1)

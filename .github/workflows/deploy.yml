@@ -4,10 +4,35 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR (push only)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image (commit SHA)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: dockerfile
+          push: true
+          tags: ghcr.io/adelbeit/jamroom:${{ github.sha }}
+
+      - name: Verify image exists in GHCR
+        run: docker manifest inspect ghcr.io/adelbeit/jamroom:${{ github.sha }} > /dev/null
+
       - name: Deploy to Droplet
         uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a7e  # v1.0.3
         with:
@@ -17,5 +42,6 @@ jobs:
           passphrase: ${{ secrets.DROPLET_SSH_PASSPHRASE }}
           script: |
             cd /opt/jamroom
-            git pull
-            docker compose up --build -d
+            printf "IMAGE_TAG=%s\n" "${{ github.sha }}" > .env
+            docker compose pull app
+            docker compose up -d
