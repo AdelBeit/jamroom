@@ -5,6 +5,7 @@ import { createAdapter } from "@socket.io/redis-adapter";
 import { User } from "../../src/types";
 import { UserStateStore } from "../../src/hooks/useUsers";
 import debugLog from "../../src/utils/debugLog";
+import { registerWithConsul } from "../../src/utils/consulRegistration";
 
 const SocketHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   debugLog("/api/socket handler called");
@@ -18,6 +19,19 @@ const SocketHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const redisUrl = process.env.REDIS_URL;
   if (!redisUrl) {
     throw new Error("REDIS_URL is required. Set it in your .env file.");
+  }
+
+  // Register with Consul on first initialization
+  // @ts-ignore
+  if (!res.socket.server.consulRegistered) {
+    try {
+      await registerWithConsul();
+      // @ts-ignore
+      res.socket.server.consulRegistered = true;
+    } catch (error) {
+      console.warn("Consul registration failed (non-critical):", error);
+      // Continue even if Consul registration fails - app can still run
+    }
   }
 
   debugLog("REDIS_URL:", redisUrl);
