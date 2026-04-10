@@ -55,3 +55,4 @@ examples/**/package-lock.json
 examples/**/pnpm-lock.yaml
 
 docs/
+.codex
