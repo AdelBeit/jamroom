@@ -1,3 +1,5 @@
+ARG BUILD_ENV=prod
+
 # Install dependencies only when needed
 FROM node:20.20.1-alpine AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -10,27 +12,36 @@ RUN yarn
 # Rebuild the source code only when needed
 FROM node:20.20.1-alpine AS builder
 WORKDIR /app
-COPY next.config.js tsconfig.json next-env.d.ts ./
+
+# Copy dependencies (cached in deps stage, rarely changes)
 COPY --from=deps /app/package.json ./package.json
 COPY --from=deps /app/yarn.lock ./yarn.lock
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy config files (changes less frequently than source)
+COPY next.config.js tsconfig.json next-env.d.ts init-consul.js jest.config.js jest.setup.js ./
+
+# Copy source code (changes most frequently)
 COPY public ./public
 COPY pages ./pages
 COPY src ./src
 COPY styles ./styles
-COPY --from=deps /app/node_modules ./node_modules
+COPY __tests__ ./__tests__
+
+# Build
 RUN yarn build
 
-# Production image, copy all the files and run next
+# Production image (no tests)
 FROM node:20.20.1-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 
+RUN apk add --no-cache curl
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
-# You only need to copy next.config.js if you are NOT using the default configuration
-COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/next.config.js /app/init-consul.js /app/jest.config.js /app/jest.setup.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
@@ -47,3 +58,11 @@ EXPOSE 8080
 
 # run the app
 CMD ["yarn", "docker:start"]
+
+# Test image (includes tests, used for testing environments only)
+FROM runner AS runner-test
+
+USER root
+COPY --from=builder /app/__tests__ ./__tests__
+RUN chown -R nextjs:nodejs /app/__tests__
+USER nextjs
