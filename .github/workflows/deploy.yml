@@ -60,7 +60,7 @@ jobs:
           DOMAIN: ${{ vars.DOMAIN }}
 
       - name: Deploy to Nomad
-        if: ${{ secrets.NOMAD_ADDR != '' }}
+        continue-on-error: true
         run: |
           nomad job run \
             -var "image_tag=${{ github.sha }}" \
