@@ -66,6 +66,17 @@ jobs:
             docker compose pull
             docker compose up -d
 
+            # Wait for Nomad to be ready
+            echo "Waiting for Nomad to be ready..."
+            for i in {1..30}; do
+              if curl -sf http://localhost:4646/v1/status/leader > /dev/null 2>&1; then
+                echo "✓ Nomad is ready"
+                break
+              fi
+              echo "Attempt $i/30 - waiting for Nomad..."
+              sleep 1
+            done
+
             # Deploy app to Nomad
             nomad job run \
               -var "image_tag=$IMAGE_TAG" \
