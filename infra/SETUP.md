@@ -1,98 +1,149 @@
 # Manual Infrastructure Setup
 
-## Step 1: Setup Central Droplet
+## Local Testing First
 
-SSH into your central droplet:
+Before deploying to droplets, test locally:
 
-```bash
-ssh root@<central-droplet-ip>
-```
-
-Download and run the setup script:
+### 1. Start Consul + Redis + Caddy with docker-compose
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/adelbeit/jamroom/main/infra/setup-central.sh | bash
+docker compose up consul redis caddy
 ```
 
-Wait for it to complete (~2 minutes).
+### 2. Start Nomad in a separate terminal
 
-Verify services are running:
+```bash
+nomad agent -dev
+```
+
+### 3. Test connection
+
+```bash
+# Check Nomad sees Consul
+nomad server members
+consul members
+
+# Deploy a test job
+nomad job run /tmp/test.nomad
+
+# Check Consul registered the service
+consul catalog services
+consul catalog service test-redis
+
+# Clean up
+nomad job stop test-redis
+```
+
+If all that works, you're ready for droplets!
+
+---
+
+## Droplet Setup
+
+### Central Droplet (Nomad Server + Consul Server)
+
+SSH in:
+
+```bash
+ssh root@<central-ip>
+```
+
+Download and run setup script:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/adelbeit/jamroom/main/infra/setup-nomad.sh | bash -s 127.0.0.1 server
+```
+
+Start docker-compose services (Consul, Redis, Caddy):
+
+```bash
+cd /opt/jamroom
+
+# Create .env
+cat > .env <<'EOF'
+REDIS_PASSWORD=your_secure_password
+DOMAIN=jam.example.com
+EOF
+
+# Start services
+docker compose up -d consul redis caddy
+```
+
+Verify:
 
 ```bash
 nomad server members
 consul members
-systemctl status nomad consul
+curl http://localhost:8500/v1/status/leader
 ```
 
 ---
 
-## Step 2: Setup App Server Droplets
+### App Droplets (Nomad Client)
 
 SSH into app server 1:
 
 ```bash
-ssh root@<app1-droplet-ip>
+ssh root@<app1-ip>
 ```
 
 Run setup script with central IP:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/adelbeit/jamroom/main/infra/setup-app.sh | bash -s <central-droplet-ip>
+curl -fsSL https://raw.githubusercontent.com/adelbeit/jamroom/main/infra/setup-nomad.sh | bash -s <central-ip>
 ```
 
-Wait for it to complete.
+Repeat for app server 2.
 
-Verify Nomad is running:
+Verify from central droplet:
 
 ```bash
-systemctl status nomad
-```
-
-**Repeat for app server 2** with the same command.
-
----
-
-## Step 3: Verify Cluster
-
-From your local machine, check the Nomad UI:
-
-```
-http://<central-droplet-ip>:4646/ui/
-```
-
-You should see:
-- 1 Nomad server
-- 2 Nomad clients (your app servers)
-
-Check Consul UI:
-
-```
-http://<central-droplet-ip>:8500/ui/
+nomad node status
+# Should show 2 clients
 ```
 
 ---
 
-## Step 4: Deploy the App
+## Deploy the App
 
-Option A: Via GitHub Actions (automatic)
-
-```bash
-git tag deploy-v1.0
-git push --tags
-```
-
-Watch the deploy workflow in GitHub Actions.
-
-Option B: Manual from central droplet
+From central droplet:
 
 ```bash
-ssh root@<central-ip>
-
 nomad job run \
   -var "image_tag=latest" \
   -var "redis_url=redis://127.0.0.1:6379" \
   -var "redis_password=your_password" \
-  /tmp/jamroom.nomad
+  /opt/jamroom/infra/jamroom.nomad
+```
+
+Check status:
+
+```bash
+nomad job status jamroom
+nomad alloc status <alloc-id>
+nomad alloc logs <alloc-id> jamroom
+```
+
+---
+
+## Useful Commands
+
+```bash
+# On central droplet
+nomad status                    # All jobs
+nomad job status jamroom        # Jamroom status
+nomad node status               # All nodes
+nomad alloc status <alloc-id>   # Allocation details
+nomad alloc logs <alloc-id>     # App logs
+
+consul catalog services         # All services
+consul catalog service jamroom-app  # App service details
+
+# View Nomad UI
+http://<central-ip>:4646/ui/
+
+# View Consul UI
+http://<central-ip>:8500/ui/
 ```
 
 ---
@@ -104,7 +155,6 @@ nomad job run \
 From central:
 
 ```bash
-nomad server members
 nomad node status
 ```
 
@@ -115,36 +165,16 @@ systemctl status nomad
 journalctl -u nomad -n 50
 ```
 
-### Redis password issues
+### Redis connection issues
 
-From central:
+Test from central:
 
 ```bash
-cd /opt/jamroom
-cat .env  # Check password
-redis-cli -p 6379 ping
-# If prompted for password:
 redis-cli -p 6379 -a your_password ping
 ```
 
-### Can't connect to services
-
-Check firewall rules on DigitalOcean dashboard. App servers need to reach:
-- Central IP:4647 (Nomad)
-- Central IP:8500 (Consul)
-- Central IP:6379 (Redis)
-
----
-
-## Useful Commands
+### App container not starting
 
 ```bash
-# On central droplet
-nomad status                    # All jobs
-nomad job status jamroom        # Jamroom job status
-nomad alloc status <alloc-id>   # Allocation details
-nomad alloc logs <alloc-id> jamroom  # App logs
-
-consul catalog services         # All registered services
-consul catalog service jamroom-app   # App service details
+nomad alloc logs <alloc-id> jamroom
 ```
