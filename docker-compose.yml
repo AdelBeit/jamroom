@@ -1,6 +1,6 @@
 services:
   consul:
-    image: consul:latest
+    image: hashicorp/consul:1.20.0
     restart: unless-stopped
     ports:
       - "8500:8500"
@@ -10,18 +10,34 @@ services:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
       - consul_data:/consul/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
 
   app:
-    image: ghcr.io/adelbeit/jamroom:${IMAGE_TAG}
+    # image: ghcr.io/adelbeit/jamroom:${IMAGE_TAG}
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: ${BUILD_TARGET:-runner}
     restart: unless-stopped
     environment:
       - REDIS_URL=${REDIS_URL}
       - CONSUL_HTTP_ADDR=consul:8500
+      - PORT=8080
+      - SERVICE_ADDRESS=app
     depends_on:
       redis:
         condition: service_healthy
       consul:
         condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
 
   redis:
     image: redis:7-alpine
@@ -34,9 +50,7 @@ services:
       retries: 5
 
   caddy:
-    build:
-      context: .
-      dockerfile: infra/caddy-updater/Dockerfile
+    image: ghcr.io/adelbeit/jamroom-caddy:v1.0
     restart: unless-stopped
     ports:
       - "80:80"
@@ -53,7 +67,10 @@ services:
       - CADDYFILE_TEMPLATE=/etc/caddy/Caddyfile.template
       - CADDYFILE_PATH=/etc/caddy/Caddyfile
     depends_on:
-      - consul
+      consul:
+        condition: service_healthy
+      app:
+        condition: service_healthy
 
 volumes:
   caddy_data:
