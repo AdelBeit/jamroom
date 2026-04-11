@@ -64,7 +64,7 @@ jobs:
 
             # Pull latest images and start infrastructure
             docker compose pull
-            docker compose up -d
+            docker compose up -d --remove-orphans
 
             # Wait for Nomad to be ready
             echo "Waiting for Nomad to be ready..."
