@@ -93,41 +93,6 @@ job "jamroom" {
       }
     }
 
-    service {
-      name = "jamroom-app"
-      port = "http"
-      address_mode = "alloc"
-
-      # Primary health check: validates HTTP + Redis connectivity
-      check {
-        name     = "http-health"
-        type     = "http"
-        path     = "/api/health"
-        interval = "10s"
-        timeout  = "2s"
-      }
-
-      # Secondary TCP check for liveness
-      check {
-        name     = "tcp-liveness"
-        type     = "tcp"
-        interval = "15s"
-        timeout  = "2s"
-      }
-
-      tags = [
-        "app",
-        "jamroom"
-      ]
-
-      # Deregister service on unhealthy checks to prevent routing to failed instances
-      check_restart {
-        limit       = 3
-        grace       = "60s"
-      }
-    }
-
-
     task "jamroom" {
       driver = "docker"
 
@@ -136,12 +101,46 @@ job "jamroom" {
         ports = ["http"]
       }
 
+      service {
+        name = "jamroom-app"
+        port = "http"
+
+        check {
+          name     = "http-health"
+          type     = "http"
+          path     = "/api/health"
+          interval = "10s"
+          timeout  = "2s"
+          expose   = true
+        }
+
+        check {
+          name     = "tcp-liveness"
+          type     = "tcp"
+          interval = "15s"
+          timeout  = "2s"
+          expose   = true
+        }
+
+        tags = [
+          "app",
+          "jamroom"
+        ]
+
+        check_restart {
+          limit       = 3
+          grace       = "60s"
+        }
+      }
+
       env {
         PORT              = "8080"
         SERVICE_ADDRESS   = "jamroom-app"
         CONSUL_HTTP_ADDR  = "consul.service.consul:8500"
         REDIS_URL         = var.redis_url
         REDIS_PASSWORD    = var.redis_password
+      }
+
       }
 
       resources {
