@@ -96,7 +96,7 @@ Description=Nomad
 After=network.target
 
 [Service]
-Type=notify
+Type=exec
 ExecStart=/usr/local/bin/nomad agent -config=/etc/nomad.d/nomad.hcl
 Restart=on-failure
 RestartSec=5
