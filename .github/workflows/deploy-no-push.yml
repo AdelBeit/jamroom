@@ -1,0 +1,103 @@
+name: Deploy without new image
+
+on:
+  push:
+    tags:
+      - 'deploy-*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # - name: Login to GHCR (push only)
+      #   uses: docker/login-action@v3
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Build and push app image
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     context: .
+      #     file: dockerfile
+      #     push: true
+      #     build-args: |
+      #       NEXT_PUBLIC_DEBUG=${{ vars.NEXT_PUBLIC_DEBUG }}
+      #     tags: |
+      #       ghcr.io/adelbeit/jamroom-app:${{ github.sha }}
+      #       ghcr.io/adelbeit/jamroom-app:latest
+
+      # - name: Verify image exists in GHCR
+      #   run: docker manifest inspect ghcr.io/adelbeit/jamroom-app:${{ github.sha }} > /dev/null
+
+      - name: Deploy to Droplet
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          envs: IMAGE_TAG,REDIS_PASSWORD,DOMAIN
+          script: |
+            mkdir -p /opt/jamroom/infra
+            cd /opt/jamroom
+
+            # Download config files from repo
+            REPO_URL="https://raw.githubusercontent.com/AdelBeit/jamroom/main"
+            curl -fsSL "$REPO_URL/docker-compose.yml" -o docker-compose.yml
+            curl -fsSL "$REPO_URL/Caddyfile.template" -o Caddyfile.template
+            curl -fsSL "$REPO_URL/infra/jamroom.nomad" -o infra/jamroom.nomad
+
+            # Write .env
+            cat > .env <<EOF
+            REDIS_PASSWORD=$REDIS_PASSWORD
+            DOMAIN=$DOMAIN
+            EOF
+
+            # Pull latest images and start infrastructure
+            docker compose pull
+            docker compose up -d --remove-orphans
+
+            # Wait for Nomad to be ready
+            echo "Waiting for Nomad to be ready..."
+            for i in {1..30}; do
+              if curl -sf http://localhost:4646/v1/status/leader > /dev/null 2>&1; then
+                echo "✓ Nomad is ready"
+                break
+              fi
+              echo "Attempt $i/30 - waiting for Nomad..."
+              sleep 1
+            done
+
+            # Deploy app to Nomad
+            nomad job run \
+              -var "image_tag=$IMAGE_TAG" \
+              -var "redis_password=$REDIS_PASSWORD" \
+              infra/jamroom.nomad
+        env:
+          IMAGE_TAG: latest
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          DOMAIN: ${{ vars.DOMAIN }}
+
+
+      - name: Post-deploy health verification
+        run: |
+          echo "Waiting for service to be ready..."
+          for i in {1..30}; do
+            if curl -sf http://${{ secrets.DROPLET_HOST }}/api/health > /dev/null 2>&1; then
+              echo "✓ Health check passed"
+              exit 0
+            fi
+            echo "Attempt $i/30 - waiting for service..."
+            sleep 2
+          done
+          echo "✗ Health check failed after 30 attempts"
+          exit 1
