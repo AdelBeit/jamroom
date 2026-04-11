@@ -92,6 +92,7 @@ job "jamroom" {
 
         # Primary health check: validates HTTP + Redis connectivity
         check {
+          name     = "http-health"
           type     = "http"
           path     = "/api/health"
           interval = "5s"
@@ -100,6 +101,7 @@ job "jamroom" {
 
         # Secondary TCP check for liveness
         check {
+          name     = "tcp-liveness"
           type     = "tcp"
           interval = "10s"
           timeout  = "2s"
