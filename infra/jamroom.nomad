@@ -122,6 +122,7 @@ job "jamroom" {
           path     = "/api/health"
           interval = "5s"
           timeout  = "2s"
+          address_mode = "alloc" # Use the allocation's private IP
         }
 
         # Secondary TCP check for liveness
@@ -130,6 +131,7 @@ job "jamroom" {
           type     = "tcp"
           interval = "10s"
           timeout  = "2s"
+          address_mode = "alloc"
         }
 
         tags = [
