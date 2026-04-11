@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     ports:
       - "4646:4646"
-    command: agent -server -bootstrap-expect=1 -bind=0.0.0.0 -client -ui
+    command: agent -server -bootstrap-expect=1 -bind=0.0.0.0 -advertise=nomad -client=0.0.0.0 -ui
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - nomad_data:/nomad/data
