@@ -74,7 +74,8 @@ CI builds Docker image (`ghcr.io/adelbeit/jamroom-app:<sha>`), pushes to registr
 
 Rollback: tag an older commit with same pattern.
 
-### Production Ops
+<details>
+<summary><b>Production Ops</b></summary>
 
 **Status:**
 ```bash
@@ -101,6 +102,8 @@ nomad job status jamroom              # Job status
 consul catalog services               # Registered services
 curl http://<app-ip>:8080/api/health  # Health
 ```
+
+</details>
 
 ## Project Structure
 
