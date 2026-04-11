@@ -97,10 +97,30 @@ job "jamroom" {
       name = "jamroom-app"
       port = "http"
 
+      check {
+        name     = "http-health"
+        type     = "http"
+        path     = "/api/health"
+        interval = "10s"
+        timeout  = "2s"
+      }
+
+      check {
+        name     = "tcp-liveness"
+        type     = "tcp"
+        interval = "15s"
+        timeout  = "2s"
+      }
+
       tags = [
         "app",
         "jamroom"
       ]
+
+      check_restart {
+        limit       = 3
+        grace       = "60s"
+      }
     }
 
 
