@@ -16,10 +16,10 @@ import (
 )
 
 type ConsulService struct {
-	ID      string
-	Service string
-	Address string
-	Port    int
+	ID      string `json:"ServiceID"`
+	Service string `json:"ServiceName"`
+	Address string `json:"ServiceAddress"`
+	Port    int    `json:"ServicePort"`
 	Checks  []struct {
 		Status string
 	}
@@ -122,13 +122,18 @@ func (u *CaddyUpdater) getHealthyServices() ([]ConsulService, error) {
 	}
 	defer resp.Body.Close()
 
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
 	if resp.StatusCode != 200 {
-		body, _ := ioutil.ReadAll(resp.Body)
 		return nil, fmt.Errorf("consul returned %d: %s", resp.StatusCode, string(body))
 	}
 
 	var services []ConsulService
-	if err := json.NewDecoder(resp.Body).Decode(&services); err != nil {
+	err = json.Unmarshal(body, &services)
+	if err != nil {
 		return nil, err
 	}
 
