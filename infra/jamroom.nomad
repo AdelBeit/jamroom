@@ -86,9 +86,7 @@ job "jamroom" {
     count = 1
 
     network {
-      port "http" {
-        static = 8080
-      }
+      port "http" {}
     }
 
     task "jamroom" {
@@ -124,17 +122,16 @@ job "jamroom" {
         ]
 
         check_restart {
-          limit       = 3
-          grace       = "60s"
+          limit = 3
+          grace = "60s"
         }
       }
 
       env {
-        PORT              = "8080"
-        SERVICE_ADDRESS   = "jamroom-app"
-        CONSUL_HTTP_ADDR  = "consul.service.consul:8500"
-        REDIS_URL         = var.redis_url
-        REDIS_PASSWORD    = var.redis_password
+        PORT             = "${NOMAD_PORT_http}"
+        CONSUL_HTTP_ADDR = "consul.service.consul:8500"
+        REDIS_URL        = var.redis_url
+        REDIS_PASSWORD   = var.redis_password
       }
 
       resources {
@@ -142,7 +139,6 @@ job "jamroom" {
         memory = 512
       }
 
-      # Graceful shutdown: stop accepting connections, wait for existing sockets to close
       shutdown_delay = "30s"
       kill_timeout   = "10s"
     }

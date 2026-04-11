@@ -41,6 +41,61 @@ rm cni-plugins.tgz
 # Create directories
 mkdir -p /etc/nomad.d /var/nomad /opt/jamroom /opt/jamroom/infra /opt/jamroom/redis_data
 
+# --- Consul DNS forwarding ---
+# Host-mode Nomad tasks share the host's /etc/resolv.conf, so *.service.consul
+# must resolve on the host itself. dnsmasq listens on 127.0.0.1:53 and forwards
+# .consul queries to the central Consul agent's DNS port (8600), which is
+# exposed on the server droplet via docker-compose.yml.
+echo "Installing dnsmasq for Consul DNS forwarding..."
+apt-get update -qq
+DEBIAN_FRONTEND=noninteractive apt-get install -y dnsmasq
+
+# Server node talks to its own Consul; clients go over the network.
+if [ "$2" = "server" ]; then
+  CONSUL_DNS_TARGET="127.0.0.1"
+else
+  CONSUL_DNS_TARGET="$CONSUL_IP"
+fi
+
+# Free :53 from systemd-resolved's stub listener so dnsmasq can bind it.
+mkdir -p /etc/systemd/resolved.conf.d
+cat > /etc/systemd/resolved.conf.d/consul.conf <<'EOF'
+[Resolve]
+DNSStubListener=no
+EOF
+systemctl restart systemd-resolved
+
+# Point host resolver at dnsmasq. Replace the managed symlink with a real file.
+rm -f /etc/resolv.conf
+cat > /etc/resolv.conf <<'EOF'
+nameserver 127.0.0.1
+options edns0 trust-ad
+EOF
+
+cat > /etc/dnsmasq.d/10-consul.conf <<EOF
+# Route .consul queries to the central Consul DNS port
+server=/consul/${CONSUL_DNS_TARGET}#8600
+# Don't read /etc/resolv.conf (would loop back to ourselves)
+no-resolv
+# Upstream for everything else
+server=1.1.1.1
+server=8.8.8.8
+# Host-mode containers share the host network namespace, so loopback is enough
+listen-address=127.0.0.1
+bind-interfaces
+cache-size=1000
+EOF
+
+systemctl enable dnsmasq
+systemctl restart dnsmasq
+
+# Sanity check: confirm .consul resolves (non-fatal — Consul may not be up yet on first run)
+if command -v dig &> /dev/null; then
+  dig +short +timeout=2 consul.service.consul @127.0.0.1 || echo "  (consul.service.consul not resolvable yet — expected if Consul isn't up)"
+fi
+# --- end Consul DNS forwarding ---
+
+
 # Download infrastructure blueprints
 echo "Downloading infrastructure blueprints..."
 REPO_URL="https://raw.githubusercontent.com/AdelBeit/jamroom/main"
