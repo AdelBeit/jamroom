@@ -40,7 +40,6 @@ rm cni-plugins.tgz
 
 # Create directories
 mkdir -p /etc/nomad.d /var/nomad /opt/jamroom /opt/jamroom/infra /opt/jamroom/redis_data
-chown -R 999:999 /opt/jamroom/redis_data
 
 # Download infrastructure blueprints
 echo "Downloading infrastructure blueprints..."

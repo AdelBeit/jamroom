@@ -20,6 +20,25 @@ job "jamroom" {
       source    = "redis_data"
     }
 
+    # Explicitly fix permissions before Redis starts
+    task "fix-permissions" {
+      driver = "docker"
+      lifecycle {
+        hook    = "prestart"
+        sidecar = false
+      }
+      config {
+        image = "alpine:latest"
+        command = "sh"
+        args = ["-c", "chown -R 999:999 /data"]
+      }
+      volume_mount {
+        volume      = "redis_data"
+        destination = "/data"
+        read_only   = false
+      }
+    }
+
     task "redis" {
       driver = "docker"
 
