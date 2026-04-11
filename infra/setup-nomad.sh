@@ -29,12 +29,6 @@ nomad version
 # Create directories
 mkdir -p /etc/nomad.d /var/nomad /opt/jamroom
 
-# Clone repo (for Nomad job specs, Caddyfile, docker-compose config)
-if [ ! -d /opt/jamroom/.git ]; then
-  cd /opt/jamroom
-  git clone https://github.com/AdelBeit/jamroom.git .
-fi
-
 # Create config for SERVER (central droplet)
 if [ "$2" = "server" ]; then
   echo "Configuring Nomad SERVER..."

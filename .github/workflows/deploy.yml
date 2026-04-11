@@ -47,18 +47,28 @@ jobs:
           key: ${{ secrets.DROPLET_SSH_KEY }}
           envs: IMAGE_TAG,REDIS_PASSWORD,DOMAIN
           script: |
+            mkdir -p /opt/jamroom/infra
             cd /opt/jamroom
+
+            # Download config files from repo
+            REPO_URL="https://raw.githubusercontent.com/AdelBeit/jamroom/main"
+            curl -fsSL "$REPO_URL/docker-compose.yml" -o docker-compose.yml
+            curl -fsSL "$REPO_URL/Caddyfile.template" -o Caddyfile.template
+            curl -fsSL "$REPO_URL/infra/jamroom.nomad" -o infra/jamroom.nomad
+
+            # Write .env
             cat > .env <<EOF
             REDIS_PASSWORD=$REDIS_PASSWORD
             DOMAIN=$DOMAIN
             EOF
+
+            # Pull latest images and start infrastructure
             docker compose pull
             docker compose up -d
 
             # Deploy app to Nomad
             nomad job run \
               -var "image_tag=$IMAGE_TAG" \
-              -var "redis_url=redis://jamroom-redis.service.consul:6379" \
               -var "redis_password=$REDIS_PASSWORD" \
               infra/jamroom.nomad
         env:

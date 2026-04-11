@@ -126,11 +126,6 @@ variable "image_tag" {
   description = "Docker image tag for the jamroom app"
 }
 
-variable "redis_url" {
-  type        = string
-  description = "Redis connection URL"
-}
-
 variable "redis_password" {
   type        = string
   description = "Redis password"
