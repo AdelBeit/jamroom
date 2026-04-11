@@ -86,11 +86,28 @@ docker compose up
    consul leave
    ```
 
+### Drain Behavior & Health Checks
+
+The app uses graceful shutdown to ensure WebSocket connections finish properly:
+
+1. **Drain initiated**: Node drain or job update stops accepting new connections
+2. **Shutdown window**: 30 seconds for existing connections to close gracefully
+3. **Kill timeout**: After 30s + 10s buffer, forcefully terminates the process
+4. **Health validation**: `/api/health` checks HTTP 200 + Redis connectivity
+5. **Automatic rollback**: If health checks fail for 3 consecutive intervals (15s), Nomad auto-reverts the job
+
+**Example: Node drain with graceful shutdown**
+```bash
+# Stop accepting new connections, but let existing sockets finish (2 min max)
+nomad node drain -enable -deadline=2m <node-id>
+```
+
 ### Monitoring
 
 - Check job status: `nomad job status jamroom`
 - View allocations: `nomad alloc status <alloc-id>`
 - Logs: `nomad alloc logs <alloc-id> jamroom` (app) or `jamroom-redis` (redis)
 - Consul services: `consul catalog services` or UI at `http://<consul-ip>:8500`
+- Health check: `curl http://<app-ip>:8080/api/health`
 
 [Figma File](https://www.figma.com/file/mL6jPwkLXq2MvPu1FzyQnt/Music-App?node-id=0%3A1)

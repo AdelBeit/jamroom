@@ -3,6 +3,14 @@ job "jamroom" {
   type        = "service"
   priority    = 80
 
+  update {
+    max_parallel     = 1
+    min_healthy_time = "10s"
+    healthy_deadline = "5m"
+    auto_revert      = true
+    canary           = 0
+  }
+
   group "redis" {
     count = 1
 
@@ -68,10 +76,15 @@ job "jamroom" {
         memory = 512
       }
 
+      # Graceful shutdown: stop accepting connections, wait for existing sockets to close
+      shutdown_delay = "30s"
+      kill_timeout   = "10s"
+
       service {
         name = "jamroom-app"
         port = "http"
 
+        # Primary health check: validates HTTP + Redis connectivity
         check {
           type     = "http"
           path     = "/api/health"
@@ -79,6 +92,7 @@ job "jamroom" {
           timeout  = "2s"
         }
 
+        # Secondary TCP check for liveness
         check {
           type     = "tcp"
           interval = "10s"
@@ -89,6 +103,12 @@ job "jamroom" {
           "app",
           "jamroom"
         ]
+
+        # Deregister service on unhealthy checks to prevent routing to failed instances
+        check_restart {
+          limit       = 3
+          grace       = "30s"
+        }
       }
     }
 
