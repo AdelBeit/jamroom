@@ -148,6 +148,41 @@ http://<central-ip>:8500/ui/
 
 ---
 
+## Remote UI Access
+
+Access Nomad and Consul UIs from your local machine via SSH port forwarding:
+
+**Consul UI (port 8500):**
+```bash
+ssh -L 8500:localhost:8500 root@<central-droplet-ip>
+```
+Then open: `http://localhost:8500/ui/`
+
+**Nomad UI (port 4646):**
+```bash
+ssh -L 4646:localhost:4646 root@<central-droplet-ip>
+```
+Then open: `http://localhost:4646/ui/`
+
+**Access both at once:**
+```bash
+ssh -L 8500:localhost:8500 -L 4646:localhost:4646 root@<central-droplet-ip>
+```
+
+Keep the SSH connection open while using the UIs. Add to `~/.ssh/config` for permanent access:
+```
+Host jamroom-central
+  HostName <central-droplet-ip>
+  User root
+  IdentityFile ~/.ssh/id_rsa
+  LocalForward 8500 localhost:8500
+  LocalForward 4646 localhost:4646
+```
+
+Then: `ssh jamroom-central` and both UIs are accessible at `localhost:8500` and `localhost:4646`.
+
+---
+
 ## Troubleshooting
 
 ### Nomad client not showing up
