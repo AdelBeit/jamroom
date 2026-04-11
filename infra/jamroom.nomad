@@ -96,7 +96,9 @@ job "jamroom" {
     service {
       name = "jamroom-app"
       port = "http"
+      address_mode = "alloc"
 
+      # Primary health check: validates HTTP + Redis connectivity
       check {
         name     = "http-health"
         type     = "http"
@@ -105,6 +107,7 @@ job "jamroom" {
         timeout  = "2s"
       }
 
+      # Secondary TCP check for liveness
       check {
         name     = "tcp-liveness"
         type     = "tcp"
@@ -117,6 +120,7 @@ job "jamroom" {
         "jamroom"
       ]
 
+      # Deregister service on unhealthy checks to prevent routing to failed instances
       check_restart {
         limit       = 3
         grace       = "60s"
