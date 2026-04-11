@@ -25,6 +25,12 @@ job "jamroom" {
           "--requirepass", var.redis_password,
           "--appendonly", "yes"
         ]
+        mount {
+          type     = "bind"
+          target   = "/data"
+          source   = "/opt/jamroom/redis_data"
+          readonly = false
+        }
       }
 
       resources {
@@ -67,7 +73,7 @@ job "jamroom" {
         PORT              = "8080"
         SERVICE_ADDRESS   = "jamroom-app"
         CONSUL_HTTP_ADDR  = "consul.service.consul:8500"
-        REDIS_URL         = "redis://jamroom-redis.service.consul:6379"
+        REDIS_URL         = var.redis_url
         REDIS_PASSWORD    = var.redis_password
       }
 
@@ -124,6 +130,12 @@ job "jamroom" {
 variable "image_tag" {
   type        = string
   description = "Docker image tag for the jamroom app"
+}
+
+variable "redis_url" {
+  type        = string
+  description = "Redis connection URL"
+  default     = "redis://jamroom-redis.service.consul:6379"
 }
 
 variable "redis_password" {

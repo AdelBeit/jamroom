@@ -30,8 +30,16 @@ mv nomad /usr/local/bin/
 rm nomad_1.7.0_linux_amd64.zip
 nomad version
 
+# Install CNI plugins (required for bridge networking)
+echo "Installing CNI plugins..."
+CNI_VERSION="v1.3.0"
+mkdir -p /opt/cni/bin
+wget -q -O cni-plugins.tgz "https://github.com/containernetworking/plugins/releases/download/${CNI_VERSION}/cni-plugins-linux-amd64-${CNI_VERSION}.tgz"
+tar -xzf cni-plugins.tgz -C /opt/cni/bin
+rm cni-plugins.tgz
+
 # Create directories
-mkdir -p /etc/nomad.d /var/nomad /opt/jamroom
+mkdir -p /etc/nomad.d /var/nomad /opt/jamroom /opt/jamroom/redis_data
 
 # Create config for SERVER (central droplet)
 if [ "$2" = "server" ]; then
