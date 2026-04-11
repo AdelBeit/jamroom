@@ -11,11 +11,15 @@ fi
 echo "=== Nomad Setup ==="
 echo "Consul server: $CONSUL_IP"
 
-# Install Docker
-echo "Installing Docker..."
-curl -fsSL https://get.docker.com -o get-docker.sh
-sh get-docker.sh
-rm get-docker.sh
+# Install Docker (skip if already installed)
+if ! command -v docker &> /dev/null; then
+  echo "Installing Docker..."
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sh get-docker.sh
+  rm get-docker.sh
+else
+  echo "Docker already installed, skipping..."
+fi
 
 # Install Nomad
 echo "Installing Nomad..."
