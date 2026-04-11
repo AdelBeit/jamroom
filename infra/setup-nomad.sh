@@ -61,6 +61,10 @@ server {
 
 client {
   enabled = true
+  host_volume "redis_data" {
+    path      = "/opt/jamroom/redis_data"
+    read_only = false
+  }
 }
 
 consul {

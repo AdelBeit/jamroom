@@ -14,6 +14,12 @@ job "jamroom" {
   group "redis" {
     count = 1
 
+    volume "redis_data" {
+      type      = "host"
+      read_only = false
+      source    = "redis_data"
+    }
+
     task "redis" {
       driver = "docker"
 
@@ -25,12 +31,12 @@ job "jamroom" {
           "--requirepass", var.redis_password,
           "--appendonly", "yes"
         ]
-        mount {
-          type     = "bind"
-          target   = "/data"
-          source   = "/opt/jamroom/redis_data"
-          readonly = false
-        }
+      }
+
+      volume_mount {
+        volume      = "redis_data"
+        destination = "/data"
+        read_only   = false
       }
 
       resources {
