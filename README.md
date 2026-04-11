@@ -34,7 +34,63 @@ docker compose up
 ## Deploy
 
 - CI builds and pushes `ghcr.io/adelbeit/jamroom:<sha>` on each `main` push.
-- Deploy SSH writes `IMAGE_TAG=<sha>` to `/opt/jamroom/.env`, then runs `docker compose pull app && docker compose up -d`.
-- Rollback: set `IMAGE_TAG` to a prior SHA and run `docker compose up -d`.
+- Tag a commit with `deploy-*` to trigger the deploy workflow (e.g., `git tag deploy-v1.0 && git push --tags`).
+- Deploy to Nomad: workflow runs `nomad job run infra/jamroom.nomad` with the image tag.
+- Rollback: tag a prior commit and push the tag to re-run deployment.
+
+## Ops Runbook
+
+### Adding a Node to the Cluster
+
+1. **Install Nomad and Consul** on the new node (assumes base OS is configured)
+   ```bash
+   # Follow official Nomad/Consul installation guides
+   # Ensure agents can reach the cluster network
+   ```
+
+2. **Start Nomad Agent** (client mode)
+   ```bash
+   nomad agent -config=/etc/nomad.d/nomad.hcl
+   ```
+
+3. **Start Consul Agent** (client mode)
+   ```bash
+   consul agent -config-dir=/etc/consul.d
+   ```
+
+4. **Verify node joined cluster**
+   ```bash
+   nomad node status
+   consul members
+   ```
+
+### Removing a Node from the Cluster
+
+1. **Drain the node** (gracefully stop allocations)
+   ```bash
+   nomad node drain -enable -deadline=5m <node-id>
+   ```
+
+2. **Monitor drain progress**
+   ```bash
+   nomad node status <node-id>
+   ```
+
+3. **Stop Nomad Agent**
+   ```bash
+   systemctl stop nomad
+   ```
+
+4. **Leave Consul cluster**
+   ```bash
+   consul leave
+   ```
+
+### Monitoring
+
+- Check job status: `nomad job status jamroom`
+- View allocations: `nomad alloc status <alloc-id>`
+- Logs: `nomad alloc logs <alloc-id> jamroom` (app) or `jamroom-redis` (redis)
+- Consul services: `consul catalog services` or UI at `http://<consul-ip>:8500`
 
 [Figma File](https://www.figma.com/file/mL6jPwkLXq2MvPu1FzyQnt/Music-App?node-id=0%3A1)
