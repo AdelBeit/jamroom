@@ -46,6 +46,18 @@ jobs:
             docker compose pull app
             docker compose up -d
 
+      - name: Deploy to Nomad
+        if: ${{ env.NOMAD_ADDR != '' }}
+        run: |
+          nomad job run \
+            -var "image_tag=${{ github.sha }}" \
+            -var "redis_url=${{ secrets.REDIS_URL }}" \
+            -var "redis_password=${{ secrets.REDIS_PASSWORD }}" \
+            infra/jamroom.nomad
+        env:
+          NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
+          NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
+
       - name: Post-deploy health verification
         run: |
           echo "Waiting for service to be ready..."
