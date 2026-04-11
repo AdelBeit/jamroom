@@ -86,6 +86,48 @@ job "jamroom" {
   group "app" {
     count = 1
 
+    network {
+      mode = "bridge"
+      port "http" {
+        static = 8080
+      }
+    }
+
+    service {
+      name = "jamroom-app"
+      port = "http"
+
+      # Primary health check: validates HTTP + Redis connectivity
+      check {
+        name     = "http-health"
+        type     = "http"
+        path     = "/api/health"
+        interval = "5s"
+        timeout  = "2s"
+        address_mode = "alloc" # Now allowed at the group level
+      }
+
+      # Secondary TCP check for liveness
+      check {
+        name     = "tcp-liveness"
+        type     = "tcp"
+        interval = "10s"
+        timeout  = "2s"
+        address_mode = "alloc"
+      }
+
+      tags = [
+        "app",
+        "jamroom"
+      ]
+
+      # Deregister service on unhealthy checks to prevent routing to failed instances
+      check_restart {
+        limit       = 3
+        grace       = "30s"
+      }
+    }
+
     task "jamroom" {
       driver = "docker"
 
@@ -110,48 +152,6 @@ job "jamroom" {
       # Graceful shutdown: stop accepting connections, wait for existing sockets to close
       shutdown_delay = "30s"
       kill_timeout   = "10s"
-
-      service {
-        name = "jamroom-app"
-        port = "http"
-
-        # Primary health check: validates HTTP + Redis connectivity
-        check {
-          name     = "http-health"
-          type     = "http"
-          path     = "/api/health"
-          interval = "5s"
-          timeout  = "2s"
-          address_mode = "alloc" # Use the allocation's private IP
-        }
-
-        # Secondary TCP check for liveness
-        check {
-          name     = "tcp-liveness"
-          type     = "tcp"
-          interval = "10s"
-          timeout  = "2s"
-          address_mode = "alloc"
-        }
-
-        tags = [
-          "app",
-          "jamroom"
-        ]
-
-        # Deregister service on unhealthy checks to prevent routing to failed instances
-        check_restart {
-          limit       = 3
-          grace       = "30s"
-        }
-      }
-    }
-
-    network {
-      mode = "bridge"
-      port "http" {
-        static = 8080
-      }
     }
   }
 }
