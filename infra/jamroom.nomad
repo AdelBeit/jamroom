@@ -59,7 +59,7 @@ job "jamroom" {
       driver = "docker"
 
       config {
-        image = "ghcr.io/adelbeit/jamroom:${var.image_tag}"
+        image = "ghcr.io/adelbeit/jamroom-app:${var.image_tag}"
         ports = ["http"]
       }
 
