@@ -1,113 +1,127 @@
-## Jamroom
+# Jamroom
 
-Virtual music jam room PWA. Made for mobile. Gather your friends and play the keyboard or the drums together.
+Real-time multiplayer music jam room PWA. Play instruments together with friends online.
 
-[Play Here](https://jam.adelbeit.com)
+[Play](https://jam.adelbeit.com)
 
-## Features:
+## Overview
 
-- PWA
-- Customizable drumpads
-- Multiplayer, invite your friends through the users dropdown
-- Scrollable full keyboard
-- Playable offline
+Web-based collaboration app for live musical performance. Real-time audio sync via Web Audio API, distributed state via Redis pub/sub, orchestrated on Nomad with service discovery via Consul.
 
-Powered by:
+## Tech Stack
 
-- Typescript
-- ReactJS
-- NextJS
-- Socket.io (Websocket)
-- Redis (pub/sub adapter for multi-instance broadcasting)
-- Docker / Docker Compose
-- ToneJS (Web Audio API)
-- Zustand
+**Client:** React 18, Next.js 12, TypeScript, Zustand (state), ToneJS (audio synthesis), Socket.io-client
 
-## Running locally
+**Server:** Node.js, Next.js API routes, Socket.io (WebSocket + fallbacks)
+
+**Infrastructure:** Redis (session pub/sub), Nomad (scheduling), Consul (service discovery), Caddy (reverse proxy + auto-HTTPS)
+
+**Deployment:** Docker, GitHub Actions (CI/CD)
+
+## Architecture
+
+```
+Clients (React + Socket.io)
+    ↓ WebSocket
+Next.js Server (Socket.io handler)
+    ↓ pub/sub
+Redis (broadcasts across instances)
+```
+
+Each client maintains local Zustand state. User actions (note played, user joined) emit via Socket.io → server routes to Redis pub/sub → all listening clients receive update → local state + audio sync.
+
+Multi-instance scaling: Redis adapter keeps app instances synchronized without sticky sessions. State is ephemeral (no persistence).
+
+## Quick Start
+
+### Local Development
 
 ```bash
 cp .env.example .env
-# fill in REDIS_PASSWORD and REDIS_URL in .env
-docker compose up
+# Set REDIS_PASSWORD and REDIS_URL in .env
+
+docker compose up      # Starts: app, Redis, Consul, Nomad, Caddy
+yarn dev               # Run app (separate terminal)
 ```
 
-## Deploy
+Available at `http://localhost:3000`
 
-- CI builds and pushes `ghcr.io/adelbeit/jamroom-app:<sha>` (and `:latest`) on each `main` push.
-- Tag a commit with `deploy-*` to trigger the deploy workflow (e.g., `git tag deploy-v1.0 && git push --tags`).
-- Deploy to Nomad: workflow runs `nomad job run infra/jamroom.nomad` with the image tag.
-- Rollback: tag a prior commit and push the tag to re-run deployment.
+### Scripts
 
-## Ops Runbook
-
-### Adding a Node to the Cluster
-
-1. **Install Nomad and Consul** on the new node (assumes base OS is configured)
-   ```bash
-   # Follow official Nomad/Consul installation guides
-   # Ensure agents can reach the cluster network
-   ```
-
-2. **Start Nomad Agent** (client mode)
-   ```bash
-   nomad agent -config=/etc/nomad.d/nomad.hcl
-   ```
-
-3. **Start Consul Agent** (client mode)
-   ```bash
-   consul agent -config-dir=/etc/consul.d
-   ```
-
-4. **Verify node joined cluster**
-   ```bash
-   nomad node status
-   consul members
-   ```
-
-### Removing a Node from the Cluster
-
-1. **Drain the node** (gracefully stop allocations)
-   ```bash
-   nomad node drain -enable -deadline=5m <node-id>
-   ```
-
-2. **Monitor drain progress**
-   ```bash
-   nomad node status <node-id>
-   ```
-
-3. **Stop Nomad Agent**
-   ```bash
-   systemctl stop nomad
-   ```
-
-4. **Leave Consul cluster**
-   ```bash
-   consul leave
-   ```
-
-### Drain Behavior & Health Checks
-
-The app uses graceful shutdown to ensure WebSocket connections finish properly:
-
-1. **Drain initiated**: Node drain or job update stops accepting new connections
-2. **Shutdown window**: 30 seconds for existing connections to close gracefully
-3. **Kill timeout**: After 30s + 10s buffer, forcefully terminates the process
-4. **Health validation**: `/api/health` checks HTTP 200 + Redis connectivity
-5. **Automatic rollback**: If health checks fail for 3 consecutive intervals (15s), Nomad auto-reverts the job
-
-**Example: Node drain with graceful shutdown**
 ```bash
-# Stop accepting new connections, but let existing sockets finish (2 min max)
-nomad node drain -enable -deadline=2m <node-id>
+yarn dev              # Build + Consul init
+yarn dev:next         # Next.js dev only
+yarn build            # Production build
+yarn start            # Production server
+yarn lint             # ESLint
+yarn test:smoke       # Smoke tests
 ```
 
-### Monitoring
+## Deployment
 
-- Check job status: `nomad job status jamroom`
-- View allocations: `nomad alloc status <alloc-id>`
-- Logs: `nomad alloc logs <alloc-id> jamroom` (app) or `jamroom-redis` (redis)
-- Consul services: `consul catalog services` or UI at `http://<consul-ip>:8500`
-- Health check: `curl http://<app-ip>:8080/api/health`
+### Release
 
-[Figma File](https://www.figma.com/file/mL6jPwkLXq2MvPu1FzyQnt/Music-App?node-id=0%3A1)
+Tag a commit with `deploy-*` prefix to trigger CI:
+
+```bash
+git tag deploy-v1.0.0
+git push --tags
+```
+
+CI builds Docker image (`ghcr.io/adelbeit/jamroom-app:<sha>`), pushes to registry, triggers Nomad job with image tag.
+
+Rollback: tag an older commit with same pattern.
+
+### Production Ops
+
+**Status:**
+```bash
+nomad job status jamroom
+nomad alloc status <alloc-id>
+nomad alloc logs <alloc-id> jamroom
+```
+
+**Add node:**
+1. Install Nomad + Consul agents (client mode)
+2. Verify: `nomad node status`, `consul members`
+
+**Remove node:**
+```bash
+nomad node drain -enable -deadline=2m <node-id>
+systemctl stop nomad && consul leave
+```
+
+**Graceful shutdown:** 30s drain window for WebSocket close, 40s kill timeout. Health check (`/api/health`) validates HTTP 200 + Redis. Auto-rollback if 3 consecutive health checks fail.
+
+**Monitor:**
+```bash
+nomad job status jamroom              # Job status
+consul catalog services               # Registered services
+curl http://<app-ip>:8080/api/health  # Health
+```
+
+## Project Structure
+
+```
+pages/               Next.js pages + API routes
+├── api/socket.ts   WebSocket handler
+└── api/health.ts   Health check
+src/
+├── components/     React components
+├── screens/        Full-page views
+├── hooks/          React hooks
+├── utils/          Helpers + Zustand stores
+└── types.d.ts      TypeScript definitions
+public/             Static assets
+infra/              Infrastructure as Code
+├── jamroom.nomad   Nomad job spec
+└── caddy-updater/  Service discovery integration
+__tests__/          Test suite
+docker-compose.yml  Local dev services
+dockerfile          Production image
+```
+
+## Resources
+
+- [Design](https://www.figma.com/file/mL6jPwkLXq2MvPu1FzyQnt/Music-App?node-id=0%3A1)
+- [Setup Guide](./infra/SETUP.md)
