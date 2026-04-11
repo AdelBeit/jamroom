@@ -1,4 +1,26 @@
+version: '3.9'
+
 services:
+  nomad:
+    image: hashicorp/nomad:latest
+    restart: unless-stopped
+    ports:
+      - "4646:4646"
+    command: agent -server -bootstrap-expect=1 -bind=0.0.0.0 -client=0.0.0.0 -ui
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - nomad_data:/nomad/data
+    environment:
+      - NOMAD_ADDR=http://localhost:4646
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4646/v1/status/leader"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+    depends_on:
+      consul:
+        condition: service_healthy
+
   consul:
     image: hashicorp/consul:1.20.1
     restart: unless-stopped
@@ -10,43 +32,8 @@ services:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
       - consul_data:/consul/data
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 512M
-        reservations:
-          cpus: '0.5'
-          memory: 256M
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
-      interval: 5s
-      timeout: 2s
-      retries: 3
-
-  app:
-    image: ghcr.io/adelbeit/jamroom/jamroom:latest
-    restart: unless-stopped
-    environment:
-      - REDIS_URL=${REDIS_URL}
-      - CONSUL_HTTP_ADDR=consul:8500
-      - PORT=8080
-      - SERVICE_ADDRESS=app
-    depends_on:
-      redis:
-        condition: service_healthy
-      consul:
-        condition: service_started
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 512M
-        reservations:
-          cpus: '0.5'
-          memory: 256M
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
       interval: 5s
       timeout: 2s
       retries: 3
@@ -54,6 +41,8 @@ services:
   redis:
     image: redis:7.2-alpine
     restart: unless-stopped
+    ports:
+      - "6379:6379"
     command: redis-server --requirepass ${REDIS_PASSWORD}
     deploy:
       resources:
@@ -68,9 +57,11 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+    volumes:
+      - redis_data:/data
 
   caddy:
-    image: ghcr.io/adelbeit/jamroom/caddy:latest
+    image: ghcr.io/adelbeit/jamroom-caddy:latest
     restart: unless-stopped
     ports:
       - "80:80"
@@ -81,7 +72,7 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     environment:
-      - DOMAIN
+      - DOMAIN=${DOMAIN}
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_NAME=jamroom-app
       - CADDYFILE_TEMPLATE=/etc/caddy/Caddyfile.template
@@ -97,10 +88,10 @@ services:
     depends_on:
       consul:
         condition: service_healthy
-      app:
-        condition: service_healthy
 
 volumes:
+  nomad_data:
   caddy_data:
   caddy_config:
   consul_data:
+  redis_data:
