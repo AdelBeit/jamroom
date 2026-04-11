@@ -27,7 +27,13 @@ rm nomad_1.7.0_linux_amd64.zip
 nomad version
 
 # Create directories
-mkdir -p /etc/nomad.d /var/nomad
+mkdir -p /etc/nomad.d /var/nomad /opt/jamroom
+
+# Clone repo (for Nomad job specs, Caddyfile, docker-compose config)
+if [ ! -d /opt/jamroom/.git ]; then
+  cd /opt/jamroom
+  git clone https://github.com/AdelBeit/jamroom.git .
+fi
 
 # Create config for SERVER (central droplet)
 if [ "$2" = "server" ]; then
