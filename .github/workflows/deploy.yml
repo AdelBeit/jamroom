@@ -45,3 +45,17 @@ jobs:
             printf "IMAGE_TAG=%s\n" "${{ github.sha }}" > .env
             docker compose pull app
             docker compose up -d
+
+      - name: Post-deploy health verification
+        run: |
+          echo "Waiting for service to be ready..."
+          for i in {1..30}; do
+            if curl -sf http://${{ secrets.DROPLET_HOST }}/api/health > /dev/null 2>&1; then
+              echo "✓ Health check passed"
+              exit 0
+            fi
+            echo "Attempt $i/30 - waiting for service..."
+            sleep 2
+          done
+          echo "✗ Health check failed after 30 attempts"
+          exit 1
