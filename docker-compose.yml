@@ -26,10 +26,6 @@ services:
 
   app:
     image: ghcr.io/adelbeit/jamroom/jamroom:latest
-    # build:
-    #   context: .
-    #   dockerfile: dockerfile
-    #   target: ${BUILD_TARGET:-runner}
     restart: unless-stopped
     environment:
       - REDIS_URL=${REDIS_URL}
@@ -75,9 +71,6 @@ services:
 
   caddy:
     image: ghcr.io/adelbeit/jamroom/caddy:latest
-    # build:
-    #   context: .
-    #   dockerfile: infra/caddy-updater/Dockerfile
     restart: unless-stopped
     ports:
       - "80:80"
