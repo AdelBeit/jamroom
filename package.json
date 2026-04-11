@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev:next": "next dev",
     "build": "next build",
-    "start": "ts-node server.ts",
+    "start": "next start",
+    "start:init": "node init-consul.js",
+    "dev": "yarn build && yarn start:init",
     "lint": "next lint",
-    "docker:start": "ts-node server.ts",
+    "docker:start": "node init-consul.js",
     "prod": "yarn && yarn build && yarn start",
     "test:smoke": "jest --testPathPattern=smoke --forceExit --detectOpenHandles",
-    "docker:reset": "docker compose down && docker compose build && docker compose up -d"
+    "docker:reset": "docker compose down && docker compose build --no-cache && docker compose up -d && docker compose logs app -f"
   },
   "resolutions": {
     "socket.io-adapter": "2.5.6"
