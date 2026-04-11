@@ -129,5 +129,4 @@ variable "image_tag" {
 variable "redis_password" {
   type        = string
   description = "Redis password"
-  sensitive   = true
 }
