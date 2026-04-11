@@ -1,41 +1,4 @@
 services:
-  nomad:
-    image: hashicorp/nomad:latest
-    restart: unless-stopped
-    ports:
-      - "4646:4646"
-    command: agent -server -bootstrap-expect=1 -bind=0.0.0.0 -advertise=nomad -client=0.0.0.0 -ui
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - nomad_data:/nomad/data
-    environment:
-      - NOMAD_ADDR=http://localhost:4646
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4646/v1/status/leader"]
-      interval: 5s
-      timeout: 2s
-      retries: 3
-    depends_on:
-      consul:
-        condition: service_healthy
-
-  consul:
-    image: hashicorp/consul:1.20.1
-    restart: unless-stopped
-    ports:
-      - "8500:8500"
-      - "8600:8600/udp"
-    command: agent -server -ui -node=consul-server -bootstrap-expect=1 -client=0.0.0.0
-    environment:
-      - CONSUL_BIND_INTERFACE=eth0
-    volumes:
-      - consul_data:/consul/data
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
-      interval: 5s
-      timeout: 2s
-      retries: 3
-
   redis:
     image: redis:7.2-alpine
     restart: unless-stopped
@@ -88,8 +51,6 @@ services:
         condition: service_healthy
 
 volumes:
-  nomad_data:
   caddy_data:
   caddy_config:
-  consul_data:
   redis_data:
