@@ -30,6 +30,8 @@ jobs:
           context: .
           file: dockerfile
           push: true
+          build-args: |
+            NEXT_PUBLIC_DEBUG=${{ vars.NEXT_PUBLIC_DEBUG }}
           tags: |
             ghcr.io/adelbeit/jamroom-app:${{ github.sha }}
             ghcr.io/adelbeit/jamroom-app:latest
@@ -55,7 +57,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          DOMAIN: ${{ secrets.DOMAIN }}
+          DOMAIN: ${{ vars.DOMAIN }}
 
       - name: Deploy to Nomad
         if: ${{ secrets.NOMAD_ADDR != '' }}
@@ -67,7 +69,6 @@ jobs:
             infra/jamroom.nomad
         env:
           NOMAD_ADDR: ${{ secrets.NOMAD_ADDR }}
-          NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
 
       - name: Post-deploy health verification
         run: |
