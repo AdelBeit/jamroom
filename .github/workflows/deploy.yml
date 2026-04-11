@@ -43,20 +43,26 @@ jobs:
           host: ${{ secrets.DROPLET_HOST }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
-          envs: IMAGE_TAG
+          envs: IMAGE_TAG,REDIS_PASSWORD,DOMAIN
           script: |
             cd /opt/jamroom
-            docker compose pull app
+            cat > .env <<EOF
+            REDIS_PASSWORD=$REDIS_PASSWORD
+            DOMAIN=$DOMAIN
+            EOF
+            docker compose pull
             docker compose up -d
         env:
           IMAGE_TAG: ${{ github.sha }}
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          DOMAIN: ${{ secrets.DOMAIN }}
 
       - name: Deploy to Nomad
-        if: ${{ env.NOMAD_ADDR != '' }}
+        if: ${{ secrets.NOMAD_ADDR != '' }}
         run: |
           nomad job run \
             -var "image_tag=${{ github.sha }}" \
-            -var "redis_url=${{ secrets.REDIS_URL }}" \
+            -var "redis_url=redis://jamroom-redis.service.consul:6379" \
             -var "redis_password=${{ secrets.REDIS_PASSWORD }}" \
             infra/jamroom.nomad
         env:
