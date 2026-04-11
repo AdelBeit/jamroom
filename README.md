@@ -33,7 +33,7 @@ docker compose up
 
 ## Deploy
 
-- CI builds and pushes `ghcr.io/adelbeit/jamroom:<sha>` on each `main` push.
+- CI builds and pushes `ghcr.io/adelbeit/jamroom-app:<sha>` (and `:latest`) on each `main` push.
 - Tag a commit with `deploy-*` to trigger the deploy workflow (e.g., `git tag deploy-v1.0 && git push --tags`).
 - Deploy to Nomad: workflow runs `nomad job run infra/jamroom.nomad` with the image tag.
 - Rollback: tag a prior commit and push the tag to re-run deployment.

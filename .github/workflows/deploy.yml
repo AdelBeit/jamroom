@@ -24,16 +24,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push image (commit SHA)
+      - name: Build and push app image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: dockerfile
           push: true
-          tags: ghcr.io/adelbeit/jamroom:${{ github.sha }}
+          tags: |
+            ghcr.io/adelbeit/jamroom-app:${{ github.sha }}
+            ghcr.io/adelbeit/jamroom-app:latest
 
       - name: Verify image exists in GHCR
-        run: docker manifest inspect ghcr.io/adelbeit/jamroom:${{ github.sha }} > /dev/null
+        run: docker manifest inspect ghcr.io/adelbeit/jamroom-app:${{ github.sha }} > /dev/null
 
       - name: Deploy to Droplet
         uses: appleboy/ssh-action@v1.0.3
@@ -41,11 +43,13 @@ jobs:
           host: ${{ secrets.DROPLET_HOST }}
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
+          envs: IMAGE_TAG
           script: |
             cd /opt/jamroom
-            printf "IMAGE_TAG=%s\n" "${{ github.sha }}" > .env
             docker compose pull app
             docker compose up -d
+        env:
+          IMAGE_TAG: ${{ github.sha }}
 
       - name: Deploy to Nomad
         if: ${{ env.NOMAD_ADDR != '' }}
