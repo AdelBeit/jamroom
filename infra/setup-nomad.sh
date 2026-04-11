@@ -39,7 +39,14 @@ tar -xzf cni-plugins.tgz -C /opt/cni/bin
 rm cni-plugins.tgz
 
 # Create directories
-mkdir -p /etc/nomad.d /var/nomad /opt/jamroom /opt/jamroom/redis_data
+mkdir -p /etc/nomad.d /var/nomad /opt/jamroom /opt/jamroom/infra /opt/jamroom/redis_data
+
+# Download infrastructure blueprints
+echo "Downloading infrastructure blueprints..."
+REPO_URL="https://raw.githubusercontent.com/AdelBeit/jamroom/main"
+curl -fsSL "$REPO_URL/docker-compose.yml" -o /opt/jamroom/docker-compose.yml
+curl -fsSL "$REPO_URL/Caddyfile.template" -o /opt/jamroom/Caddyfile.template
+curl -fsSL "$REPO_URL/infra/jamroom.nomad" -o /opt/jamroom/infra/jamroom.nomad
 
 # Create config for SERVER (central droplet)
 if [ "$2" = "server" ]; then
