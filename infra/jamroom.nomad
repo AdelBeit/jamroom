@@ -76,7 +76,6 @@ job "jamroom" {
     }
 
     network {
-      mode = "bridge"
       port "redis" {
         static = 6379
       }
@@ -87,7 +86,6 @@ job "jamroom" {
     count = 1
 
     network {
-      mode = "bridge"
       port "http" {
         static = 8080
       }
@@ -111,7 +109,6 @@ job "jamroom" {
           path     = "/api/health"
           interval = "10s"
           timeout  = "2s"
-          expose   = true
         }
 
         check {
@@ -119,7 +116,6 @@ job "jamroom" {
           type     = "tcp"
           interval = "15s"
           timeout  = "2s"
-          expose   = true
         }
 
         tags = [
@@ -139,8 +135,6 @@ job "jamroom" {
         CONSUL_HTTP_ADDR  = "consul.service.consul:8500"
         REDIS_URL         = var.redis_url
         REDIS_PASSWORD    = var.redis_password
-      }
-
       }
 
       resources {
