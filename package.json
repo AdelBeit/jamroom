@@ -6,10 +6,9 @@
     "dev:next": "next dev",
     "build": "next build",
     "start": "next start",
-    "start:init": "node init-consul.js",
-    "dev": "yarn build && yarn start:init",
+    "dev": "yarn build && yarn start",
     "lint": "next lint",
-    "docker:start": "node init-consul.js",
+    "docker:start": "next start -p ${PORT:-8080}",
     "prod": "yarn && yarn build && yarn start",
     "test:smoke": "jest --testPathPattern=smoke --forceExit --detectOpenHandles",
     "docker:reset": "docker compose down && docker compose build --no-cache && docker compose up -d && docker compose logs app -f"
