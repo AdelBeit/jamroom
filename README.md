@@ -32,7 +32,7 @@ Redis (broadcasts across instances)
 
 Each client maintains local Zustand state. User actions (note played, user joined) emit via Socket.io → server routes to Redis pub/sub → all listening clients receive update → local state + audio sync.
 
-Multi-instance scaling: Redis adapter keeps app instances synchronized without sticky sessions. State is ephemeral (no persistence).
+**Routing & Sessions:** Caddy (reverse proxy) uses sticky sessions via cookies to route repeat connections to the same app instance. Redis pub/sub ensures state sync across instances. State is ephemeral (no persistence).
 
 ## Quick Start
 
