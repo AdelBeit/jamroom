@@ -16,6 +16,8 @@ Web-based collaboration app for live musical performance. Real-time audio sync v
 
 **Infrastructure:** Redis (session pub/sub), Nomad (scheduling), Consul (service discovery), Caddy (reverse proxy + auto-HTTPS)
 
+**Hosting:** DigitalOcean (Droplets)
+
 **Deployment:** Docker, GitHub Actions (CI/CD)
 
 ## Architecture
