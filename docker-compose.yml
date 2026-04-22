@@ -27,7 +27,7 @@ services:
       retries: 3
 
   app:
-    image: ghcr.io/adelbeit/jamroom/jamroom:latest
+    image: ghcr.io/adelbeit/jamroom-app:${IMAGE_TAG:-latest}
     # build:
     #   context: .
     #   dockerfile: dockerfile
