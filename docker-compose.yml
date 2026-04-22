@@ -1,5 +1,6 @@
-services:
+version: '3.9'
 
+services:
   consul:
     image: hashicorp/consul:1.20.1
     restart: unless-stopped
@@ -11,14 +12,74 @@ services:
       - CONSUL_BIND_INTERFACE=eth0
     volumes:
       - consul_data:/consul/data
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8500/v1/status/leader"]
       interval: 5s
       timeout: 2s
       retries: 3
 
+  app:
+    image: ghcr.io/adelbeit/jamroom/jamroom:latest
+    # build:
+    #   context: .
+    #   dockerfile: dockerfile
+    #   target: ${BUILD_TARGET:-runner}
+    restart: unless-stopped
+    environment:
+      - REDIS_URL=${REDIS_URL}
+      - CONSUL_HTTP_ADDR=consul:8500
+      - PORT=8080
+      - SERVICE_ADDRESS=app
+    depends_on:
+      redis:
+        condition: service_healthy
+      consul:
+        condition: service_started
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+
+  redis:
+    image: redis:7.2-alpine
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   caddy:
-    image: ghcr.io/adelbeit/jamroom-caddy:latest
+    image: ghcr.io/adelbeit/jamroom/caddy:latest
+    # build:
+    #   context: .
+    #   dockerfile: infra/caddy-updater/Dockerfile
     restart: unless-stopped
     ports:
       - "80:80"
@@ -29,7 +90,7 @@ services:
       - caddy_data:/data
       - caddy_config:/config
     environment:
-      - DOMAIN=${DOMAIN}
+      - DOMAIN
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_NAME=jamroom-app
       - CADDYFILE_TEMPLATE=/etc/caddy/Caddyfile.template
@@ -44,6 +105,8 @@ services:
           memory: 256M
     depends_on:
       consul:
+        condition: service_healthy
+      app:
         condition: service_healthy
 
 volumes:

@@ -19,7 +19,7 @@ COPY --from=deps /app/yarn.lock ./yarn.lock
 COPY --from=deps /app/node_modules ./node_modules
 
 # Copy config files (changes less frequently than source)
-COPY next.config.js tsconfig.json next-env.d.ts jest.config.js jest.setup.js ./
+COPY next.config.js tsconfig.json next-env.d.ts init-consul.js jest.config.js jest.setup.js ./
 
 # Copy source code (changes most frequently)
 COPY public ./public
@@ -41,7 +41,7 @@ RUN apk add --no-cache curl
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
-COPY --from=builder /app/next.config.js /app/jest.config.js /app/jest.setup.js ./
+COPY --from=builder /app/next.config.js /app/init-consul.js /app/jest.config.js /app/jest.setup.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules

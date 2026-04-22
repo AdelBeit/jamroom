@@ -64,6 +64,3 @@ docs/
 
 # Generated Caddyfile (created by caddy-updater, template is Caddyfile.template)
 /Caddyfile
-
-# Local temp files
-/tmp/
