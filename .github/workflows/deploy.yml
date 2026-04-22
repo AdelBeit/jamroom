@@ -34,7 +34,7 @@ jobs:
         run: docker manifest inspect ghcr.io/adelbeit/jamroom:${{ github.sha }} > /dev/null
 
       - name: Deploy to Droplet
-        uses: appleboy/ssh-action@7eaf76671a0d7eec5d98ee897acda4f968735a7e  # v1.0.3
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.DROPLET_HOST }}
           username: ${{ secrets.DROPLET_USER }}
