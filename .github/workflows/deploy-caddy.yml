@@ -1,0 +1,62 @@
+name: Deploy Caddy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'infra/caddy-updater/**'
+      - 'Caddyfile.template'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy-caddy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Caddy image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infra/caddy-updater/Dockerfile
+          push: true
+          tags: ghcr.io/adelbeit/jamroom-caddy:latest
+
+      - name: Verify image exists in GHCR
+        run: docker manifest inspect ghcr.io/adelbeit/jamroom-caddy:latest > /dev/null
+
+      - name: Deploy to Droplet
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            cd /opt/jamroom
+            docker compose pull caddy
+            docker compose up -d caddy
+
+      - name: Post-deploy health verification
+        run: |
+          echo "Waiting for service to be ready..."
+          for i in {1..30}; do
+            if curl -sf http://${{ secrets.DROPLET_HOST }}/api/health > /dev/null 2>&1; then
+              echo "✓ Health check passed"
+              exit 0
+            fi
+            echo "Attempt $i/30 - waiting for service..."
+            sleep 2
+          done
+          echo "✗ Health check failed after 30 attempts"
+          exit 1
