@@ -6,7 +6,7 @@ Polls Consul every 5s → updates Caddyfile → reloads Caddy.
 
 **Caddy owns SSL** (default): template uses `{$DOMAIN}`, set `CADDY_HTTP_PORT=80` + `CADDY_HTTPS_PORT=443`
 
-**External LB owns SSL**: template uses `http://{$DOMAIN}`, set `CADDY_HTTP_PORT=<port>`, omit `CADDY_HTTPS_PORT`
+**External LB owns SSL**: template uses `http://{$DOMAIN}`, set `CADDY_HTTP_PORT` and `CADDY_HTTPS_PORT` to free host ports if 80/443 are already occupied by the terminator
 
 ## Env Vars
 
