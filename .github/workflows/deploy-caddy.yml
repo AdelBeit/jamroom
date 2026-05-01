@@ -47,15 +47,21 @@ jobs:
             docker compose up -d caddy
 
       - name: Post-deploy health verification
-        run: |
-          echo "Waiting for service to be ready..."
-          for i in {1..30}; do
-            if curl -sf http://${{ secrets.DROPLET_HOST }}/api/health > /dev/null 2>&1; then
-              echo "✓ Health check passed"
-              exit 0
-            fi
-            echo "Attempt $i/30 - waiting for service..."
-            sleep 2
-          done
-          echo "✗ Health check failed after 30 attempts"
-          exit 1
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DROPLET_HOST }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            PORT=$(grep '^CADDY_HTTP_PORT=' /opt/jamroom/.env 2>/dev/null | cut -d= -f2)
+            PORT=${PORT:-80}
+            for i in $(seq 1 30); do
+              if curl -sf http://localhost:${PORT}/api/health > /dev/null 2>&1; then
+                echo "Health check passed"
+                exit 0
+              fi
+              echo "Attempt $i/30 - waiting..."
+              sleep 2
+            done
+            echo "Health check failed after 30 attempts"
+            exit 1
