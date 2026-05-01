@@ -43,6 +43,9 @@ jobs:
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
+            mkdir -p /opt/jamroom
+            curl -fsSL https://raw.githubusercontent.com/AdelBeit/jamroom/main/docker-compose.yml -o /opt/jamroom/docker-compose.yml
+            curl -fsSL https://raw.githubusercontent.com/AdelBeit/jamroom/main/Caddyfile.template -o /opt/jamroom/Caddyfile.template
             cd /opt/jamroom
             docker compose pull caddy
             docker compose up -d caddy
