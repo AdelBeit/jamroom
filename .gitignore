@@ -64,3 +64,5 @@ docs/
 
 # Generated Caddyfile (created by caddy-updater, template is Caddyfile.template)
 /Caddyfile
+.vagrant
+.vagrant/
