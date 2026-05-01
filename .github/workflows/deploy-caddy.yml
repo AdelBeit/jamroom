@@ -1,11 +1,7 @@
 name: Deploy Caddy
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'infra/caddy-updater/**'
-      - 'Caddyfile.template'
+  workflow_dispatch:
 
 permissions:
   contents: read
