@@ -1,7 +1,7 @@
 ARG BUILD_ENV=prod
 
 # Install dependencies only when needed
-FROM node:20.20.1-alpine AS deps
+FROM node:22.23.4-alpine AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
@@ -10,7 +10,7 @@ COPY yarn.lock ./
 RUN yarn
 
 # Rebuild the source code only when needed
-FROM node:20.20.1-alpine AS builder
+FROM node:22.23.4-alpine AS builder
 WORKDIR /app
 
 # Copy dependencies (cached in deps stage, rarely changes)
@@ -32,7 +32,7 @@ COPY __tests__ ./__tests__
 RUN yarn build
 
 # Production image (no tests)
-FROM node:20.20.1-alpine AS runner
+FROM node:22.23.4-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
